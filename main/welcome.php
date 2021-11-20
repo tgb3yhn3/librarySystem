@@ -3,8 +3,8 @@
 session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === false){
+    header("location: index.php");
     exit;  //記得要跳出來，不然會重複轉址過多次
 }
 ?>
@@ -26,15 +26,14 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     }
     </style>
 <body>
+<?php
+  //很重要，可以用的變數存在session裡
+$username=$_SESSION["username"];
+echo "<h1>你好 ".$username."你好</h1>";
+echo "<a href='logout.php'>登出</a>";
+    
+?>
 
-<form method="POST" action="login.php">
-帳號：
-<input type="text" name="username"><br/><br/>
-密碼：
-<input type="password" name="password"><br><br>
-<input type="submit" value="登入" name="submit"><br><br>
-<a href="register.php">還沒有帳號？現在就註冊！</a>
-</form>
 <table>
   <tr>
  <a href="select.php"><button>查詢</button></a> 
