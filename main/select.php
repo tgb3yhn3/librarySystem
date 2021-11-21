@@ -1,3 +1,4 @@
+<?php require_once("islog.php");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body{
-            text-align:center;
-        }
+        
         img{
             float:left;
             width:50px;
@@ -17,12 +16,12 @@
         </style>
 </head>
 <body>
-    <a href="index.php"><img src="home.png"></a>
-    <form action="search.php" method="post">
+    
+    <form action="book.php" method="post">
         搜尋書名<input type="text" name='search'><input type="submit" >
     </form>
     <?php
-    session_start();
+  
     $host = 'localhost';
     $dbuser ='root';
     $dbpassword = '123456';
@@ -69,7 +68,7 @@
         $ISBN=$datas[$i]["ISBN"];
         $describeBook=$datas[$i]["describeBook"];
         echo "<br>第$i 本書<br> ";
-        echo "<a href='book.php?ISBN=".$ISBN."'><h3>$bookName<br></h3></a>";
+        echo "<a href='book.php?search=".$ISBN."'><h3>$bookName<br></h3></a>";
         echo "author:$author<br>";
         echo "ISBN:$ISBN<br>";
         echo "describeBook:$describeBook<br>";

@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php
+<?php
+    require_once("cav.php");
      $search=$_POST['search'];
      $host = 'localhost';
      $dbuser ='root';
@@ -16,7 +8,7 @@
      $sql="select * from `book` where bookName like '%$search%'";
      $link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
      $result = mysqli_query($link,$sql);
-     $data=array();
+     $datas=array();
      
      if ($result) {
          // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
@@ -33,7 +25,7 @@
          mysqli_free_result($result);
      }
      else {
-         echo "找不到書籍" ;
+         //echo "找不到書籍" ;
      }
      // 處理完後印出資料
      if(!empty($result)){
@@ -55,17 +47,11 @@
          $ISBN=$datas[$i]["ISBN"];
          $describeBook=$datas[$i]["describeBook"];
          echo "<br>第$i 筆<br> ";
-         echo "<h3>bookName:$bookName<br></h3>";
+         echo "<h3><a href='book.php?search=".$ISBN."'>$bookName</a><br></h3>";
          echo "author:$author<br>";
          echo "ISBN:$ISBN<br>";
          echo "describeBook:$describeBook<br>";
-         echo ' <form action="book.php"  method="POST">
-         <input type="hidden" name="ISBN" value='.$ISBN.'>
-         <input type="submit"  value="查看這本書的詳細資訊">
-     </from>';
+        
          echo "<hr>";
      }
  ?>
-  
-</body>
-</html>

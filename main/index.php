@@ -8,13 +8,13 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;  //記得要跳出來，不然會重複轉址過多次
 }
 ?>
-<html xmlns=”http://www.w3.org/1999/xhtml”>
+<html>
 <head>
+  <title>Library-System</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	</head>
+</head>
   <style>
     body{
-      
       text-align:center;
     }
     button{

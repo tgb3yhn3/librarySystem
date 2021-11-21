@@ -29,7 +29,7 @@
 		
 		if ($result) {
 			echo "<br> in";
-			header("location:/main/book.php?ISBN=".substr($request,1,strlen($request)));
+			header("location:/main/book.php?search=".substr($request,1,strlen($request)));
 		}
 			else{//echo $request;
 			http_response_code(404);
