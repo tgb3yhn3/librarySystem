@@ -30,14 +30,18 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === false){
   //很重要，可以用的變數存在session裡
 $username=$_SESSION["username"];
 echo "<h1>你好 ".$username."你好</h1>";
-echo "<a href='logout.php'>登出</a>";
+echo "<a href='logout.php'><button>登出</button></a>";
     
 ?>
 
 <table>
   <tr>
  <a href="select.php"><button>查詢</button></a> 
- <a href="insert.php"><button>新增書籍</button></a>
+ <?php
+ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        
+ echo '<a href="insert.php"><button>新增書籍</button></a>';
+ }?>
   </tr>
  <!-- <li><a href="update.php">UPDATE，更新資料表中的資料</a></li>
  <li><a href="delete.php">DELETE，刪除資料表中的資料</a></li> -->

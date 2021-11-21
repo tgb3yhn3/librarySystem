@@ -38,7 +38,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 <table>
   <tr>
  <a href="select.php"><button>查詢</button></a> 
- <a href="insert.php"><button>新增書籍</button></a>
+ <?php
+ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        
+ echo '<a href="insert.php"><button>新增書籍</button></a>';
+ }?>
+
   </tr>
  <!-- <li><a href="update.php">UPDATE，更新資料表中的資料</a></li>
  <li><a href="delete.php">DELETE，刪除資料表中的資料</a></li> -->

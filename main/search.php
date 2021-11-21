@@ -59,9 +59,13 @@
          echo "author:$author<br>";
          echo "ISBN:$ISBN<br>";
          echo "describeBook:$describeBook<br>";
+         echo ' <form action="book.php"  method="POST">
+         <input type="hidden" name="ISBN" value='.$ISBN.'>
+         <input type="submit"  value="查看這本書的詳細資訊">
+     </from>';
          echo "<hr>";
      }
  ?>
-    
+  
 </body>
 </html>

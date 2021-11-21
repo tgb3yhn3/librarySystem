@@ -22,6 +22,7 @@
         搜尋書名<input type="text" name='search'><input type="submit" >
     </form>
     <?php
+    session_start();
     $host = 'localhost';
     $dbuser ='root';
     $dbpassword = '123456';
@@ -68,14 +69,19 @@
         $ISBN=$datas[$i]["ISBN"];
         $describeBook=$datas[$i]["describeBook"];
         echo "<br>第$i 本書<br> ";
-        echo "<h3>bookName:$bookName<br></h3>";
+        echo "<a href='book.php?ISBN=".$ISBN."'><h3>$bookName<br></h3></a>";
         echo "author:$author<br>";
         echo "ISBN:$ISBN<br>";
         echo "describeBook:$describeBook<br>";
+        
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        
+    
         echo "<form action='delete.php'method='post'>
                 <input type='hidden'name='delete' value='$bookName'>
                 <input type='submit' value='刪除這本書 'onclick='msg()'>        
         </form> ";
+    }
         echo "<hr>";
     }}else{
         echo"沒有書籍";
