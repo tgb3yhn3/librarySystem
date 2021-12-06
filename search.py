@@ -1,12 +1,23 @@
-# encoding:utf-8
+
 import requests
 import json
 from bs4 import BeautifulSoup
 import sys  
 import time
+from fake_useragent import UserAgent
 # 第一層
 params = sys.argv[1]
-headers = {'user-agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'}
+headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9", 
+    "Accept-Encoding": "gzip, deflate, br", 
+    "Accept-Language": "zh-TW,zh;q=0.9", 
+    
+    "Sec-Fetch-Dest": "document", 
+    "Sec-Fetch-Mode": "navigate", 
+    "Sec-Fetch-Site": "none", 
+    "Upgrade-Insecure-Requests": "1", 
+    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" #使用者代理
+}
 
 response = requests.get("https://search.books.com.tw/search/query/key/"+params+"/cat/BKA",headers=headers)
 # response = requests.get("https://search.books.com.tw/search/query/key/9789574554089/cat/BKA")
@@ -16,7 +27,6 @@ for tag in a_tags:
     link = tag.a.get('href')
 goal = link.index('item/')
 end = link.index('/page')
-print(link[goal+5:end])
 # --------------------------
 
 # 第二層
@@ -73,6 +83,8 @@ for i in seperate:
         # print(date)
         break
 book_json = {'book_name':book_name,'author':author,'company':company,'date':date,'img_url':img_url,'text':text}
-str1 = json.dumps(book_json,ensure_ascii=False)
+str1 = json.dumps(book_json,ensure_ascii=True)
+# bs=str1.encode('cp950')
+
 print(str1)
     
