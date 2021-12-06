@@ -25,6 +25,7 @@
         $command = escapeshellcmd($path.$isbn);
         $output = shell_exec($command);
         $after_decode =  iconv(mb_detect_encoding($output), "UTF-8", $output);
+        // echo $after_decode;
         $obj = json_decode($after_decode);
         $book_name = $obj -> {'book_name'};
         echo $book_name.'<br>';
@@ -32,6 +33,8 @@
         echo $author.'<br>';
         $company = $obj -> {'company'};
         echo $company.'<br>';
+        $date = $obj -> {'date'};
+        echo $date.'<br>';
         $img_url = $obj -> {'img_url'};
         echo $img_url.'<br>';
         $text = $obj -> {'text'};
