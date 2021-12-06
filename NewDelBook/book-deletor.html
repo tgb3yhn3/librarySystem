@@ -18,11 +18,14 @@
 <body>
     <h2>Delete a Book</h2>
     <pre>
-    <b>Author</b>   <input type="text" id="author">
-    <b>Title</b>    <input type="text" id="title">
-    <b>Category</b> <input type="text" id="category">
-    <b>Year</b>     <input type="text" id="year">
-    <b>ISBN</b>     <input type="text" id="isbn">
+        <b>BookName     </b><input type="text" id="bookName">
+        <b>Author       </b><input type="text" id="author">
+        <b>ISBN         </b><input type="text" id="ISBN">
+        <b>describeBook </b><input type="text" id="describeBook">
+        <b>class        </b><input type="text" id="class">
+        <b>publish_year </b><input type="text" id="publish_year">
+        <b>publisher    </b><input type="text" id="publisher">
+        <b>num          </b><input type="text" id="num">
     <br>
     <button id="delete">Delete Book</button>
     </pre>
@@ -35,13 +38,15 @@
 		
 		$("#delete").click(deleteBook);
         function deleteBook() {
-            
             let obj = {};
+            obj["bookName"] = $("#bookName").val();
             obj["author"] = $("#author").val();
-            obj["title"] = $("#title").val();
-            obj["category"] = $("#category").val();
-            obj["year"] = $("#year").val();
-            obj["isbn"] = $("#isbn").val();
+            obj["ISBN"] = $("#ISBN").val();
+            obj["describeBook"] = $("#describeBook").val();
+            obj["class"] = $("#class").val();
+            obj["publish_year"] = $("#publish_year").val();
+            obj["publisher"] = $("#publisher").val();
+            obj["num"] = $("#num").val();
 
             $.post("delete_API.php", obj)
                 .done(function (data) {

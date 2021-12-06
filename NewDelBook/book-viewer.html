@@ -30,11 +30,14 @@
     <table border="1">
         <tbody id="menu">
             <tr>
+                <th>BookName</th>
                 <th>Author</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Year</th>
                 <th>ISBN</th>
+                <th>describeBook</th>
+                <th>class</th>
+                <th>publish_year</th>
+                <th>publisher</th>
+                <th>num</th>
             </tr>
         </tbody>
     </table>
@@ -50,11 +53,14 @@
             for (let item in data) {
                 let content =
                     "<tr>" +
+                    "<td>" + data[item].bookName + "</td>" +
                     "<td>" + data[item].author + "</td>" +
-                    "<td>" + data[item].title + "</td>" +
-                    "<td>" + data[item].category + "</td>" +
-                    "<td>" + data[item].year + "</td>" +
-                    "<td>" + data[item].isbn + "</td>" +
+                    "<td>" + data[item].ISBN + "</td>" +
+                    "<td>" + data[item].describeBook + "</td>" +
+                    "<td>" + data[item].class + "</td>" +
+                    "<td>" + data[item].publish_year + "</td>" +
+                    "<td>" + data[item].publisher + "</td>" +
+                    "<td>" + data[item].num + "</td>" +
                     "</tr>";
                 $("#menu").append(content);
             }

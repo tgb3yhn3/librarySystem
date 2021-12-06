@@ -18,35 +18,57 @@
 <body>
     <h2>Add a New Book</h2>
     <pre>
-    <b>Author</b>   <input type="text" id="author">
-    <b>Title</b>    <input type="text" id="title">
-    <b>Category</b> <input type="text" id="category">
-    <b>Year</b>     <input type="text" id="year">
-    <b>ISBN</b>     <input type="text" id="isbn">
+    <b>BookName     </b><input type="text" id="bookName">
+    <b>Author       </b><input type="text" id="author">
+    <b>ISBN         </b><input type="text" id="ISBN">
+    <b>describeBook </b><input type="text" id="describeBook">
+    <b>class        </b><input type="text" id="class">
+    <b>publish_year </b><input type="text" id="publish_year">
+    <b>publisher    </b><input type="text" id="publisher">
+    <b>num          </b><input type="text" id="num">
     <br>
+    
     <button id="insert">Add Book</button>
+    <button id="crawl">Add Book from crawl</button>
     </pre>
     <a href="book-viewer.html">List all books</a>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
     <script type="text/javascript">
+        document.getElementById("author").innerText = "hsdf";
         const url = "insert_API.php";
-		
 		$("#insert").click(insertBook);
         function insertBook() {
             
             let obj = {};
             obj["author"] = $("#author").val();
-            obj["title"] = $("#title").val();
-            obj["category"] = $("#category").val();
-            obj["year"] = $("#year").val();
-            obj["isbn"] = $("#isbn").val();
+            obj["bookName"] = $("#bookName").val();
+            obj["ISBN"] = $("#ISBN").val();
+            obj["describeBook"] = $("#describeBook").val();
+            obj["class"] = $("#class").val();
+            obj["publish_year"] = $("#publish_year").val();
+            obj["publisher"] = $("#publisher").val();
+            obj["num"] = $("#num").val();
 
             $.post("insert_API.php", obj)
                 .done(function (data) {
                     window.alert(data);
                 });
+        }
+
+        /*crawl*/
+        const crawlUrl = "search.php";
+        $('#crawl').click(applyFrom);
+        function applyFrom(){
+            $.getJSON(crawlUrl, function(data){
+               document.getElementById("bookName").value = data.book_name;
+               document.getElementById("author").value = data.author;
+               document.getElementById("describeBook").value = data.text;
+               document.getElementById("publisher").value = data.company;
+               document.getElementById("publish_year").value = data.date;
+               
+            });
         }
     </script>
 </body>
