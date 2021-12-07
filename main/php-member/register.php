@@ -37,7 +37,7 @@
 </form>
 
 <?php 
-$conn=require_once("config.php");
+$conn=require_once("../config.php");
 require_once("sentRegisterEmail.php");
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     $username=$_POST["username"];

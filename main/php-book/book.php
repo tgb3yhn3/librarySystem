@@ -1,9 +1,11 @@
 <?php
-require_once("islog.php");
-require_once("config.php");
 
-$ISBN=$_GET["search"];
+require_once("../config.php");
 
+$ISBN=$_POST["search"];
+if($ISBN){
+    $ISBN=$_GET["search"];
+}
      $sql="select * from `book` where ISBN = '$ISBN'";
      $sql2="select * from `book` where bookName = '$ISBN'";
      $result = mysqli_query($link,$sql);

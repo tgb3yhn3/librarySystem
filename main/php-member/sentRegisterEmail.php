@@ -6,9 +6,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/PHPMailer/src/Exception.php';
-require 'PHPMailer/PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/PHPMailer/src/SMTP.php';
+require '../PHPMailer/PHPMailer/src/Exception.php';
+require '../PHPMailer/PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/PHPMailer/src/SMTP.php';
 //Load Composer's autoloader
 
 function sentRegMail($mailto,$token){
