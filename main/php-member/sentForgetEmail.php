@@ -1,4 +1,5 @@
 <?php
+//function 後端 發送忘記密碼的email
 
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function

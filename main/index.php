@@ -27,14 +27,14 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     </style>
 <body>
 
-<form method="POST" action="../php-member/login.php">
-帳號：
-<input type="text" name="username"><br/><br/>
+<form method="POST" action="php-member/login.php">
+帳號(學號)：
+<input type="text" name="userID"><br/><br/>
 密碼：
 <input type="password" name="password"><br><br>
 <input type="submit" value="登入" name="submit"><br><br>
-<a href="php-member/register.php">還沒有帳號？現在就註冊！</a>
-<a href="php-member/forget.php">忘記密碼了?</a>
+<a href="php-member/register.html">還沒有帳號？現在就註冊！</a>
+<a href="php-member/forget.html">忘記密碼了?</a>
 </form>
 <table>
   <tr>
@@ -42,7 +42,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
  <?php
  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         
- echo '<a href="insert.php"><button>新增書籍</button></a>';
+ echo '<a href="php-book/insert.php"><button>新增書籍</button></a>';
  }?>
 
   </tr>

@@ -1,4 +1,5 @@
 <?php
+//function 後端 發送註冊的email
 
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
@@ -45,10 +46,10 @@ try {
     <p>歡迎你加入成為我們平臺的新使用者！</p>
     
     
-    <p>請於收到此信件的24小時內<br>點選「<a href="http://grassr.ddns.net/main/validReg.php?verify='.$token.'">這裡</a>」進行驗證以完成註冊。</p>
+    <p>請於收到此信件的24小時內<br>點選「<a href="http://grassr.ddns.net/main/php-member/validReg.php?verify='.$token.'">這裡</a>」進行驗證以完成註冊。</p>
     
     <p>若連結無法啟用，請在瀏覽器上貼上以下網址：<br>
-    http://grassr.ddns.net/main/validReg.php?verify='.$token.'</p>
+    http://grassr.ddns.net/main/php-member/validReg.php?verify='.$token.'</p>
     
     感謝您的使用，祝你期中期末all pass!
     <br><br><br><br>
@@ -60,7 +61,9 @@ try {
 
     $mail->send();
     echo 'Message has been sent';
+    return true;
 } catch (Exception $e) {
+    return false;
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 }

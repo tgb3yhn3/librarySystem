@@ -1,13 +1,19 @@
-<?php
+<?php 
+//POST 後端 用來檢視所選(詳細顯示所選書籍的資訊)
 
 require_once("../config.php");
+$ISBN="";
+if(array_key_exists(("search"),$_POST)){
+     $ISBN=$_POST["search"];
 
-$ISBN=$_POST["search"];
-if($ISBN){
+}
+else if(array_key_exists(("search"),$_GET)){
     $ISBN=$_GET["search"];
+}else{
+    echo" 請聯繫管理員，request method 錯誤";
 }
      $sql="select * from `book` where ISBN = '$ISBN'";
-     $sql2="select * from `book` where bookName = '$ISBN'";
+     $sql2="select * from `book` where bookName like '%".$ISBN."%'";
      $result = mysqli_query($link,$sql);
      $result2= mysqli_query($link,$sql2);
      $data=array();

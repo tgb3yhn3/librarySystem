@@ -1,13 +1,10 @@
 <?php
-    require_once("cav.php");
-     $search=$_POST['search'];
-     $host = 'localhost';
-     $dbuser ='root';
-     $dbpassword = '123456';
-     $dbname = 'test';
+//後端 function 用來查詢書籍
+    function get_search_book($search){
+    // require_once("cav.php");
+     $conn=require_once("../config.php");
      $sql="select * from `book` where bookName like '%$search%'";
-     $link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
-     $result = mysqli_query($link,$sql);
+     $result = mysqli_query($conn,$sql);
      $datas=array();
      
      if ($result) {
@@ -27,31 +24,32 @@
      else {
          //echo "找不到書籍" ;
      }
+     $return_value="";
      // 處理完後印出資料
      if(!empty($result)){
-         // 如果結果不為空，就利用print_r方法印出資料
-         //print_r($datas);
-         //print_r("\n");
-     }
+         $return_value="<h3>所有書籍查詢結果</h3>";
+         for($i=0;$i<count($datas);$i++){
+            $bookName=$datas[$i]["bookName"];
+            $author=$datas[$i]["author"];
+            $ISBN=$datas[$i]["ISBN"];
+            $describeBook=$datas[$i]["describeBook"];
+            $return_value=$return_value."<br>第$i 筆<br> ";
+            $return_value=$return_value."<h3><a href='book.php?search=".$ISBN."'>$bookName</a><br></h3>";
+            $return_value=$return_value."author:$author<br>";
+            $return_value=$return_value."ISBN:$ISBN<br>";
+            $return_value=$return_value."describeBook:$describeBook<br>";
+           
+            $return_value=$return_value."<hr>";
+        }
+       }
      else {
          // 為空表示沒資料
-         echo "查無資料";
-     }?>
-     <h3>所有書籍查詢結果</h3>
-     <?php foreach($datas as $i){
-         //print_r($i) ;
+         $return_value="查無資料";
      }
-     for($i=0;$i<count($datas);$i++){
-         $bookName=$datas[$i]["bookName"];
-         $author=$datas[$i]["author"];
-         $ISBN=$datas[$i]["ISBN"];
-         $describeBook=$datas[$i]["describeBook"];
-         echo "<br>第$i 筆<br> ";
-         echo "<h3><a href='book.php?search=".$ISBN."'>$bookName</a><br></h3>";
-         echo "author:$author<br>";
-         echo "ISBN:$ISBN<br>";
-         echo "describeBook:$describeBook<br>";
-        
-         echo "<hr>";
-     }
+     return $return_value;
+    }
+     ?>
+     
+     <?php 
+    
  ?>

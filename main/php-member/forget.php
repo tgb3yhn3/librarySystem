@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="forget.php" method="POST">
-        請輸入學號<input type=text name="userID"><br>
-        <input type="submit">
-        <input type="reset">
-       
-</body>
 <?php
+//POST 後端 用來寄出驗證信
 if($_SERVER["REQUEST_METHOD"]=="POST"){
         $conn=require_once "config.php";
         require_once "sentForgetEmail.php";
@@ -35,6 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }else{
             echo"此使用者不存在 請重新輸入";
         }
+    }else{
+        header("location:forget.html");
     }
         ?>
-</html>

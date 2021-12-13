@@ -1,23 +1,7 @@
-
- <script>
-        
-        function validateForm() {
-            var x = document.forms["resetPasswordForm"]["password"].value;
-            var y = document.forms["resetPasswordForm"]["password_check"].value;
-            if(x.length<6){
-                alert("密碼長度不足");
-                return false;
-            }
-            if (x != y) {
-                alert("請確認密碼是否輸入正確");
-                return false;
-            }
-        }
-    </script>
-
 <?php
+//GET 後端 用來驗證忘記密碼token 
 $token=$_GET["verify"];
-$conn=require_once "config.php";
+$conn=require_once ("../config.php");
 $sql="SELECT * FROM users WHERE forgettoken='".$token."'";
 // echo $sql;
 if(mysqli_num_rows(mysqli_query($conn,$sql))==1){
@@ -32,3 +16,19 @@ if(mysqli_num_rows(mysqli_query($conn,$sql))==1){
 }
 
 ?>
+
+<script>
+        
+        function validateForm() {
+            var x = document.forms["resetPasswordForm"]["password"].value;
+            var y = document.forms["resetPasswordForm"]["password_check"].value;
+            if(x.length<6){
+                alert("密碼長度不足");
+                return false;
+            }
+            if (x != y) {
+                alert("請確認密碼是否輸入正確");
+                return false;
+            }
+        }
+    </script>

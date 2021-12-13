@@ -27,19 +27,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false){
     </style>
 <body>
 <?php
-$username=$_SESSION["username"];
-echo "<h1>你好 ".$username."你好</h1>";
-echo "<a href='logout.php'><button>登出</button></a>";
+$userID=$_SESSION["userID"];
+echo "<h1>".$userID."你好</h1>";
+echo "<a href='php-member/logout.php'><button>登出</button></a>";
     
 ?>
 
 <table>
   <tr>
- <a href="select.php"><button>查詢</button></a> 
+ <a href="../php-book/select.php"><button>查詢</button></a> 
  <?php
  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         
- echo '<a href="insert.php"><button>新增書籍</button></a>';
+ echo '<a href="../php-book/insert.php"><button>新增書籍</button></a>';
  }
  ?>
   </tr>

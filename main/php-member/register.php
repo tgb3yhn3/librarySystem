@@ -1,42 +1,5 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>會員註冊</title>
-    <script>
-        
-        function validateForm() {
-            var x = document.forms["registerForm"]["password"].value;
-            var y = document.forms["registerForm"]["password_check"].value;
-            if(x.length<6){
-                alert("密碼長度不足");
-                return false;
-            }
-            if (x != y) {
-                alert("請確認密碼是否輸入正確");
-                return false;
-            }
-        }
-    </script>
-    
-    </head>
-<body>
-    <h1>註冊頁面</h1>
-<form name="registerForm" method="post" action="register.php" onsubmit="return validateForm()">
-    使用者名稱
-    <input type="text" name="username"><br/><br/>
-    學  號：
-    <input type="text" name="userID"><br/><br/>
-    密  碼：
-    <input type="password" name="password" id="password"><br/><br/>
-    確認密碼：
-    <input type="password" name="password_check" id="password_check"><br/><br/>
-
-
-    <input type="submit" value="註冊" name="submit">
-    <input type="reset" value="重設" name="submit">
-</form>
-
 <?php 
+//POST 後端 驗證註冊內容
 $conn=require_once("../config.php");
 require_once("sentRegisterEmail.php");
 if($_SERVER["REQUEST_METHOD"]=="POST"){
@@ -46,17 +9,28 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $password=$_POST["password"];
     $token=md5($userID.$password.time());
     //檢查帳號是否重複
-    $check="SELECT * FROM users WHERE username='".$username."'";
+    $check="SELECT * FROM users WHERE userID='".$userID."'";
     if(mysqli_num_rows(mysqli_query($conn,$check))==0){
         $sql="INSERT INTO users (username,userID,email, password,token)
             VALUES('".$username."','".$userID."','".$email."','".$password."','".$token."')";
        
         
         if(mysqli_query($conn, $sql)){
-            sentRegMail($email,$token);
-            echo "註冊成功!<br>";
+            if(sentRegMail($email,$token)){
+                echo "註冊成功!<br>";
 
-            echo"沒收到驗證信請檢查垃圾郵件QQ";
+                echo"沒收到驗證信請檢查垃圾郵件<br>";
+                echo "<br>3秒後將自動跳轉回首頁<br>";
+                echo "<a href='../index.php'>未成功跳轉頁面請點擊此</a>";
+                
+                header("refresh:3;url=../index.php",true);
+            }else{
+                $sql='delete from users where userID="'.$userID.'"';
+                mysqli_query($conn, $sql);
+                echo"郵件寄送失敗，請重試或請聯繫系統管理員";
+            }
+            
+            
             
             //echo "<a href='index.php'>未成功跳轉頁面請點擊此</a>";
             
@@ -69,11 +43,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
     else{
         echo "該帳號已有人使用!<br>3秒後將自動跳轉頁面<br>";
-        echo "<a href='register.php'>未成功跳轉頁面請點擊此</a>";
+        echo "<a href='register.html'>未成功跳轉頁面請點擊此</a>";
         header('HTTP/1.0 302 Found');
-        header("refresh:3;url=register.php",true);
+        header("refresh:3;url=register.html",true);
         exit;
     }
+}else{
+    header("location:register.html");
 }
 
 
@@ -89,5 +65,3 @@ function function_alert($message) {
     return false;
 } 
 ?>
-</body>
-</html>

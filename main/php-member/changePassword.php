@@ -1,4 +1,5 @@
 <?php
+//POST 後端 用來修改密碼
 $conn=require_once "config.php";
      echo"成功";
     $password=$_POST["password"];
@@ -9,8 +10,5 @@ $conn=require_once "config.php";
         $sql="UPDATE users SET forgettoken='null' WHERE forgettoken='".$token."'";
         mysqli_query($conn,$sql);
         echo"結束";
-    }
-   
-    
-
+    }  
 ?>

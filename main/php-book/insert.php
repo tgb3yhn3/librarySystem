@@ -1,4 +1,24 @@
-<?php require_once("islog.php");;?>
+<?php 
+//GET 前端 用來創建書籍
+
+require_once("islog.php");
+ function function_alert($message) { 
+    // window.location.href='index.php';
+    // Display the alert box  
+    echo "<script>alert('$message');
+     
+    </script>"; 
+    return false;
+} 
+//TODO 權限功能尚未製作
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false){//如果沒有登入就不允許新增書籍
+   
+    function_alert("尚未登入或權限不足");
+    
+    header("refresh:0;url=../index.php",true);
+    exit;  //記得要跳出來，不然會重複轉址過多次
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
