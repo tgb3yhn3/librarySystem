@@ -1,8 +1,9 @@
 <?php
-    header("Content-type: text/html; charset=utf-8");
+    
     function search_ISBN ($isbn){
         // $isbn = '9789865028756';
         // $isbn=$_POST["isbn"];
+        header("Content-type: text/html; charset=utf-8");
         $path="python search.py "; //需要注意的是：末尾要加一個空格
         $command = escapeshellcmd($path.$isbn);
         $output = exec($command.' 2>error.txt"',$isbn);
