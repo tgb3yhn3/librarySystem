@@ -45,6 +45,8 @@
     <a href="book-creator.html">Add a book</a>
     <br>
     <a href="book-deletor.html">Delete a book</a>
+    <br>
+    <a href="book-update.html">Update a book</a>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
     <script type="text/javascript">
@@ -65,6 +67,11 @@
                 $("#menu").append(content);
             }
         });
+
+        function myFunction(id) {
+            document.getElementById("demo").innerHTML = id;
+        }
+
     </script>
 </body>
 

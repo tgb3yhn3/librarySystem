@@ -17,7 +17,7 @@
     $row = $result->fetch_assoc();
     array_push($arr,$row);
   }
-  
+ 
   //set encoding
   header("content-Type: application/json; charset=utf-8");
 

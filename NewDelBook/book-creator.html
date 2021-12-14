@@ -36,7 +36,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
     <script type="text/javascript">
-        document.getElementById("author").innerText = "hsdf";
         const url = "insert_API.php";
 		$("#insert").click(insertBook);
         function insertBook() {
@@ -57,7 +56,7 @@
                 });
         }
 
-        /*crawl*/
+        /*crawl
         const crawlUrl = "search.php";
         $('#crawl').click(applyFrom);
         function applyFrom(){
@@ -70,6 +69,25 @@
                
             });
         }
+        */
+        /*test*/
+        $(document).ready(function(){
+            $('#crawl').click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "search.php",
+                    data : {isbn : $('#ISBN').val()},
+                    success:function(data){
+                        var data = JSON.parse(data);
+                        document.getElementById("bookName").value = data.book_name;
+                        document.getElementById("author").value = data.author;
+                        document.getElementById("describeBook").value = data.text;
+                        document.getElementById("publisher").value = data.company;
+                        document.getElementById("publish_year").value = data.date;
+                    }
+                })
+            })
+        });
     </script>
 </body>
 
