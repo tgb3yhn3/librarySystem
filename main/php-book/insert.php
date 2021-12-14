@@ -1,7 +1,7 @@
 <?php 
 //GET 前端 用來創建書籍
 
-require_once("islog.php");
+
  function function_alert($message) { 
     // window.location.href='index.php';
     // Display the alert box  
@@ -11,6 +11,7 @@ require_once("islog.php");
     return false;
 } 
 //TODO 權限功能尚未製作
+session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false){//如果沒有登入就不允許新增書籍
    
     function_alert("尚未登入或權限不足");
@@ -43,8 +44,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false){//如果沒
         </style>
 </head>
 <body>
-    <a href="index.php"><img src="home.png" alt="home"></a>
-    <form action="create.php" method="post">
+    <form action="create.php" method="post" enctype="multipart/form-data">
         <table>
             
         <tr>
@@ -59,6 +59,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false){//如果沒
         <tr> 
             <th>書籍描述</th>   <td><input type="text"name="describeBook"></td>
         </tr>
+        <tr> 
+            <th>書籍圖片</th>   <td> <input type="file"  name="image"  accept="image/png, image/jpeg,image/gif"></td>
+        </tr>
+       
         <tr>
             <th colspan="2"><input type="submit"></th>
         </tr>   

@@ -1,4 +1,5 @@
 <?php
+//GET 前端 有登錄才能進到的首頁
 // Initialize the session
 session_start();
  
@@ -35,11 +36,11 @@ echo "<a href='php-member/logout.php'><button>登出</button></a>";
 
 <table>
   <tr>
- <a href="../php-book/select.php"><button>查詢</button></a> 
+ <a href="php-book/select.php"><button>查詢</button></a> 
  <?php
  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         
- echo '<a href="../php-book/insert.php"><button>新增書籍</button></a>';
+ echo '<a href="php-book/insert.php"><button>新增書籍</button></a>';
  }
  ?>
   </tr>

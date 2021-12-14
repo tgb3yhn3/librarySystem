@@ -20,9 +20,12 @@
         搜尋書名<input type="text" name='search'><input type="submit" >
     </form>
     <?php
+require("search.php");
   if(array_key_exists(("search"),$_POST)){
-    require("search.php");
-    echo get_search_book($_POST['search']);
+    
+    echo get_search_book($_POST['search'],1);
+  }else{
+    echo get_search_book("");
   }
 ?>
 

@@ -1,4 +1,5 @@
 <?php
+//GET 前端 大家都可以進入的首頁
 // Initialize the session
 session_start();
  
@@ -41,8 +42,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
  <a href="php-book/select.php"><button>查詢</button></a> 
  <?php
  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-        
- echo '<a href="php-book/insert.php"><button>新增書籍</button></a>';
+  header("location:welcome.php");
  }?>
 
   </tr>
