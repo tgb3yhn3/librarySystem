@@ -1,8 +1,8 @@
-<?php//deleteFavoriteBook_API.php
+<?php
+//deleteFavoriteBook_API.php
 session_start();
 /*要從最愛移除的書籍之資料*/
-//$userID   = $_POST["userID"];
-$userID   = $_SESSION["username"];
+$userID   = $_SESSION["userID"];
 $ISBN     = $_POST["ISBN"];
 
 /*與資料庫連線*/
@@ -14,7 +14,7 @@ $sql="delete from user_favorite_book_data
       where userID = '$userID' and ISBN = '$ISBN'";
 mysqli_query($link,$sql);
 mysqli_close($link);//關閉資料庫連線
-echo "<script>alert('刪除成功!');history.back();</script>";
+echo "<script>alert('刪除成功!');window.location.replace('viewFavoriteBooK.html');</script>";
 
     /*資料庫table
 

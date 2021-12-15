@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Book List</title>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+        }
+
+        table {
+            background-color: powderblue;
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Book List</h2>
+    <table border="1">
+        <tbody id="menu">
+            <tr>
+                <th>BookName</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>describeBook</th>
+                <th>class</th>
+                <th>publish_year</th>
+                <th>publisher</th>
+                <th>num</th>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="book-creator.html">Add a book</a>
+    <br>
+    <a href="book-deletor.html">Delete a book</a>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        const jsonUrl = "query_API.php";
+        $.getJSON(jsonUrl, function (data) {
+            for (let item in data) {
+                let content =
+                    "<tr>" +
+                    "<td>" + data[item].bookName + "</td>" +
+                    "<td>" + data[item].author + "</td>" +
+                    "<td>" + data[item].ISBN + "</td>" +
+                    "<td>" + data[item].describeBook + "</td>" +
+                    "<td>" + data[item].class + "</td>" +
+                    "<td>" + data[item].publish_year + "</td>" +
+                    "<td>" + data[item].publisher + "</td>" +
+                    "<td>" + data[item].num + "</td>" +
+                    "</tr>";
+                $("#menu").append(content);
+            }
+        });
+    </script>
+</body>
+
+</html>

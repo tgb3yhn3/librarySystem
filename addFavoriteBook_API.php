@@ -1,4 +1,5 @@
-<?php//addFavoriteBooK.php
+<?php
+//addFavoriteBooK.php
 
 /*要新增到最愛的書籍之資料*/
 $userID   = $_POST["userID"];
@@ -14,7 +15,7 @@ $conn=require_once "config.php";
 $sql="insert into user_favorite_book_data(userID,bookName,author,ISBN) values('$userID','$bookName','$author','$ISBN')";
 mysqli_query($link,$sql);
 mysqli_close($link);//關閉資料庫連線
-echo "<script>alert('加入最愛成功!');history.back();</script>";
+echo "<script>alert('加入最愛成功!');window.location.replace('addFavoriteBook.html');;</script>";
 
     /*資料庫table
 

@@ -1,11 +1,12 @@
-<?php//viewFavoriteBook_API.php
+<?php
+    //viewFavoriteBook_API.php
     session_start();
     $conn = require_once("config.php");//連線至資料庫
     if(!$conn){
         die("Fatal Error");//若未成功連線，終止程式並回報錯誤
     }
-    $_SESSION["username"] = "00857039"//※※※※這行是測試用!!假設目前登入中的使用者是00857039這位學生※※※
-    $userID = $_SESSION["username"];//哪位使用者按下加入最愛
+    $_SESSION["userID"] = "00857039";//※※※※還沒接login.php※※※
+    $userID = $_SESSION["userID"];//哪位使用者按下加入最愛
     /*從資料庫抓取資料*/
     $sql="select bookName,ISBN,author 
         FROM user_favorite_book_data
