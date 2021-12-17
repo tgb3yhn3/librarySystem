@@ -11,7 +11,6 @@
             }
             mysqli_free_result($result);
         }
-        $datas[0]['renting_book_num'];
         $adjust = "UPDATE user_condition SET renting_book_num = $datas[0]['renting_book_num']+$number WHERE userID = $userID";
         mysqli_query($conn,$adjust);
     }
