@@ -1,6 +1,5 @@
 <?php
-    function adjust_user_condition($userID,$number){
-        $conn=require_once("config.php");
+    function adjust_user_condition($userID,$number,$conn){
         $get_user_renting_book_num =  "SELECT renting_book_num FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_renting_book_num);
         if ($result) {
@@ -11,7 +10,9 @@
             }
             mysqli_free_result($result);
         }
-        $adjust = 'UPDATE user_condition SET renting_book_num = "'.$datas[0]["renting_book_num"]+$number.'" WHERE userID = $userID';
+        $result = $datas[0]["renting_book_num"]+$number;
+        // echo '<a>'.$result.'</a>';
+        $adjust = "UPDATE user_condition SET renting_book_num = '".$result."' WHERE userID = $userID";
         mysqli_query($conn,$adjust);
     }
 ?>

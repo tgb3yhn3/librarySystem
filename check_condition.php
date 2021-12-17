@@ -1,6 +1,5 @@
 <?php
-    function check_condition($userID){
-        $conn=require_once("config.php");
+    function check_condition($userID,$conn){
         $get_user_credit =  "SELECT * FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_credit);
         if ($result) {
