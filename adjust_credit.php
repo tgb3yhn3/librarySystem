@@ -18,7 +18,7 @@
             // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
-        $adjust = "UPDATE user_condition SET credit = $datas[0]['credit']+$number WHERE userID = $userID";
+        $adjust = 'UPDATE user_condition SET credit = "'.$datas[0]['credit']+$number.'" WHERE userID = $userID';
         mysqli_query($conn,$adjust);
         algorithim($datas,$number);
     }
