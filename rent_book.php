@@ -1,6 +1,6 @@
 <?php
     require_once('check_condition.php');
-    require_once('adjust_book_num.php');
+    require_once('adjust_book_status.php');
     require_once('adjust_user_condition.php');
     require_once('push_book_history.php');
     $conn=require_once("config.php");
