@@ -1,6 +1,6 @@
 <?php
-    function create_condition($userID){
-        $conn=require_once("config.php");
+    function create_condition($conn,$userID){
+        // $conn=require_once("config.php");
         $book_num = 3;
         $book_time = 15;
         $book_fine = 1;

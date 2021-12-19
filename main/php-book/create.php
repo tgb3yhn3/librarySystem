@@ -5,19 +5,33 @@ $dbuser ='root';
 $dbpassword = '123456';
 $dbname = 'test';
 $link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
+
 $bookName=$_POST["bookName"];
 $author=$_POST["author"];
 $ISBN=$_POST["ISBN"];
+$publisher=$_POST['publisher'];
+$publish_year=$_POST['publish_year'];
+$num=$_POST['num'];
 $describeBook=$_POST["describeBook"];
-
+$img_url=null;
+$imageBlob=null;
+$filetype="";
+$imageBlob="";
+if(isset($_FILES['image']['name'])){
 $filename=$_FILES['image']['name'];
 $filetype=$_FILES['image']['type'];
 $filesize=$_FILES['image']['size']; 
 $tmpname=$_FILES['image']['tmp_name'];
-if ($_FILES["image"]["error"] != 0){//檔案上傳發生錯誤
-    echo "<script>alert('上傳發生錯誤');history.back();</script>";
 }
-$imageBlob = mysqli_real_escape_string($link,file_get_contents($tmpname)); //獲取圖片    
+$haveImage=true;
+
+if (isset($_POST["img_url"])){
+    $img_url=$_POST["img_url"];
+}
+if($_FILES["image"]["error"] == 0  ){
+    $imageBlob = mysqli_real_escape_string($link,file_get_contents($tmpname)); //獲取圖片    
+
+}
 
 echo "bookName是 $bookName<br>";
 echo "author是 $author<br>";
@@ -32,8 +46,11 @@ if($link){
 else {
     echo "不正確連接資料庫</br>" . mysqli_connect_error();
 }
-$sql="insert into `book` (`bookName`,`author`,`ISBN`,`describeBook`,`bookImage`,`imageType`)VALUE('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype')";
-$result = mysqli_query($link,$sql);
+$stmt = $link->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
+                                          ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype',?,'','$publish_year','$num','','$publisher','$img_url')");
+$stmt->bind_param("s",$bookUniqueID);
+$bookUniqueID=$ISBN.'_0';
+$stmt->execute();
 if (mysqli_affected_rows($link)>0) {
     // 如果有一筆以上代表有更新
     // mysqli_insert_id可以抓到第一筆的id
@@ -48,6 +65,17 @@ if (mysqli_affected_rows($link)>0) {
         echo "<script>window.alert('新增失敗，可能已存在此書或圖片檔案大小超過10Mb 若有其他問題請聯繫管理員')</script>";
         echo "語法執行失敗，錯誤訊息: " . mysqli_error($link);
     }
+$stmt = $link->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
+                                          ('','','','','','',?,'','','','','','')");
+$stmt->bind_param("s",$bookUniqueID);
+for($i=1;$i<$num;$i++){
+    $bookUniqueID=$ISBN.'_'.$i;
+    $stmt->execute();
+}
+// $sql="INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
+//                         ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype')";
+// $result = mysqli_query($link,$sql);
+
         mysqli_close($link); 
         
      

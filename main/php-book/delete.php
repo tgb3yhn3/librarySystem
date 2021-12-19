@@ -5,7 +5,7 @@ $host = 'localhost';
 $dbuser ='root';
 $dbpassword = '123456';
 $dbname = 'test';
-$sql="delete  from `book` where bookName='$del '";
+$sql="delete  from `book` where bookUniqueID like '$del%'";
 $link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
 $result = mysqli_query($link,$sql);
 if (mysqli_affected_rows($link)>0) {

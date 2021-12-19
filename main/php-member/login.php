@@ -2,11 +2,11 @@
 //POST 後端 驗證登錄 
 // Include config file
 $conn=require_once "../config.php";
- 
+require_once "../php-blacklist/isblackList.php";
 // Define variables and initialize with empty values
 
 //增加hash可以提高安全性
-$password_hash=password_hash($password,PASSWORD_DEFAULT);
+// $password_hash=password_hash($password,PASSWORD_DEFAULT);
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     session_start();
@@ -16,7 +16,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $sql = "SELECT * FROM users WHERE userID ='".$userID."'";
     $result=mysqli_query($conn,$sql);
     $row=$result ->fetch_assoc();
-    if(mysqli_num_rows($result)==1 && $row['password']==$password&&$row['status']==1){
+    $isblackList=isblackList($conn,$userID);
+    
+    if(mysqli_num_rows($result)==1 && $row['password']==$password&&$row['status']>=1){
     
         //這些是之後可以用到的session變數 包括是否登陸 以及使用者名子及學號 
         /*使用範例
@@ -25,14 +27,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username=$_SESSION["username"];
         echo $username;//這會印出目前登錄的使用者的名字
         */
-        $_SESSION["loggedin"] = true;
-        $_SESSION["username"] = $row["username"];//使用者名稱
-        $_SESSION["userID"] = $row["userID"];//使用者學號
-        $_SESSION["email"]=$row["email"];//使用者email
-        $_SESSION["status"]=$row["status"];//是否通過信箱認證
-
-        header("location:../welcome.php");//登陸完成跳轉回首頁
-    }else if($row['status']==0&&$row['password']==$password){
+        if($isblackList==null){
+            $sql = "INSERT INTO `loginin` (`userID`, `time`, `ip`) VALUES ('$userID', current_timestamp(), ' ".$_SERVER['REMOTE_ADDR']." ')";
+            $result=mysqli_query($conn,$sql);
+            $_SESSION["loggedin"] = true;
+            $_SESSION["username"] = $row["username"];//使用者名稱
+            $_SESSION["userID"] = $row["userID"];//使用者學號
+            $_SESSION["email"]=$row["email"];//使用者email
+            $_SESSION["status"]=$row["status"];//是否通過信箱認證
+            $_SESSION["admin"]=false;
+            if($row['status']==2){
+                $_SESSION["admin"]=true;
+            }
+            header("location:../welcome.php");//登陸完成跳轉回首頁
+        }else{
+            
+            function_alert("您的帳號已被列為黑名單 ，故無法使用 原因  ".$isblackList);
+        }
+        
+    }
+    else if($row['status']==0&&$row['password']==$password){
         //帳號密碼都對但是還沒註冊=> stastus=0
         function_alert("您的帳號尚未通過信箱驗證 ，故無法使用");
         
@@ -41,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
      }
 }else{
-    function_alert("請聯絡管理員，wrong request method 或者直接開啟");   
+    function_alert("請聯絡管理員，wrong request method");   
 }
 
     // Close connection
@@ -50,9 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 function function_alert($message) { 
     // window.location.href='index.php';
     // Display the alert box  
-    echo "<script>alert('$message');
-     
-    </script>"; 
+    echo "<script>alert('$message')</script>"; 
     return false;
 } 
 header("refresh:0;url=../index.php",false);

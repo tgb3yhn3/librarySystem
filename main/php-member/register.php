@@ -17,6 +17,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         
         if(mysqli_query($conn, $sql)){
             if(sentRegMail($email,$token)){
+                require_once '../php-condiction/create_condition.php';
+                create_condition($conn,$userID);
                 echo "註冊成功!<br>";
 
                 echo"沒收到驗證信請檢查垃圾郵件<br>";

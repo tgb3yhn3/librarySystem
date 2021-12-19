@@ -9,7 +9,7 @@ VALUES('".$username."','".$ISBN."','".$context."')";
 
 if(mysqli_query($conn, $sql)){
 echo "回應成功<br>";
-header("location:book.php?search=".$ISBN);
+header("location:../php-book/book.php?search=".$ISBN);
 }else{
 echo "Error creating table: " . mysqli_error($link);
 }

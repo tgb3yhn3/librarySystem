@@ -1,14 +1,14 @@
 <?php
     header("Content-type: text/html; charset=utf-8");
-    function search_ISBN ($isbn){
+        $ISBN=$_POST["ISBN"];
         // $isbn = '9789865028756';
         // $isbn=$_POST["isbn"];
         $path="python search.py "; //需要注意的是：末尾要加一個空格
-        $command = escapeshellcmd($path.$isbn);
-        $output = exec($command.' 2>error.txt"',$isbn);
+        $command = escapeshellcmd($path.$ISBN);
+        $output = exec($command.' 2>error.txt"',$ISBN);
         $after_decode =  iconv(mb_detect_encoding($output), "cp950", $output);
-        return $after_decode;
-    }
+        echo $after_decode;
+    
     // if($_SERVER["REQUEST_METHOD"]=="POST"){
         // $obj = json_decode($after_decode);
     //     // $book_name = $obj -> {'book_name'};
