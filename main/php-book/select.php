@@ -38,6 +38,7 @@
         搜尋書名<input type="text" name='search'><input type="submit" >
     </form>
     <?php
+    session_start();
     $conn=require_once("../config.php");
     require("search.php");
     if(array_key_exists(("search"),$_POST)){

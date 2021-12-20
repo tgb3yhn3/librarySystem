@@ -25,6 +25,7 @@ $isFavorite=isFavorite($conn,$search);
     h2 {
         text-align: center;
         line-height: 6px;
+     
         color: #000000;  
     }
     .bt_sure {
@@ -70,12 +71,16 @@ $isFavorite=isFavorite($conn,$search);
     .bt_love:hover{
         background-color: #000;
         color: #fff;
+    }table{
+       
     }
     .comment{
-        border:2px solid rgb(189, 234, 252);
+        /* border:2px solid rgb(189, 234, 252); */
+        border-bottom: solid rgb(189, 234, 252);
         
     }
     #context{
+        word-break: break-all;
         width:100%;
     }
     #sent{
@@ -154,7 +159,7 @@ $isFavorite=isFavorite($conn,$search);
         </table>
     </div>
     
-    <div style="position:absolute;left:32%;border:2px rgb(0, 0, 0) solid;height:200px;width:40%;overflow:auto;top:70%">
+    <div style="position:absolute;left:32%;border:2px rgb(0, 0, 0) solid;height:200px;width:40%;overflow-x:hidden;top:70%">
     <?php
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
         echo '<form action="../php-comment/sentComment.php" method="POST">
@@ -174,10 +179,12 @@ $isFavorite=isFavorite($conn,$search);
                 <td class="comment">
                     '.$comment[$i]->username.':
                 </td>
-                <td class="comment">
+                <td  id="context" class="comment">
                     '.$comment[$i]->context.'
                 </td>
+               
             </tr>';
+             
             }
             ?>
         </table>

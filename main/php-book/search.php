@@ -2,11 +2,11 @@
 //後端 function 用來查詢書籍
     function get_search_book($search="",$modeNum=1,$usejson=0,$conn){//混沌搜尋 或者 全部列出
     // require_once("cav.php");
-     session_start();
+     
      $book=array();
      $sql="";
      if($modeNum==0){
-        $sql="select * from `book` where num<>'0'";
+        $sql="select * from `book` where num<>'0'";  
      }else if($modeNum==1){//search by book name (渾沌) 此時search為書名
         $sql="select * from `book` where bookName like '%$search%'";
      }else if($modeNum==2){//search by book ISBN 此時search為ISBN
@@ -75,7 +75,7 @@
             $return_value=$return_value."ISBN:$ISBN<br>";
             $return_value=$return_value."describeBook:".($modeNum==2?$describeBook:mb_substr($describeBook,0,400))."......<br>";
             
-            if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+            if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true&&$modeNum==2){
                 $return_value=$return_value. '<form action="sentComment.php" method="POST">
                 <input type="text" name="context">
                 <input type="hidden" name="username" value='.$_SESSION['username'].'>
