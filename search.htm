@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="frontpage.css">
+    <TITLE>館藏查詢</TITLE>
+</HEAD>
+<BODY>
+    <span id="tab-1">按書名</span>
+    <span id="tab-2">進階書名</span>
+    <div style="float: right ">
+        <input type="button" value="User 駱駝醬">&ensp;<input type="button" value="登出">
+        <p></p>
+        <font size="1" color="gray">可借/預約:不會&ensp;可借天數:求救</font>
+    </div>
+    <h1>
+        <div class="title">
+            <table border="0" valign="top">
+                <thead>
+                    <tr>
+                        <th><img src="schoolmark.png" width="100" height="100" alt="test how this work"></th>
+                        <th><h5>海大資工系圖書館系統</h5><p><h5>館藏查詢</h5></p></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </h1>
+    <p></p>
+    <div id="tab">
+        <ul>
+            <li><a href="#tab-1">按書名</a></li>
+            <li><a href="#tab-2">進階書名</a></li>
+        </ul>
+
+        <!-- 頁籤的內容區塊 -->
+        <div class="tab-content-1">
+            <p>&emsp;</p>
+            <input name="name" type="text" size="25" maxlength="30" style="border-color:#84C1FF;">&emsp;<input type="submit" value="查詢">
+        </div>
+        <div class="tab-content-2" margin:0 auto>
+            <p><input type="checkbox"><input placeholder="請輸入書名" size="25" maxlength="30" style="border-color:#84C1FF;"></p>
+            <p><input type="checkbox"><input placeholder="請輸入作者" size="25" maxlength="30" style="border-color:#84C1FF;"></p>
+            <p><input type="checkbox"><input placeholder="請輸入ISBN" size="25" maxlength="30" style="border-color:#84C1FF;"></p>
+            <input type="submit" value="查詢">
+        </div>
+    </div>
+</BODY>
+</HTML>
