@@ -11,6 +11,8 @@
         $sql="select * from `book` where bookName like '%$search%'";
      }else if($modeNum==2){//search by book ISBN 此時search為ISBN
         $sql="select * from `book` where ISBN='".$search."'";
+     }else if($modeNum==3){//search by book author
+        $sql="select * from `book` where author='%$search%'";
      }
      $ISBN="";
      $result = mysqli_query($conn,$sql);
