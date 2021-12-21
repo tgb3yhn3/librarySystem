@@ -36,12 +36,13 @@ echo "<a href='php-member/logout.php'><button>登出</button></a>";
 
 <table>
   <tr>
- <a href="php-book/select.php"><button>查詢</button></a> 
+ <a href="php-book/search_php.php"><button>查詢</button></a> 
  <?php
  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 if($_SESSION['admin']==true){
  echo '<a href="php-book/insert.php"><button>新增書籍</button></a>';
- echo '<a href="php-blacklist\blackList.html"><button>黑名單</button></a>';
+ echo '<a href="php-blacklist\blackList.php"><button>黑名單</button></a>';
+ echo '<a href="#"><button>匯出資料</button></a>';
 }
  echo '<a href="php-favorite/viewFavoriteBook.html"><button>查看最愛</button></a>';
  }
