@@ -42,6 +42,7 @@ table {
     width: 800px;
     height: 250px;
     text-align: center;
+    style="overflow:auto"
 }
 #tab {
     width: 400px;
