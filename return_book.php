@@ -17,3 +17,11 @@
         }
     }
 ?>
+<html>
+    <body>
+        <?php
+        // $userID=$_POST["userID"];
+            echo $userID;
+        ?>
+    </body>
+</html>
