@@ -1,12 +1,8 @@
 <html>
     <head>
         <script>
-            function rent_post(){
-                book.action = "rent_book.php";
-                book.submit();
-            }
-            function return_post(){
-                book.action = "return_book.php";
+            function reserve_post(){
+                book.action = "reserve_book.php";
                 book.submit();
             }
         </script>
@@ -14,9 +10,8 @@
     <body>
         <form name="book" method="POST" >
             學號:<input type = "text" id = "userID" name="userID"><br>
-            書號:<input type = "text" id = "bookuniqueID" name="bookuniqueID"><br>
-            <input type="submit"  value="借書" onClick="rent_post()">
-            <input type="submit"  value="還書" onClick="return_post()">
+            ISBN:<input type = "text" id = "ISBN" name="ISBN"><br>
+            <input type="submit"  value="預約" onClick="reserve_post()">
         </form>
     </body>
 </html>

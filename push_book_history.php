@@ -4,12 +4,10 @@
         $start_rent_date = date("Y").'-'.date("m").'-'.date("d");
         $get_user_book_time =  "SELECT book_time FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_book_time);
-        $count = 0;
         if ($result) {
             if (mysqli_num_rows($result)>0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     $datas[] = $row;
-                    $count++;
                 }
             }
             mysqli_free_result($result);
