@@ -27,26 +27,28 @@
             <div class="col-md-3 text-end">
                 <button type="button" class="btn btn-outline-primary me-2">Login</button>
                 <button type="button" class="btn btn-primary">Sign-up</button>
-                
+                <p><font size="1" color="gray">可借/預約:不會&ensp;可借天數:求救</font></p>
             </div>
         </header>
     </div>
     <span id="tab-1">按書名</span>
     <span id="tab-2">進階書名</span>
+    <span id="tab-3">書籍調整</span>
     <p></p>
     <div id="tab">
         <ul>
             <li><a href="#tab-1">上架</a></li>
             <li><a href="#tab-2">下架</a></li>
+            <li><a href="#tab-3">書籍調整</a></li>
         </ul>
 
         <!-- 頁籤的內容區塊 -->
         <div class="tab-content-1">
             <p>&emsp;</p>
             書名:&emsp;<input name="name" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;分類:&emsp;<input name="name" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">&emsp;
-            作者:&emsp;<input name="name" type="text" size="12" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="name" type="text" size="10" maxlength="30" style="border-color:#84C1FF;">&emsp;
+            作者:&emsp;<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">&emsp;<input type="submit" value="線上搜尋">&emsp;
             出版日期:<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">出版社:<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">
-            數量:<input name="name" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">簡介:&emsp;<input name="name" type="text" size="30" maxlength="30" style="border-color:#84C1FF;">
+            數量:<input name="name" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">&emsp;簡介:&emsp;<input name="name" type="text" size="30" maxlength="30" style="border-color:#84C1FF;">
             <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="查詢">&emsp;&emsp;&emsp;<input type="submit" value="清除"></p>
         </div>
         <div class="tab-content-2" margin:0 auto>
@@ -56,13 +58,21 @@
             <p>簡介:&emsp;<input name="name" type="text" size="37" maxlength="30" style="border-color:#84C1FF;"></p>
             <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="查詢">&emsp;&emsp;&emsp;<input type="submit" value="清除"></p>
         </div>
+        <div class="tab-content-3">
+            <p>&emsp;</p>
+            書名:&emsp;<input name="name" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;分類:&emsp;<input name="name" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">&emsp;
+            作者:&emsp;<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">&emsp;<input type="submit" value="站內查詢">&emsp;
+            出版日期:<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">出版社:<input name="name" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">
+            數量:<input name="name" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">&emsp;簡介:&emsp;<input name="name" type="text" size="30" maxlength="30" style="border-color:#84C1FF;">
+            <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="查詢">&emsp;&emsp;&emsp;<input type="submit" value="清除"></p>
+        </div>
     </div>
     <div class="container">
 
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
 
- 
+
             <ul class="nav col-md-4 justify-content-end">
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
