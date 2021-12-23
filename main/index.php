@@ -39,7 +39,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 </form>
 <table>
   <tr>
- <a href="php-book/select.php"><button>查詢</button></a> 
+ <a href="php-book/search_php.php"><button>查詢</button></a> 
  <?php
  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   header("location:welcome.php");
