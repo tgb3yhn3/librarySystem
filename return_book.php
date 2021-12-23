@@ -15,13 +15,17 @@
             $ISBN = $ISBN.$array[$i];
         }
         if(check_user_renting_book($userID,$bookuniqueID,$conn)){//查使用者有沒有借這本書
-            adjust_book_status($bookuniqueID,0,$conn);//表使此書尚有庫存
-            adjust_user_condition($userID,-1,$conn);//user還書 可借數量++
-            adjust_book_history($userID,$bookuniqueID,$conn);//調整歷史借書紀錄為已還書
             if(check_line_up($ISBN,$conn)){//查有沒有人在預約這本書
-                adjust_line_up($ISBN,$conn);
+                adjust_line_up($ISBN,$conn);//叫排第一個的來拿書
+                adjust_book_status($bookuniqueID,2,$conn);//表使此書在圖書館但被預約
                 echo "管理員~有人預約此書";
             }
+            else{
+                adjust_book_status($bookuniqueID,0,$conn);//表使此書尚有庫存
+            }
+            adjust_user_condition($userID,-1,$conn);//user還書 可借數量++
+            adjust_book_history($userID,$bookuniqueID,$conn);//調整歷史借書紀錄為已還書
+            
         }
         else{
             echo "此使用者無借閱此書";
