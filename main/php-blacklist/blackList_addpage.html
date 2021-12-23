@@ -1,0 +1,17 @@
+<!--blackList_addpage.html-->
+<!--將使用者加入黑名單頁面-->
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>新增使用者到黑名單</h1>
+        <form method="post" action="blackList_API.php">
+            <input name="action" type="hidden" value="add">
+            使用者學號:<input name="userID" type="text" ><br>
+            原因:<input name="reason" type="text"><br>
+            <input type="submit" value="加入到黑名單">
+        </form>
+        <a href="blackList.html">返回到黑名單頁面</a>
+    </body>
+</html>
