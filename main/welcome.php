@@ -43,6 +43,7 @@ if($_SESSION['admin']==true){
  echo '<a href="php-book/insert.php"><button>新增書籍</button></a>';
  echo '<a href="php-blacklist\blackList.php"><button>黑名單</button></a>';
  echo '<a href="#"><button>匯出資料</button></a>';
+ echo '<a href="php-condiction\condiction.php"><button>使用者權限</button></a>';
 }
  echo '<a href="php-favorite/viewFavoriteBook.html"><button>查看最愛</button></a>';
  }

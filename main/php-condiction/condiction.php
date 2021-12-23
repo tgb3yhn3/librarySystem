@@ -1,5 +1,5 @@
 <?php
-    $conn=require_once("config.php");
+    $conn=require_once("../config.php");
     $get_userID =  "SELECT * FROM user_condition";
     $result = mysqli_query($conn,$get_userID);
     if ($result) {
@@ -17,16 +17,16 @@
         mysqli_free_result($result);
     }
     for($i = 0;$i<count($datas);$i++){
-        echo '<form action="index.php" method="POST" id="user'.$i.'">
+        echo '<form action="condiction.php" method="POST" id="user'.$i.'">
             <h1>'.$datas[$i]["userID"].'</h1>
             <a>學號</a>
             <a>數量</a>
             <a>時長</a>
             <a>信用</a><br>
             <input type="hidden" name="userID" value='.$datas[$i]["userID"].'>
-            <input type="text" name="book_num" id="book_num'.$i.'" value='.$datas[$i]["book_num"].' size = "5" onchange="change_color(this.id)">
-            <input type="text" name="book_time" id="book_time'.$i.'" value='.$datas[$i]["book_time"].' size = "5" onchange="change_color(this.id)">
-            <input type="text" name="book_fine" id="book_fine'.$i.'" value='.$datas[$i]["book_fine"].' size = "5" onchange="change_color(this.id)">
+            <input type="number" name="book_num" id="book_num'.$i.'" value='.$datas[$i]["book_num"].' size = "5" onchange="change_color(this.id)">
+            <input type="number" name="book_time" id="book_time'.$i.'" value='.$datas[$i]["book_time"].' size = "5" onchange="change_color(this.id)">
+            <input type="number" name="book_fine" id="book_fine'.$i.'" value='.$datas[$i]["book_fine"].' size = "5" onchange="change_color(this.id)">
             <a>'.$datas[$i]["credit"].'</a>
             <input type="submit" id="submit'.$i.'" value="設定" onclick = "cancel_color('.$i.')">
         </form><br>';
@@ -39,7 +39,7 @@
         //檢查帳號是否重複
         $change = "UPDATE user_condition SET book_num = $book_num, book_time = $book_time, book_fine = $book_fine WHERE userID = $userID";
         mysqli_query($conn, $change);
-        header("refresh:0.005;url=index.php",true);
+        header("refresh:0.005;url=condiction.php",true);
     }
     mysqli_close($conn);
 ?>
