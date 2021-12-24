@@ -1,6 +1,6 @@
 <?php
     function check_line_up($ISBN,$conn){
-        $get_user_book_time =  "SELECT * FROM line_up WHERE ISBN = $ISBN";
+        $get_user_book_time =  "SELECT * FROM line_up WHERE ISBN = $ISBN AND lasting_time = '-'";
         $result = mysqli_query($conn,$get_user_book_time);
         $count = 0;
         if ($result) {

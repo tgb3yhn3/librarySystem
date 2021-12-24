@@ -24,8 +24,7 @@
                 adjust_book_status($bookuniqueID,0,$conn);//表使此書尚有庫存
             }
             adjust_user_condition($userID,-1,$conn);//user還書 可借數量++
-            adjust_book_history($userID,$bookuniqueID,$conn);//調整歷史借書紀錄為已還書
-            
+            adjust_book_history($userID,$bookuniqueID,$conn);//調整歷史借書紀錄為已還書或遲還
         }
         else{
             echo "此使用者無借閱此書";

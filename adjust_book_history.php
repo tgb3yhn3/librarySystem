@@ -1,6 +1,6 @@
 <?php
     function adjust_book_history($userID,$book_unique_ID,$conn){
-        
+        require_once('adjust_credit.php');
         $get_user_credit =  "SELECT * FROM user_book_history WHERE userID = $userID  AND book_status = '出借中'";
         $result = mysqli_query($conn,$get_user_credit);
         $count = 0;
@@ -28,9 +28,11 @@
         $days = round(($lasting-$return)/3600/24);
         if($days>=0){
             $book_status = "已歸還";
+            adjust_credit($userID,1);
         }
         else{
             $book_status = "遲還";
+            adjust_credit($userID,-1);
         }
         $sql = "UPDATE user_book_history SET return_date = '".$d1."',book_status = '".$book_status."',comment_status = '未評論' WHERE userID = '".$userID."'AND book_unique_ID = '".$book_unique_ID."'";
         mysqli_query($conn,$sql);

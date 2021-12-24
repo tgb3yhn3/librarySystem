@@ -15,7 +15,7 @@
         $day = $datas[0]['book_time'];
         $lasting_return_date = date("Y-m-d",strtotime($start_rent_date."+$day day"));
         $sql = "UPDATE user_book_history SET start_rent_date = '".$start_rent_date."',book_unique_ID = '".$bookuniqueID."',lasting_return_date = '".$lasting_return_date."'
-                ,book_status = '出借中',comment_status = '未評論' WHERE userID = '".$userID."'AND book_unique_ID = '".$ISBN."'";
+                ,book_status = '出借中',comment_status = '-' WHERE userID = '".$userID."'AND book_unique_ID = '".$ISBN."'";
         mysqli_query($conn,$sql);
     }
 ?>

@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
+    <script>
+        function rent_post(){
+            book.action = "rent_book.php";
+            book.submit();
+        }
+        function return_post(){
+            book.action = "return_book.php";
+            book.submit();
+        }
+    </script>
     <link rel="stylesheet" type="text/css" href="frontpage.css">
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -36,18 +46,20 @@
                 <tr>
                     <th>
                         <label>
-                            <p></p>
-                            <p>
-                                &emsp;學號:
-                                <input name="name" type="text" size="25" maxlength="30">  &emsp;
-                            </p>
-                            <p>
-                                &emsp;書號:
-                                <input name="name" type="text" size="25" maxlength="30">  &emsp;
-                            </p>
-                            <p>
-                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="出借" onclick="alert('將跳轉至匯出頁面');">&emsp;<input type="reset" value="還書" onclick="alert('將跳轉至匯出頁面');">
-                            </p>
+                            <form name="book" method="POST" >
+                                <p></p>
+                                <p>
+                                    &emsp;學號:
+                                    <input name="userID" type="text" size="25" maxlength="30">  &emsp;
+                                </p>
+                                <p>
+                                    &emsp;書號:
+                                    <input name="bookuniqueID" type="text" size="25" maxlength="30">  &emsp;
+                                </p>
+                                <p>
+                                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="出借" onClick="rent_post()">&emsp;<input type="reset" value="還書" onClick="return_post()">
+                                </p>
+                            </form>
                         </label>
                     </th>
                 </tr>
