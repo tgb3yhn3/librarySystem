@@ -28,11 +28,11 @@
         $days = round(($lasting-$return)/3600/24);
         if($days>=0){
             $book_status = "已歸還";
-            adjust_credit($userID,1);
+            adjust_credit($userID,1,$conn);
         }
         else{
             $book_status = "遲還";
-            adjust_credit($userID,-1);
+            adjust_credit($userID,-1,$conn);
         }
         $sql = "UPDATE user_book_history SET return_date = '".$d1."',book_status = '".$book_status."',comment_status = '未評論' WHERE userID = '".$userID."'AND book_unique_ID = '".$book_unique_ID."'";
         mysqli_query($conn,$sql);

@@ -1,5 +1,5 @@
 <?php
-    function algorithim($datas,$number){
+    function algorithim($datas,$number,$conn){
         $userID = $datas[0]["userID"];
         $book_num = $datas[0]["book_num"];
         $book_time = $datas[0]["book_time"];
@@ -69,7 +69,6 @@
         else if($credit==-20&&$number==-1){//-20->-21
             $credit = -20;
         }
-        $conn=require_once("config.php");
         $adjust = "UPDATE user_condition SET book_num = $book_num, book_time = $book_time, book_fine = $book_fine credit = $credit WHERE userID = $userID";
         mysqli_query($conn,$adjust);
     }

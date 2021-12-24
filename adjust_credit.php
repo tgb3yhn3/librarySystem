@@ -1,7 +1,6 @@
 <?php
-    function adjust_credit($userID,$number){
+    function adjust_credit($userID,$number,$conn){
         require_once("algorithim.php");
-        $conn=require_once("config.php");
         $get_user_credit =  "SELECT * FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_credit);
         if ($result) {
@@ -20,7 +19,7 @@
         }
         $adjust = 'UPDATE user_condition SET credit = "'.$datas[0]['credit']+$number.'" WHERE userID = $userID';
         mysqli_query($conn,$adjust);
-        algorithim($datas,$number);
+        algorithim($datas,$number,$conn);
     }
     
 ?>

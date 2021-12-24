@@ -6,6 +6,7 @@
     require_once('check_book_status.php');
     require_once('adjust_book_history_reserve.php');
     require_once('check_reserve.php');
+    require_once('check_late_return.php');
     $conn=require_once("config.php");
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $userID=$_POST["userID"];
