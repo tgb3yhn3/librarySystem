@@ -26,7 +26,7 @@
         $lasting = mktime(0,0,0,$lasting_date[1],$lasting_date[2],$lasting_date[0]);
         $return = mktime(0,0,0,$return_date[1],$return_date[2],$return_date[0]);
         $days = round(($lasting-$return)/3600/24);
-        if($days>=0){
+        if($days>=0){//確認有沒有遲還
             $book_status = "已歸還";
             adjust_credit($userID,1,$conn);
         }
