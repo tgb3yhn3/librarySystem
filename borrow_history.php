@@ -2,7 +2,7 @@
     session_start();
     $conn=require_once("config.php");
     $userID = '00857020';//TODO
-    $get_book_history =  "SELECT book_unique_ID, start_rent_date, return_date, book_status, comment_status ,lasting_return_date FROM user_book_history WHERE userID = '".$userID."'";
+    $get_book_history =  "SELECT book_unique_ID, start_rent_date, return_date, book_status, comment_status ,lasting_return_date ,book_name FROM user_book_history WHERE userID = '".$userID."'";
     $res = mysqli_query($conn,$get_book_history);
     $get_user_data = "SELECT * FROM user_condition WHERE userID = '".$userID."'";
     $result = mysqli_query($conn,$get_user_data);
@@ -98,7 +98,7 @@
                 <tbody bgcolor='#D2E9FF'>";
     for($i=0;$i<count($res_datas);$i++){
                 echo "<tr style='height:30px'>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_unique_ID']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_name']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['return_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_status']."</th>
