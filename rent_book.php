@@ -28,7 +28,7 @@
                         echo "正常借書<br>";
                         adjust_book_status($bookuniqueID,1,$conn);//把此書登記為借出
                         adjust_user_condition($userID,1,$conn);//user的renting_book_num+1
-                        push_book_history($userID,$bookuniqueID,$conn);//將借書資訊放到history
+                        push_book_history($userID,$bookuniqueID,$conn,$ISBN);//將借書資訊放到history
                     }
                     else{
                         echo "此書已被借走";

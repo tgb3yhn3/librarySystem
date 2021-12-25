@@ -1,3 +1,44 @@
+<?php
+    session_start();
+    $conn=require_once("config.php");
+    $userID = '00857020';//TODO
+    $get_book_history =  "SELECT book_unique_ID, start_rent_date, return_date, book_status, comment_status ,lasting_return_date FROM user_book_history WHERE userID = '".$userID."'";
+    $res = mysqli_query($conn,$get_book_history);
+    $get_user_data = "SELECT * FROM user_condition WHERE userID = '".$userID."'";
+    $result = mysqli_query($conn,$get_user_data);
+    $reserve = 0;
+    $uncomment = 0;
+    if ($res) {
+        if (mysqli_num_rows($res)>0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $res_datas[] = $row;
+            }
+        }
+        mysqli_free_result($res);
+    }
+    if ($result) {
+        if (mysqli_num_rows($result)>0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $result_datas[] = $row;
+            }
+        }
+        mysqli_free_result($result);
+    }
+    for($i=0;$i<count($res_datas);$i++){
+        if($res_datas[$i]['book_status']=='已預約'){
+            $reserve++;
+        }
+        if($res_datas[$i]['comment_status']=='未評論'){
+            $uncomment++;
+        }
+    }
+    $_SESSION['reserve'] = $reserve;
+    $_SESSION['uncomment'] = $uncomment;
+    $_SESSION['unreturn'] = $result_datas[0]['renting_book_num'];
+    $_SESSION['book_num'] = $result_datas[0]['book_num'];
+    $_SESSION['book_time'] = $result_datas[0]['book_time'];
+
+?>
 <HTML>
 <HEAD>
     <!-- Required meta tags -->
@@ -32,34 +73,16 @@
             <div class="col-md-3 text-end">
                 <button type="button" class="btn btn-outline-primary me-2">Login</button>
                 <button type="button" class="btn btn-primary">Sign-up</button>
-                <p><font size="1" color="gray">可借/預約:不會&ensp;可借天數:求救</font></p>
+                <p><font size="1" color="gray">可借/預約:<?php  echo $_SESSION["book_num"];?>&ensp;可借天數:<?php  echo $_SESSION["book_time"];?></font></p>
             </div>
         </header>
     </div>
     <p></p>   
     <?php
-    $conn=require_once("config.php");
-    $userID = '00857020';
-    $get_userID =  "SELECT book_unique_ID, start_rent_date, return_date, book_status, comment_status ,lasting_return_date FROM user_book_history WHERE userID = '".$userID."'";
-    $result = mysqli_query($conn,$get_userID);
-    if ($result) {
-        // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
-        if (mysqli_num_rows($result)>0) {
-            // 取得大於0代表有資料
-            // while迴圈會根據資料數量，決定跑的次數
-            // mysqli_fetch_assoc方法可取得一筆值
-            while ($row = mysqli_fetch_assoc($result)) {
-                // 每跑一次迴圈就抓一筆值，最後放進data陣列中
-                $datas[] = $row;
-            }
-        }
-        // 釋放資料庫查到的記憶體
-        mysqli_free_result($result);
-    }
     echo "<div class='myblank' >
             <table border='1' RULES=ALL style='border-color:black;'>
             <div style='float: right '>
-            未還書:待寫&ensp;已預約:待寫&ensp;未評論:待寫
+            未還書:".$_SESSION["unreturn"]."&ensp;已預約:".$_SESSION["reserve"]."&ensp;未評論:".$_SESSION["uncomment"]."
             </div>
             <p>&ensp;</p>
                 <thead bgcolor='#84C1FF'>
@@ -73,20 +96,20 @@
                     </tr>
                 </thead>
                 <tbody bgcolor='#D2E9FF'>";
-    for($i=0;$i<count($datas);$i++){
+    for($i=0;$i<count($res_datas);$i++){
                 echo "<tr style='height:30px'>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$datas[$i]['book_unique_ID']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$datas[$i]['start_rent_date']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$datas[$i]['return_date']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$datas[$i]['book_status']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$datas[$i]['comment_status']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$datas[$i]['lasting_return_date']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_unique_ID']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['return_date']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_status']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['comment_status']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['lasting_return_date']."</th>
                     </tr>";
     }
     echo "      </tbody>
             </table>
         </div>";
-?>
+    ?>
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
