@@ -1,4 +1,5 @@
 <?php
+require_once("checkAPI.php");
 if(!isset($_POST['ISBN'])){
     alertMsg('HTTP method error');
     header("refresh:0;url='bookchange.htm'");
@@ -80,16 +81,37 @@ if(!isset($_POST['ISBN'])){
     // $bookUniqueID=$ISBN.'_0';
     if($oldnum>$num)
     {
-        alertMsg("")
-    }else{
+        if(check_still_have_borrow($ISBN,$conn))
+        alertMsg("尚有外借中，不允許調低數量");
+        else{
 
+            $stmt->execute();
+            
+            
+        
+            for($i=$oldnum-1;$i>=$num;$i--){
+                $stmt =$conn->prepare("delete from book where bookUniqueID='".$ISBN."_".$i."'");
+                
+                $stmt->execute();
+            }
+            alertMsg("調整成功");
+        }
+    }else if($oldnum<$num){
+        $stmt->execute();
+        $stmt = $conn->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
+                                          ('','','','','','',?,'','','','','','')");
+         $stmt->bind_param("s",$bookUniqueID);
+        for($i=$oldnum-1;$i<$num;$i++){
+            $bookUniqueID=$ISBN.'_'.$i;
+            $stmt->execute();
+            echo"新增";
+        }
+        alertMsg("調整成功");
+    }else{
+        echo("<br>無調整數量");
     }
     // $stmt->bind_param();
-    $stmt->execute();
+    
 }
-function alertMsg($msg){
-    echo "<script>
-    window.alert('$msg');
-    </script>";
-}
+
 ?>

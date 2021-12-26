@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if($row['status']==2){
                 $_SESSION["admin"]=true;
             }
-            header("location:../welcome.php");//登陸完成跳轉回首頁
+            header("location:../index.php");//登陸完成跳轉回首頁
         }else{
             
             function_alert("您的帳號已被列為黑名單 ，故無法使用 原因  ".$isblackList);

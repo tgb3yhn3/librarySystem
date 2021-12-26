@@ -1,0 +1,90 @@
+<!--announcement.html-->
+<!--系統公告頁面(訪客、使用者)-->
+<?xml version = "1.0" encoding = "utf-8"?>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>系統公告頁面</title>
+        <style type="text/css">
+            body {
+                font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+            }
+            #announcement_area {
+                border:3px solid black;
+                width:80%;
+                height:80%;
+                top: 10%;
+                right: 10%;
+                display:block;
+                overflow-y:auto;
+                float: left;
+                position:absolute;
+            }
+            #announcement_area>div{
+                height:6%;
+                border-bottom: 1px solid black;
+                font-size: 12px;
+                overflow-y: hidden;
+            }
+            #announcement_area>div>div{
+                float: left;
+            }
+            #announcement_area>div>div.announcement_detail_link{
+                width:80%;
+                cursor:pointer;
+            }
+            
+            #announcement_area>div h4{
+                height: 25px;
+                line-height: 25px;
+                position: relative;
+                list-style: none;
+                font-size: 12px;
+                display:inline;
+            }
+            .announcement_detail_link> .li_rightstyle{
+                display: block;
+                float: right;
+                margin-top: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .announcement_detail_link:hover{
+                text-decoration:underline;
+                cursor:pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>系統公告頁面</h3>
+        <a href='home_page.html'>返回首頁</a>
+        <div id="announcement_area">
+
+        </div>
+        <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+        <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            //將從資料庫抓到的資料輸出成公告欄的項目
+            const jsonUrl = "announcement_view_API.php";
+            $.getJSON(jsonUrl, function (data) {
+                for (let item in data) {
+                    let content =
+                    "<div>"+  
+                        "<div class= 'announcement_detail_link' onclick=location.href='announcement_detail_view_API.php?ID="+data[item].ID+"';>"+         
+                            "<h4>" + data[item].title + "</h4>" +
+                            "<h4 class='li_rightstyle'>" + data[item].annouceTime + "</h4>" +
+                        "</div>"+
+                    "</div>"; 
+                        $("#announcement_area").append(content);
+                }
+                
+            });
+
+
+            
+
+        </script>
+    </body>
+</html>
