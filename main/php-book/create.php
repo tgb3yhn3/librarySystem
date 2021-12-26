@@ -13,10 +13,12 @@ $publisher=$_POST['publisher'];
 $publish_year=$_POST['publish_year'];
 $num=$_POST['num'];
 $describeBook=$_POST["describeBook"];
+$class=$_POST["class"];
 $img_url=null;
 $imageBlob=null;
 $filetype="";
 $imageBlob="";
+
 if(isset($_FILES['image']['name'])){
 $filename=$_FILES['image']['name'];
 $filetype=$_FILES['image']['type'];
@@ -28,7 +30,7 @@ $haveImage=true;
 if (isset($_POST["img_url"])){
     $img_url=$_POST["img_url"];
 }
-if($_FILES["image"]["error"] == 0  ){
+if(isset($_FILES["image"])&&$_FILES["image"]["error"] == 0  ){
     $imageBlob = mysqli_real_escape_string($link,file_get_contents($tmpname)); //獲取圖片    
 
 }
@@ -47,7 +49,7 @@ else {
     echo "不正確連接資料庫</br>" . mysqli_connect_error();
 }
 $stmt = $link->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
-                                          ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype',?,'','$publish_year','$num','','$publisher','$img_url')");
+                                          ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype',?,'$class','$publish_year','$num','','$publisher','$img_url')");
 $stmt->bind_param("s",$bookUniqueID);
 $bookUniqueID=$ISBN.'_0';
 $stmt->execute();

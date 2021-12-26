@@ -51,7 +51,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
     <div class="container">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <a href="https://www.ntou.edu.tw/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
           <img width="50px" height="50px"src="ntou_logo.png">
         </a>
         <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-管理介面</span></span>
@@ -64,13 +64,13 @@
     </div>
     <div class="container"> 
             <div class="row justify-content-center">
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/borrowreturn-2.htm'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/bookchange.htm'" value="館藏調整"></input><!-- //放入要跳轉的網址 -->  
+                <input type ="button" class = "bt" onclick="javascript:location.href='https://www.ntou.edu.tw/'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
+                <input type ="button" class = "bt" onclick="javascript:location.href='https://www.ntou.edu.tw/'" value="館藏調整"></input><!-- //放入要跳轉的網址 -->  
             </div>
             
             <div class="row justify-content-center">
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-condiction/condiction.php'" value="使用者權限"></input><!-- //放入要跳轉的網址 -->
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-blacklist/blackList.php'" value="黑名單"></input><!-- //放入要跳轉的網址 -->  
+                <input type ="button" class = "bt" onclick="javascript:location.href='https://www.ntou.edu.tw/'" value="使用者權限"></input><!-- //放入要跳轉的網址 -->
+                <input type ="button" class = "bt" onclick="javascript:location.href='https://www.ntou.edu.tw/'" value="黑名單"></input><!-- //放入要跳轉的網址 -->  
             </div>    
     </div>
     <div class="container w-50 p-5">
@@ -100,7 +100,7 @@
                 <thead>
                     <tr class="table-warning">
                         <th colspan="2">
-                            <form action="php-announcement/announcement_admin.html">
+                            <form action="announcement_admin.html">
                                 系統公告<input type="submit" class="btn btn-outline-primary pull-right" value="編輯公告" />
                             </form>
                         </th>
@@ -138,12 +138,12 @@
 
 
         //將從資料庫抓到的資料輸出成首頁公告欄的項目
-         jsonUrl = "php-announcement/announcement_view_API.php";
+         jsonUrl = "announcement_view_API.php";
         $.getJSON(jsonUrl, function (data) {
             let announcementCount = 5;//首頁顯示前5個公告
             for (let item in data) {
                 let content = 
-                "<tr class='one_announcement' onclick=location.href='php-announcement/announcement_detail_view_API.php?ID="+data[item].ID+"';>"+
+                "<tr class='one_announcement' onclick=location.href='announcement_detail_view_API.php?ID="+data[item].ID+"';>"+
                     "<td style='width:75%; border-right:0px;' >"+
                         data[item].title+
                     "</td>"+

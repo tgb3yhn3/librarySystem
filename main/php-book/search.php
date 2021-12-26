@@ -1,6 +1,12 @@
 <?php
 //後端 function 用來查詢書籍
-    function get_search_book($search="",$modeNum=1,$usejson=0,$conn){//混沌搜尋 或者 全部列出
+    if(isset($_POST['modeNum'])){
+        $conn= require_once("../config.php");
+        
+        get_search_book($_POST['search'],$_POST['modeNum'],0,$conn);
+       
+    }
+    function get_search_book($search="",$modeNum=1,$usejson=0,$conn=null){//混沌搜尋 或者 全部列出
     // require_once("cav.php");
      
      $book=array();
@@ -13,11 +19,15 @@
         $sql="select * from `book` where ISBN='".$search."'";
      }else if($modeNum==3){//search by book author
         $sql="select * from `book` where author='%$search%'";
+     }else if($modeNum==4||$modeNum==5){//上下架館藏調整
+        $sql="select * from `book` where ISBN='$search'";
+     }else if($modeNum==6){
+        $sql="SELECT * FROM `user_book_history` group by book_unique_ID order by count(book_unique_ID)'";
      }
      $ISBN="";
      $result = mysqli_query($conn,$sql);
      $datas=array();
-     
+    //  echo "in";
      if ($result) {
          // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
          if (mysqli_num_rows($result)>0) {
@@ -67,7 +77,7 @@
                 echo '<img width="300px"height="400px"src='.$img.' />';
             }
             $return_value=$return_value."<h3><a href='book.php?search=".$ISBN."'>$bookName</a><br></h3>";
-            if($_SESSION['admin']==true){
+            if(isset($_SESSION['admin'])&&$_SESSION['admin']==true){
                 $return_value=$return_value.'<form action="delete.php" method="POST">
                 <input type="hidden" name="delete" value="'.$ISBN.'" />
                 <input type="submit" value="刪除此書"/>
@@ -96,6 +106,21 @@
             $bookdata->num=$num;
             array_push($book,$bookdata);
             $return_value=$return_value."<hr>";
+            if($modeNum==4){
+                $data=new stdClass();
+                $data->bookName=$bookName;
+                $data->author=$author;
+                echo iconv(mb_detect_encoding(json_encode($data)), "utf-8", json_encode($data));
+                 
+                
+            }
+            if($modeNum==5){
+                
+                $bookdata->img=$datas[$i]["img_url"];
+                echo iconv(mb_detect_encoding(json_encode($bookdata)), "utf-8", json_encode($bookdata));
+                 
+                
+            }
         }
        }
      else {
@@ -104,7 +129,7 @@
      }
      
     //  echo json_encode($book);
-    
+   
     if($usejson==0){
         return $return_value;
     }else if($usejson==1){

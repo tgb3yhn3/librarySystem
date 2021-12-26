@@ -88,10 +88,12 @@ $isFavorite=isFavorite($conn,$search);
     }
     
     </style>
-    
     <script>
-		
-	</script>
+            function reserve_post(){
+                book.action = "reserve_book.php";
+                book.submit();
+            }
+    </script>
 </head>
 <body>
     <div style="text-align:center">
@@ -123,7 +125,11 @@ $isFavorite=isFavorite($conn,$search);
                         <a>5.0</a>
                     </div><br>
                     <div style="text-align: center;">
-                        <input  type ="button" class="bt_sure" value="預約租書"></input>
+                    <form name="book" method="POST" >
+                        <input type = "hidden" id = "userID" name="userID" value = "<?php echo $_SESSION['userID'] ?>"><br>
+                        <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>"><br>
+                        <input type="button"  class ="bt_sure" value="預約租書" onClick="reserve_post()">
+                    </form>
                     </div><br>
                     <div style="text-align: center;">
                     <form action="../php-favorite/addFavoriteBook_API.php" method="POST">
@@ -162,14 +168,14 @@ $isFavorite=isFavorite($conn,$search);
     <div style="position:absolute;left:32%;border:2px rgb(0, 0, 0) solid;height:200px;width:40%;overflow-x:hidden;top:70%">
     <?php
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-        echo '<form action="../php-comment/sentComment.php" method="POST">
+    //     echo '<form action="../php-comment/sentComment.php" method="POST">
         
-        <input id="context"type="text" width=80% name="context">
-        <input type="hidden" name="username" value='.$_SESSION['username'].'>
-        <input type="hidden" name="ISBN" value='.$search.'>
-        <input id="sent"type="submit" value="送出評論">
+    //     <input id="context"type="text" width=80% name="context">
+    //     <input type="hidden" name="username" value='.$_SESSION['username'].'>
+    //     <input type="hidden" name="ISBN" value='.$search.'>
+    //     <input id="sent"type="submit" value="送出評論">
         
-    </form>';
+    // </form>';
     }
     ?>    
     <table >

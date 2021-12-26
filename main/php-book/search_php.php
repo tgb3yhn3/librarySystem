@@ -26,6 +26,8 @@ mysqli_close($conn);
     <title>Search_result!</title>
   </head>
   <body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
@@ -75,6 +77,21 @@ mysqli_close($conn);
               </div>
               <div class="col-md-2 row align-items-center">
                 <div class="d-grid gap-5">
+                '.(isset($_SESSION['admin'])&&$_SESSION['admin']==true?'<button  class="btn btn-danger " id="delete_'.$book[$i]->ISBN.'">刪除此書</button>
+                <script>
+          $("#delete_'.$book[$i]->ISBN.'").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "delete.php",
+                    data : {delete : "'.$book[$i]->ISBN.'"},
+                    success:function(data){
+                        alert("刪除成功")
+                        location.reload();
+                    }
+                })
+            })
+        ;
+</script>':'').'
                   <button type="button" class="btn btn-primary mr-1" href="#">預約租書</button>
                   <button type="button" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>
                 </div>
@@ -96,4 +113,6 @@ mysqli_close($conn);
       </footer>
     </div>
   </body>
+  
+
 </html>
