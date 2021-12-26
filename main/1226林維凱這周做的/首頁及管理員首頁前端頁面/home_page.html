@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
     <meta charset="utf-8">
-   
+    <link rel="stylesheet" type="text/css" href="frontpage.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,47 +30,38 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
     <div class="container">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <a href="https://www.ntou.edu.tw/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
           <img width="50px" height="50px"src="ntou_logo.png">
         </a>
         <span class="fs-1">海大資工系圖書館系統</span>
   
         <div class="col-md-3 text-end">
-          <?php session_start();
-          if(isset($_SESSION['username'])){
-            echo $_SESSION['username'].'&emsp;你好&emsp;';
-            echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
-          }else{
-            echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
-         ';
-          } ?>
-          </div>
+          <button type="button" class="btn btn-outline-primary me-2">Login</button>
+          <button type="button" class="btn btn-primary">Sign-up</button>
+        </div>
       </header>
     </div>
     <div class="container" >
         <div class="row justify-content-center">
             <div class="col-4">
-              <form action="php-book/search_php.php" method="POST">
-              <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋">
+              <input class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋">
             </div>
             <div class="col-1">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </div>
-           </form>
         </div>
     </div>
     <br>
     <div class="text-center">
         <div class="btn-group">
-            <a href="php-book/search_php.php"><button  type="button" class="btn btn-secondary btn-lg">館藏查詢</button></a>
-            <a href="php-book/borrow_history.php" ><button type="button" class="btn btn-secondary btn-lg">借閱歷史</button></a>
-            <a href="php-favorite/viewFavoriteBook.html"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>
+            <button href="#" type="button" class="btn btn-secondary btn-lg">館藏查詢</button>
+            <button href="#" type="button" class="btn btn-secondary btn-lg">借閱歷史</button>
+            <button href="#" type="button" class="btn btn-secondary btn-lg">我的最愛</button>
         </div>
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.html">更多</a></div>
+            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="announcement_visitor_user.html">更多</a></div>
             <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -99,7 +90,7 @@
                 <div class="carousel-caption">
                   <h5 id="recommendNewBook_bookName1"></h5>
                   <h5 id="recommendNewBook_author1"></h5>
-                  <p id=""></p>
+                  <p id="recommendNewBook_describeBook1">簡介</p>
                 </div>
               </div>
               <div class="carousel-item" data-bs-interval="2000">
@@ -107,7 +98,7 @@
                 <div class="carousel-caption d-none d-md-block">
                   <h5 id="recommendNewBook_bookName2"></h5>
                   <h5 id="recommendNewBook_author3"></h5>
-                  <p id=""></p>
+                  <p id="recommendNewBook_describeBook2">簡介</p>
                 </div>
               </div>
               <div class="carousel-item">
@@ -115,7 +106,7 @@
                 <div class="carousel-caption d-none d-md-block">
                   <h5 id="recommendNewBook_bookName3"></h5>
                   <h5 id="recommendNewBook_author3"></h5>
-                  <p id=""></p>
+                  <p id="recommendNewBook_describeBook3">簡介</p>
                 </div>
               </div>
             </div>
@@ -201,16 +192,12 @@
         });
 
         //將從資料庫抓到的資料輸出成首頁公告欄的項目
-        jsonUrl = "php-announcement/announcement_view_API.php";
-        // console.log(jsonUrl)
+        jsonUrl = "announcement_view_API.php";
         $.getJSON(jsonUrl, function (data) {
-          
             let announcementCount = 5;//首頁顯示前5個公告
-            console.log(data)
             for (let item in data) {
-              
                 let content = 
-                "<tr class='one_announcement' onclick=location.href='php-announcement/announcement_detail_view_API.php?ID="+data[item].ID+"';>"+
+                "<tr class='one_announcement' onclick=location.href='announcement_detail_view_API.php?ID="+data[item].ID+"';>"+
                     "<td style='width:75%; ' >"+
                         data[item].title+
                     "</td>"+

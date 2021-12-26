@@ -1,0 +1,79 @@
+<!--blackList.html-->
+<!--黑名單系統主頁面-->
+<?xml version = "1.0" encoding = "utf-8"?>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>黑名單前端頁面(測試後端用)</title>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+        }
+
+        table {
+            background-color: powderblue;
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>海大資工系圖書館系統-黑名單系統</h2>
+    <div id="formlist"></div>
+    <table border="1">
+        <tbody id="menu">
+            <tr>
+                <th>使用者學號</th>
+                <th>使用者姓名</th>
+                <th>原因</th>
+                <th>操作</th>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="blackList_addpage.html">新增使用者到黑名單</a>
+    <br>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        
+        /*將從資料庫抓到的資料輸出成html的table*/
+        const jsonUrl = "view_blackList_API.php";
+        $.getJSON(jsonUrl, function (data) {
+            for (let item in data) {
+                let content =
+                    "<tr>" +
+                    "<td>" + data[item].userID + "</td>" +
+                    "<td>" + data[item].username + "</td>" +
+                    "<td>" + data[item].reason +"</td>" +
+                    "<td>" + "<input type='button' id='editReason' value='編輯原因' onclick='editReason(\""+data[item].userID+"\")'>" + "<input type='submit' value='刪除' form="+data[item].userID+">" +"</td>" +
+                    "</tr>";
+                $("#menu").append(content);
+                let content2 =  "<form action='blackList_API.php' method='post' id="+data[item].userID+">"+
+                                "<input name='userID'   type='hidden' value="+data[item].userID   +">"+
+                                "<input name='username' type='hidden' value="+data[item].username +">"+
+                                "<input name='reason'   type='hidden' value="+data[item].reason   +">"+
+                                "<input name='action'   type='hidden' value='delete'>"+
+                                "</form>";
+                $("#formlist").append(content2);
+            }
+        });
+
+        //編輯原因用，將使用者資料傳給編輯頁面
+        function editReason(userID){
+            localStorage.setItem('blackList_userID',userID);
+            window.location.replace('blackList_editpage.html');
+        }
+    </script>
+</body>
+
+</html>
