@@ -45,6 +45,7 @@
         echo "借書成功";
     }
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -57,6 +58,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>資料匯出</title>
   </head>
   <body>
@@ -80,7 +82,7 @@
       <div class="row justify-content-center">
         <div class="card text-center" style="width: 30rem;">
           <div class="card-body">
-              <button href="#" type="button" class="btn btn-success btn-lg mx-4" >出借憑據</button>
+              <button id="html" type="button" class="btn btn-success btn-lg mx-4" >出借憑據</button>
               <button href="#" type="button" class="btn btn-success btn-lg" disabled>還書憑據</button>
               <br><br>
             <button href="#" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>
@@ -100,7 +102,13 @@
         </footer>
     </div>
 
-      
+    <script>
+        $(document).ready(function(){
+            $("#html").click(function(){
+                window.open("borrowReceipt.php?ISBN=<?=$ISBN?>&bookuniqueID=<?=$bookuniqueID?>&userID=<?=$userID?>","_blnk");
+            });
+        });
+    </script>
   </body>
   
 </html>
