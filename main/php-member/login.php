@@ -34,12 +34,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION["username"] = $row["username"];//使用者名稱
             $_SESSION["userID"] = $row["userID"];//使用者學號
             $_SESSION["email"]=$row["email"];//使用者email
+            
             $_SESSION["status"]=$row["status"];//是否通過信箱認證
-            $_SESSION["admin"]=false;
-            if($row['status']==2){
-                $_SESSION["admin"]=true;
-            }
-            header("location:../index.php");//登陸完成跳轉回首頁
+            $_SESSION["admin"]=($_SESSION["status"]==2);
+            
+            
+            header("refresh=0;url=../index.php",false);//登陸完成跳轉回首頁
         }else{
             
             function_alert("您的帳號已被列為黑名單 ，故無法使用 原因  ".$isblackList);
