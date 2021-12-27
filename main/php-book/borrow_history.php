@@ -101,7 +101,7 @@
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_name']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['return_date']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_status']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'> ".(($res_datas[$i]['book_status']=='已預約')?'<a target="_blank" href="cancel_reserve_book.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'&userID='.$res_datas[$i]['userID'].'">已預約</a>':$res_datas[$i]['book_status'])."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".(($res_datas[$i]['comment_status']=='未評論')?'<a target="_blank" href="../php-comment/makecomment.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'">未評論</a>':$res_datas[$i]['comment_status'])."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['lasting_return_date']."</th>
                     </tr>";
