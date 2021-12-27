@@ -7,7 +7,7 @@
     
     
     /*判斷當前登入者*/
-    $_SESSION["admin"] =0;
+    // $_SESSION["admin"] =0;
     if($_SESSION["admin"]==true){//管理員
         $userID = "admin";
     }
