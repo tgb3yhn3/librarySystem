@@ -57,7 +57,7 @@
         <div class="row justify-content-center">
             <div class="col-4">
               <form action="php-book/search_php.php" method="POST">
-              <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋">
+              <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋" required>
             </div>
             <div class="col-1">
               <button class="btn btn-outline-success" type="submit">Search</button>
@@ -69,8 +69,8 @@
     <div class="text-center">
         <div class="btn-group">
             <a href="php-book/search_php.php"><button  type="button" class="btn btn-secondary btn-lg">館藏查詢</button></a>
-            <a href="php-book/borrow_history.php" ><button type="button" class="btn btn-secondary btn-lg">借閱歷史</button></a>
-            <a href="php-favorite/viewFavoriteBook.html"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>
+            <?php echo((isset($_SESSION['userID'])?'<a href="php-book/borrow_history.php" ><button type="button" class="btn btn-secondary btn-lg">借閱歷史</button></a>':''));?>
+            <?php echo((isset($_SESSION['userID'])?'<a href="php-favorite/viewFavoriteBook.html"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>':''));?>
         </div>
     </div>
     <div class="container">

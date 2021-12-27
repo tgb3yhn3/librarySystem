@@ -66,15 +66,27 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
         <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-管理介面</span></span>
   
         <div class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-primary me-2">Login</button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
+        <?php 
+        //   session_start();
+          if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
+            echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
+            echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+          }else{
+            echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+            <a href="php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+         ';
+          } ?>
         </div>
       </header>
     </div>
     <div class="container"> 
             <div class="row justify-content-center">
                 <input type ="button" class = "bt" onclick="javascript:location.href='php-book/borrowreturn-2.htm'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/bookchange.htm'" value="館藏調整"></input><!-- //放入要跳轉的網址 -->  
+                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/bookchange.php'" value="館藏調整"></input><!-- //放入要跳轉的網址 -->  
             </div>
             
             <div class="row justify-content-center">

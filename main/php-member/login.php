@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION["admin"]=($_SESSION["status"]==2);
             
             
-            header("refresh=2;url=../index.php",false);//登陸完成跳轉回首頁
+            header("refresh=0;url=../index.php",false);//登陸完成跳轉回首頁
         }else{
             
             function_alert("您的帳號已被列為黑名單 ，故無法使用 原因  ".$isblackList);
@@ -67,6 +67,6 @@ function function_alert($message) {
     echo "<script>alert('$message')</script>"; 
     return false;
 } 
-header("refresh:2;url=../index.php",false);
+header("refresh:0;url=../index.php",false);
 ?>
 <a href="index.php">若無跳轉請按此</a>
