@@ -1,8 +1,11 @@
 <?php 
 session_start();
-if(!isset($_SESSION['admin'])||$_SESSION['admin']!=true){
-    header("refresh:0;url='index.php'");
+// echo isset($_SESSION["admin"]);
+// echo $_SESSION["admin"];
+if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+    header("location:index.php");
 }
+
 ?>
 <!DOCTYPE html>
 <html>

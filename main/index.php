@@ -36,9 +36,14 @@
         <span class="fs-1">海大資工系圖書館系統</span>
   
         <div class="col-md-3 text-end">
-          <?php session_start();
+          <?php 
+          session_start();
           if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
             echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
             echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
