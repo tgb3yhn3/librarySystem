@@ -21,6 +21,10 @@
             <div class="col-md-3 text-end">
             <?php 
           session_start();
+         
+             if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+            header("location:../index.php");
+            }
           if(isset($_SESSION['username'])){
 
             // echo ($_SESSION["status"]);

@@ -85,7 +85,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
     </div>
     <div class="container"> 
             <div class="row justify-content-center">
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/borrowreturn-2.htm'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
+                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/borrowreturn-2.php'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
                 <input type ="button" class = "bt" onclick="javascript:location.href='php-book/bookchange.php'" value="館藏調整"></input><!-- //放入要跳轉的網址 -->  
             </div>
             

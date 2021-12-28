@@ -1,5 +1,9 @@
 <?php
   $conn=require_once("../config.php");
+  session_start();
+  if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+    header("location:../index.php");
+}
   $get_userID =  "SELECT * FROM user_condition";
   $result = mysqli_query($conn,$get_userID);
   if ($result) {
@@ -56,7 +60,7 @@
     
           <div class="col-md-3 text-end">
           <?php 
-          session_start();
+        
           if(isset($_SESSION['username'])){
 
             // echo ($_SESSION["status"]);
