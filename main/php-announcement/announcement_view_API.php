@@ -56,7 +56,7 @@ if($conn === false){
         if($result->num_rows!=0){//有書逾期未還
             $overdue_notice = array(
                 'ID'         => "overdue_notice",
-                'title'      => "(逾期未還通知)".$username."(".$userID.")同學好，您有書籍未歸還且已超過還書期限，請盡速歸還",
+                'title'      => "<span style='color:red;'>【逾期未還通知】</span>".$username."(".$userID.")同學好，您有書籍未歸還且已超過還書期限，請盡速歸還",
                 'message'    => "",
                 'annouceTime'=> $today,
                 'sent_to'    => "",

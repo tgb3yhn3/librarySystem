@@ -122,7 +122,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                     <tr class="table-warning">
                         <th colspan="2">
                         系統公告
-                            <form style="display: inline " action="php-announcement/announcement_admin.html">                       
+                            <form style="display: inline " action="php-announcement/announcement_admin.php">                       
                                 <input type="submit" class="btn btn-outline-primary pull-right" value="編輯公告" />
                             </form>
                             <form style="display: inline " action="php-announcement/sentOverdueMail.php">

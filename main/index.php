@@ -90,7 +90,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.html">更多</a></div>
+            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.php">更多</a></div>
             <table class="table table-bordered">
                 <thead>
                   <tr>
