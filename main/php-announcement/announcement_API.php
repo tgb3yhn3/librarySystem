@@ -41,7 +41,7 @@
                 where ID = (SELECT MAX(ID) from announcement)";
         mysqli_query($conn,$sql);
 
-        echo "<script>alert('加入成功!');window.location.replace('announcement_admin.html');</script>";
+        echo "<script>alert('加入成功!');window.location.replace('announcement_admin.php');</script>";
     
         $conn->close();//關閉與資料庫的連線 
     }
@@ -58,7 +58,7 @@
         }   
         $sql="delete from announcement where ID = '$ID'";
         mysqli_query($conn,$sql);
-        echo "<script>alert('刪除成功!');window.location.replace('announcement_admin.html');</script>";
+        echo "<script>alert('刪除成功!');window.location.replace('announcement_admin.php');</script>";
 
         $conn->close();//關閉與資料庫的連線 
     }
@@ -102,7 +102,7 @@
                 where ID = '$ID'";
         mysqli_query($conn,$sql);
 
-        echo "<script>alert('修改成功!');window.location.replace('announcement_admin.html');</script>";
+        echo "<script>alert('修改成功!');window.location.replace('announcement_admin.php');</script>";
 
         $conn->close();//關閉與資料庫的連線 
     }
