@@ -1,6 +1,6 @@
 <?php
     function check_adjust_balance($ISBN,$conn){
-        $get_book_status2_num =  "SELECT * FROM book WHERE ISBN = $ISBN AND book_status = '2'";
+        $get_book_status2_num =  "SELECT * FROM book WHERE ISBN = '".$ISBN."' AND status = '2'";
         $result = mysqli_query($conn,$get_book_status2_num);
         $book_status2_num = 0;
         if ($result) {
@@ -12,7 +12,8 @@
             }
             mysqli_free_result($result);
         }
-        $get_reserve_num =  "SELECT * FROM line_up WHERE ISBN = $ISBN";
+        echo "book_status2_num = ".$book_status2_num."<br>";
+        $get_reserve_num =  "SELECT * FROM line_up WHERE ISBN = '".$ISBN."'";
         $res = mysqli_query($conn,$get_reserve_num);
         $reserve_num = 0;
         if ($res) {
@@ -22,9 +23,9 @@
                     $reserve_num++;
                 }
             }
-            mysqli_free_result($result);
+            mysqli_free_result($res);
         }
-        
+        echo "reserve_num = ".$reserve_num."<br>";
         if($book_status2_num==$reserve_num){
             return true;
         }
