@@ -20,6 +20,7 @@
             echo "有預約<br>";
             adjust_book_status($bookuniqueID,1,$conn);//把此書登記為借出
             adjust_book_history_reserve($userID,$bookuniqueID,$ISBN,$conn);//把history已預約的狀態改成出借中
+            echo "借書成功";
         }
         else{
             if(check_condition($userID,$conn)){//查user還有沒有扣打
@@ -29,6 +30,7 @@
                         adjust_book_status($bookuniqueID,1,$conn);//把此書登記為借出
                         adjust_user_condition($userID,1,$conn);//user的renting_book_num+1
                         push_book_history($userID,$bookuniqueID,$conn,$ISBN);//將借書資訊放到history
+                        echo "借書成功";
                     }
                     else{
                         echo "此書已被借走";
@@ -42,6 +44,6 @@
                 echo "已達借書上限,不得借書";
             }
         }
-        echo "借書成功";
+        
     }
 ?>
