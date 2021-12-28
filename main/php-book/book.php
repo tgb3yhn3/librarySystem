@@ -100,7 +100,7 @@ $isFavorite=isFavorite($conn,$search);
         <table style = "margin:auto">
             <tr>
                 <td>
-                    <img width="100px" height="100px"src="ntou_logo.png">
+                    <a href="../index.php"><img width="100px" height="100px"src="ntou_logo.png"></a>
                 </td>
                 <td>
                     <h1>海大資工系圖書館系統</h1>
