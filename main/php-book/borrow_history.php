@@ -7,11 +7,13 @@
     $get_user_data = "SELECT * FROM user_condition WHERE userID = '".$userID."'";
     $result = mysqli_query($conn,$get_user_data);
     $reserve = 0;
+    $res_count = 0;
     $uncomment = 0;
     if ($res) {
         if (mysqli_num_rows($res)>0) {
             while ($row = mysqli_fetch_assoc($res)) {
                 $res_datas[] = $row;
+                $res_count++;
             }
         }
         mysqli_free_result($res);
@@ -24,7 +26,7 @@
         }
         mysqli_free_result($result);
     }
-    for($i=0;$i<count($res_datas);$i++){
+    for($i=0;$i<$res_count;$i++){
         if($res_datas[$i]['book_status']=='已預約'){
             $reserve++;
         }
@@ -96,7 +98,7 @@
                     </tr>
                 </thead>
                 <tbody bgcolor='#D2E9FF'>";
-    for($i=0;$i<count($res_datas);$i++){
+    for($i=0;$i<$res_count;$i++){
                 echo "<tr style='height:30px'>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_name']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>

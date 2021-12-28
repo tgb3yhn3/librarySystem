@@ -1,6 +1,6 @@
 <?php
     function check_adjust_balance($ISBN,$conn){
-        $get_book_status2_num =  "SELECT * FROM book WHERE ISBN = '".$ISBN."' AND status = '2'";
+        $get_book_status2_num =  "SELECT * FROM book WHERE bookUniqueID like '".$ISBN."%' AND status = '2'";
         $result = mysqli_query($conn,$get_book_status2_num);
         $book_status2_num = 0;
         if ($result) {

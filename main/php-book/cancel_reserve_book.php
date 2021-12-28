@@ -38,8 +38,18 @@
         mysqli_query($link,$delete_reserve_line_up);
         adjust_user_condition($_GET['userID'],-1,$link);
         echo "取消預約成功";
+        alertMsg("取消預約成功") ;
+        echo'<script>history.go(-1)</script>';
     }
     else{
         echo "失敗";
+        alertMsg("失敗") ;
+        echo'<script>history.go(-1)</script>';
+        
+    }
+    function alertMsg($msg){
+        echo "<script>
+        window.alert('$msg');
+        </script>";
     }
 ?>
