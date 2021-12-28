@@ -13,7 +13,7 @@
         var x = document.forms["registerForm"]["password"].value;
         var y = document.forms["registerForm"]["password_check"].value;
         if(x.length<6){
-            alert("密碼長度不足");
+            alert("密碼長度不足6位");
             return false;
         }
         if (x != y) {
@@ -31,7 +31,7 @@
 使用者名稱
 <input type="text" name="username"><br/><br/>
 學  號：
-<input type="text" name="userID"><br/><br/>
+<input type="text" name="userID" min='6'><br/><br/>
 密  碼：
 <input type="password" name="password" id="password"><br/><br/>
 確認密碼：

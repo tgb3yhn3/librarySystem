@@ -1,6 +1,6 @@
 <?php
     function set_book_status_to_0($ISBN,$conn){
-        $sql =  "SELECT * FROM book WHERE ISBN = '".$ISBN."' AND status = '2'" ;
+        $sql =  "SELECT * FROM book WHERE bookUniqueID like '".$ISBN."%' AND status = '2'" ;
         $result = mysqli_query($conn,$sql);
         if ($result) {
             if (mysqli_num_rows($result)>0) {

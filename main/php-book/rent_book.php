@@ -1,7 +1,7 @@
 <?php
-    require_once('../php-condiction/check_condition.php');
+    require_once('check_condition.php');
     require_once('adjust_book_status.php');
-    require_once('../php-condiction/adjust_user_condition.php');
+    require_once('adjust_user_condition.php');
     require_once('push_book_history.php');
     require_once('check_book_status.php');
     require_once('adjust_book_history_reserve.php');
@@ -45,7 +45,6 @@
         echo "借書成功";
     }
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -58,7 +57,6 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>資料匯出</title>
   </head>
   <body>
