@@ -21,8 +21,8 @@ if($conn === false){
     
     
     /*判斷當前登入者*/
-    $_SESSION["admin"] =0;
-    if($_SESSION["admin"]==true){//管理員
+    // $_SESSION["admin"] =0;
+    if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){//管理員
         $userID = "admin";
         // echo"ADMIN";
     }
@@ -40,13 +40,14 @@ if($conn === false){
 
     /*發布逾期通知給使用者*/
     
-    if($_SESSION["admin"]==false && isset($_SESSION["userID"])){
+    if(isset($_SESSION["admin"]) && $_SESSION["admin"]==false && isset($_SESSION["userID"])){
         $today = date('Y-m-d');
         $username = $_SESSION["username"];
         $sql = "select  user_book_history.book_unique_ID,book.bookName,user_book_history.lasting_return_date 
                 from 	user_book_history,book
                 WHERE 	SUBSTRING_INDEX(user_book_history.book_unique_ID, '_', 1) = book.ISBN and 
                         user_book_history.userID = '$userID' and 
+                        user_book_history.start_rent_date <> '-' and 
                         user_book_history.return_date = '-' and 
                         user_book_history.lasting_return_date < '$today'
                 ORDER by user_book_history.lasting_return_date ";
@@ -65,7 +66,7 @@ if($conn === false){
     }
     
     /*發布一般通知*/
-    if($_SESSION["admin"]){//如果是管理員，將顯示所有公告 
+    if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){//如果是管理員，將顯示所有公告 
         $sql=  "select ID,title,message,annouceTime,sent_to
         FROM announcement";
     }

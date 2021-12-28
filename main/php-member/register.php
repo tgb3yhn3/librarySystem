@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                 require_once '../php-condiction/create_condition.php';
                 create_condition($conn,$userID);
                 echo "註冊成功!<br>";
-
+                
                 echo"沒收到驗證信請檢查垃圾郵件<br>";
                 echo "<br>3秒後將自動跳轉回首頁<br>";
                 echo "<a href='../index.php'>未成功跳轉頁面請點擊此</a>";

@@ -1,8 +1,6 @@
 <?php
+//myFavoriteBook.php
 session_start();
-if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
-  header("location:../index.php");
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,7 +14,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>黑名單</title>
+    <title>我的最愛</title>
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -27,7 +25,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
           <a href="../welcome.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <img width="50px" height="50px"src="../ntou_logo.png">
           </a>
-          <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-黑名單</span></span>
+          <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-我的最愛</span></span>
     
           <div class="col-md-3 text-end">
             <button type="button" class="btn btn-outline-primary me-2" disabled><?php echo $_SESSION['username']?></button>
@@ -38,41 +36,19 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
 
       <div class="container" id="formlist">
         <table class="table align-middle">
-            <thead class="table-dark">
+            <thead class="table-dark" >
               <tr>
-                <th scope="col">學號</th>
-                <th scope="col">姓名</th>
-                <th scope="col">原因</th>
-                <th scope="col">編輯</th>
+                <th style="text-align:center;" scope="col">書名</th>
+                <th style="text-align:center;" scope="col">ISBN</th>
+                <th style="text-align:center;" scope="col">編輯</th>
               </tr>
             </thead>
             <br>
-            <tbody  id="menu">
-              <!-- <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><button type="button" class="btn btn-outline-primary me-2">刪除</button></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td><button type="button" class="btn btn-outline-primary me-2">刪除</button></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td><button type="button" class="btn btn-outline-primary me-2">刪除</button></td>
-              </tr> -->
+            <tbody id="menu"  >
 
             </tbody>
           </table>
-          <a href="blackList_addpage.html">
-          <div class="d-grid gap-2">
-            <button class="btn btn-outline-primary me-2" type="button">新增</button>
-          </div></a>
+          <a></a>
       </div>
       <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -85,39 +61,44 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
           </ul>
         </footer>
       </div>
-
-      
   </body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
   </script>
   <script type="text/javascript">
         
-    /*將從資料庫抓到的資料輸出成html的table*/
-    const jsonUrl = "view_blackList_API.php";
-    $.getJSON(jsonUrl, function (data) {
-        for (let item in data) {
-            let content =
-                "<tr>" +
-                "<td>" + data[item].userID + "</td>" +
-                "<td>" + data[item].username + "</td>" +
-                "<td>" + data[item].reason +"</td>" +
-                "<td>" + "<input type='button' id='editReason' value='編輯原因' onclick='editReason(\""+data[item].userID+"\")'>&emsp;" + "<input type='submit' value='刪除' form="+data[item].userID+">" +"</td>" +
-                "</tr>";
-            $("#menu").append(content);
-            let content2 =  "<form action='blackList_API.php' method='post' id="+data[item].userID+">"+
-                            "<input name='userID'   type='hidden' value="+data[item].userID   +">"+
-                            "<input name='username' type='hidden' value="+data[item].username +">"+
-                            "<input name='reason'   type='hidden' value="+data[item].reason   +">"+
-                            "<input name='action'   type='hidden' value='delete'>"+
-                            "</form>";
-            $("#formlist").append(content2);
-        }
-    });
+     /*將從資料庫抓到的資料輸出成html的table*/
+     const jsonUrl = "viewFavoriteBook_API.php";
+        var odd = 1;
+        var color_controller;
+        $.getJSON(jsonUrl, function (data) {
 
-    //編輯原因用，將使用者資料傳給編輯頁面
-    function editReason(userID){
-        localStorage.setItem('blackList_userID',userID);
-        window.location.replace('blackList_editpage.html');
-    }
+            for (let item in data) {
+                if(odd==1){
+                    color_controller = "#FFF6D9";
+                    console.log(odd);
+                }
+                else{
+                    color_controller = "#EEE6D9";
+                    console.log(odd);
+                }
+                let content =
+                    "<tr bgcolor="+color_controller+">" +
+                    "<td style='border-right:2px white solid;'><a href='../php-book/book.php?search="+data[item].ISBN+"'>" + data[item].bookName + "</a></td>" +
+                    
+                    "<td style='border-right:2px white solid; text-align:center;'>" + data[item].ISBN + "<input type='hidden' name='ISBN' value="+data[item].ISBN+" form="+data[item].ISBN+">" + "</td>" +
+                    "<td style=' text-align:center;'>" + "<input type='submit' class='btn btn-outline-primary'  value='從最愛清單刪除' form="+data[item].ISBN+">" + "</td>" +
+                    "</tr>";
+                $("#menu").append(content);
+                let content2 = "<form action='favoriteBook_API.php' method='post' id="+data[item].ISBN+"></form>"
+                $("#formlist").append(content2);
+                if(odd==1){
+                    odd=0;
+                }
+                else{
+                    odd=1;
+                }
+            }
+        });
+
 </script>
 </html>
