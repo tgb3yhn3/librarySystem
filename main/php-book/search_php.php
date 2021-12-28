@@ -24,6 +24,12 @@ mysqli_close($conn);
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Search_result!</title>
+    <script>
+            function reserve_post(){
+                book.action = "reserve_book.php";
+                book.submit();
+            }
+    </script>
   </head>
   <body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -91,8 +97,12 @@ mysqli_close($conn);
                 })
             })
         ;
-</script>':'').'
-                  <button type="button" class="btn btn-primary mr-1" href="#">預約租書</button>
+</script>':'').'  
+                  <form name="book" method="POST">
+                    <input type="hidden" name="ISBN" value="'.$book[$i]->ISBN.'"/>
+                    <input type="hidden" name="userID"value="'.$_SESSION['userID'].'"/>
+                    <input type ="button" class="btn btn-primary mr-1" value="預約借書" onClick="reserve_post()"></input>
+                  </form>
                   <button type="button" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>
                 </div>
               </div>
