@@ -22,6 +22,15 @@
         text-decoration:underline;
         cursor:pointer;
       }
+      #recommendNewBook1:hover{
+        cursor:pointer;
+      }
+      #recommendNewBook2:hover{
+        cursor:pointer;
+      }
+      #recommendNewBook3:hover{
+        cursor:pointer;
+      }
     </style>
 </HEAD>
 <BODY>
@@ -70,7 +79,7 @@
         <div class="btn-group">
             <a href="php-book/search_php.php"><button  type="button" class="btn btn-secondary btn-lg">館藏查詢</button></a>
             <?php echo((isset($_SESSION['userID'])?'<a href="php-book/borrow_history.php" ><button type="button" class="btn btn-secondary btn-lg">借閱歷史</button></a>':''));?>
-            <?php echo((isset($_SESSION['userID'])?'<a href="php-favorite/viewFavoriteBook.html"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>':''));?>
+            <?php echo((isset($_SESSION['userID'])?'<a href="php-favorite/myFavoriteBook.php"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>':''));?>
         </div>
     </div>
     <div class="container">
@@ -99,7 +108,7 @@
               <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="2000">
+              <div id="recommendNewBook1" class="carousel-item active" data-bs-interval="2000">
                 <img id="recommendNewBook_img1" src="" class="d-block w-20" alt="...">
                 <div class="carousel-caption">
                   <h5 id="recommendNewBook_bookName1"></h5>
@@ -107,7 +116,7 @@
                   <p id=""></p>
                 </div>
               </div>
-              <div class="carousel-item" data-bs-interval="2000">
+              <div id="recommendNewBook2"class="carousel-item" data-bs-interval="2000">
                 <img id="recommendNewBook_img2" src="" class="d-block w-20" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h5 id="recommendNewBook_bookName2"></h5>
@@ -115,7 +124,7 @@
                   <p id=""></p>
                 </div>
               </div>
-              <div class="carousel-item">
+              <div id="recommendNewBook3" class="carousel-item">
                 <img id="recommendNewBook_img3" src="" class="d-block w-20" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h5 id="recommendNewBook_bookName3"></h5>
@@ -167,7 +176,10 @@
                 <div class="card-body">
                   <h4 class="card-title">討論度</h4>
                   <p class="card-text">依照討論度排行</p>
-                  <button type="button" class="btn btn-outline-primary me-2">前往</button>
+                  <form method="get" action="php-book/hotLeaderboard.php">
+                      <input type="hidden"  name="leaderboardAccordingTo" value="discussion" />
+                      <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
+                  </form>
                 </div>
               </div>
             </div>
@@ -193,6 +205,7 @@
         $.getJSON(jsonUrl, function (data) {
             let recommendCount = 3;//首頁顯示3本推薦的新書
             while(recommendCount>0){
+              $("#recommendNewBook"+recommendCount).attr("onclick","location.href='php-book/book.php?search="+data[recommendCount-1].ISBN+"'");
               $("#recommendNewBook_bookName"+recommendCount).html(data[recommendCount-1].bookName);
               $("#recommendNewBook_author"+recommendCount).html("作者:"+data[recommendCount-1].author);
               $("#recommendNewBook_describeBook"+recommendCount).html("簡介:<br>"+data[recommendCount-1].describeBook);

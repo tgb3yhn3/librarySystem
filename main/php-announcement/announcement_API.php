@@ -52,7 +52,7 @@
         if(!$ID){
             die("Fatal Error");//若ID不存在，終止程式並回報錯誤
         }
-        $conn = require_once("config.php");//連線至資料庫
+        $conn = require_once("../config.php");//連線至資料庫
         if(!$conn){
             die("Fatal Error");//若未成功連線，終止程式並回報錯誤
         }   
@@ -74,7 +74,7 @@
         if(!$ID){
             die("Fatal Error");//若ID不存在，終止程式並回報錯誤
         }
-        $conn = require_once("config.php");//連線至資料庫
+        $conn = require_once("../config.php");//連線至資料庫
         if(!$conn){
             die("Fatal Error");//若未成功連線，終止程式並回報錯誤
         }   

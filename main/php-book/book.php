@@ -8,7 +8,18 @@ require_once("../php-favorite/isFavorite.php");
 $search=$_GET["search"];
 $book=get_search_book($search,2,1,$conn);
 $comment=get_comment($search,$conn);
-$isFavorite=isFavorite($conn,$search);
+$isFavorite = false;
+if(isset($_SESSION['userID'])){
+    if($_SESSION["admin"]!=true){
+        $isFavorite=isFavorite($conn,$search,$_SESSION['userID']);//使用者
+    }
+    else{
+        $isFavorite=false;//管理員
+    }
+}
+else{
+    $isFavorite=false;//訪客
+}
 // echo $book;
 ?>
 
@@ -173,13 +184,13 @@ $isFavorite=isFavorite($conn,$search);
                 
                 <div class="card-body text-center ">
                     <form name="book" method="POST" >
-                        <input type = "hidden" id = "userID" name="userID" value = "<?php echo $_SESSION['userID'] ?>"><br>
+                        <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>"><br>
                         <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>"><br>
                         <input type="button"  class ="bt_sure" value="預約租書" onClick="reserve_post()">
                     </form>
                 </div>
                 <div class="card-body text-center">
-                    <form action="../php-favorite/addFavoriteBook_API.php" method="POST">
+                    <form action="../php-favorite/favoriteBook_API.php" method="POST">
                         <input type="hidden" name="ISBN"value="<?php echo $search;  ?>"/>
                         <input type="hidden" name="bookName"value="<?php echo $book[0]->bookName;  ?>"/>
                         <input  type ="submit" class="bt_love" value="<?php echo($isFavorite?'移除':'加入') ?>最愛"></input>
