@@ -186,7 +186,7 @@ else{
                     <form name="book" method="POST" >
                         <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>"><br>
                         <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>"><br>
-                        <input type="button"  class ="bt_sure" value="預約租書" onClick="reserve_post()">
+                    <?php echo($book[0]->num==0)?' <input type="button"  class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >':''?>
                     </form>
                 </div>
                 <div class="card-body text-center">
@@ -233,7 +233,20 @@ else{
                       ?>
     
     
+                    </div>
+                    </div>
+                    <div class="container">
 
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
+
+
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+            </ul>
+        </footer>
+    </div>
     
 </body>
      
