@@ -1,3 +1,9 @@
+<?php session_start();
+// echo isset($_SESSION["admin"]);
+// echo $_SESSION["admin"];
+if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
+    header("location:welcome.php");
+}?>
 <!DOCTYPE html>
 <HTML>
 <HEAD>
@@ -46,7 +52,7 @@
   
         <div class="col-md-3 text-end">
           <?php 
-          session_start();
+          
           if(isset($_SESSION['username'])){
 
             // echo ($_SESSION["status"]);
