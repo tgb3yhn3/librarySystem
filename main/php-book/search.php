@@ -58,7 +58,9 @@
             $ISBN=$datas[$i]["ISBN"];
             $publisher=$datas[$i]['publisher'];
             $publish_year=$datas[$i]['publish_year'];
-            $num=$datas[$i]['num'];
+            $sql="SELECT count(status) as num FROM `book` where bookUniqueID like '$ISBN%' and status=0;";
+            $num=mysqli_fetch_assoc(mysqli_query($conn,$sql))['num'];
+            // $num=$datas[$i]['num'];
             
             $img="";
             if($datas[$i]["img_url"]!=""){
