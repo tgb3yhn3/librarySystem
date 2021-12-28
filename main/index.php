@@ -42,7 +42,7 @@
             echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <a href="php-member/signup-2.htm.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
           </div>
