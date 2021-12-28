@@ -49,6 +49,7 @@
                         from 	user_book_history,book
                         WHERE 	SUBSTRING_INDEX(user_book_history.book_unique_ID, '_', 1) = book.ISBN and 
                                 user_book_history.userID = '$userID' and 
+                                user_book_history.start_rent_date <> '-' and 
                                 user_book_history.return_date = '-' and 
                                 user_book_history.lasting_return_date < '$today'
                         ORDER by user_book_history.lasting_return_date ";
