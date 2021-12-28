@@ -73,8 +73,20 @@
             <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-借閱歷史</span></span>
 
             <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2">Login</button>
-                <button type="button" class="btn btn-primary">Sign-up</button>
+            <?php 
+            //   session_start();
+            if(isset($_SESSION['username'])){
+
+                // echo ($_SESSION["status"]);
+                // echo $_SESSION["admin"];
+                echo $_SESSION['username'].'&emsp;你好&emsp;';
+                
+                echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+            }else{
+                echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+                <a href="../php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            ';
+            } ?>
                 <p><font size="1" color="gray">可借/預約:<?php  echo $_SESSION["book_num"];?>&ensp;可借天數:<?php  echo $_SESSION["book_time"];?></font></p>
             </div>
         </header>
