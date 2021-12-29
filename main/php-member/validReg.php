@@ -1,8 +1,17 @@
 <?php 
 //GET 後端 用來驗證註冊token
 $conn=require_once("../config.php");
+if($_SERVER["REQUEST_METHOD"]=="GET"){
 $token=$_GET['verify'];
 // 
+echo '<form action="validReg.php" method="POST">
+<button>按我以驗證</button>
+<input type="hidden" name="ver" value="'.$token.'">
+
+</form>';
+}
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $token=$_POST['ver'];
 $sql="SELECT * FROM users WHERE token='".$token."'";
 // echo $sql;
 if(mysqli_num_rows(mysqli_query($conn,$sql))==1){
@@ -19,5 +28,6 @@ else{
     header('HTTP/1.0 302 Found');
     header("refresh:3;url=register.php",true);
     exit;
+}
 }
 ?>

@@ -25,7 +25,7 @@ if (mysqli_affected_rows($link)>0) {
         echo "{$sql} 語法執行失敗，錯誤訊息: " . mysqli_error($link);
     }
         mysqli_close($link); 
-        header('Location: search_php.php');
+        header('refresh:0;url="bookchange.php"');
         exit();
 }
 

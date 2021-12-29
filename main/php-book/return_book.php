@@ -18,7 +18,7 @@
             if(check_line_up($ISBN,$conn)){//查有沒有人在預約這本書
                 adjust_line_up($ISBN,$conn);//叫排第一個的來拿書
                 adjust_book_status($bookuniqueID,2,$conn);//表使此書在圖書館但被預約
-                echo "管理員~有人預約此書";
+                // echo "管理員~有人預約此書";
             }
             else{
                 adjust_book_status($bookuniqueID,0,$conn);//表使此書尚有庫存

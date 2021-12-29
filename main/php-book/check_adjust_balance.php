@@ -12,7 +12,7 @@
             }
             mysqli_free_result($result);
         }
-        echo "book_status2_num = ".$book_status2_num."<br>";
+        // echo "book_status2_num = ".$book_status2_num."<br>";
         $get_reserve_num =  "SELECT * FROM line_up WHERE ISBN = '".$ISBN."'";
         $res = mysqli_query($conn,$get_reserve_num);
         $reserve_num = 0;
@@ -25,7 +25,7 @@
             }
             mysqli_free_result($res);
         }
-        echo "reserve_num = ".$reserve_num."<br>";
+        // echo "reserve_num = ".$reserve_num."<br>";
         if($book_status2_num==$reserve_num){
             return true;
         }

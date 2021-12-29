@@ -23,9 +23,9 @@
             mysqli_free_result($result);
         }
         if($datas[0]["lasting_time"]!='-'){//如果他是那個ISBN裡有收到簡訊的話
-            echo "有收到簡訊<br>";
+            // echo "有收到簡訊<br>";
             if(check_adjust_balance($_GET['book'],$link)){//如果滿了
-                echo "滿了<br>";
+                // echo "滿了<br>";
                 set_book_status_to_0($_GET['book'],$link);//表使此書不用保留給預約的,直接放上架,要把book的status設為0
             }
             else{//表示還有人預約還沒收到簡訊
@@ -37,12 +37,12 @@
         $delete_reserve_line_up = "DELETE FROM line_up WHERE userID = '".$_GET['userID']."' AND ISBN = '".$_GET['book']."' ORDER BY numbering DESC LIMIT 1";//如果同一個人預約同一本書,刪掉後面那一本,else 普通刪除
         mysqli_query($link,$delete_reserve_line_up);
         adjust_user_condition($_GET['userID'],-1,$link);
-        echo "取消預約成功";
-        alertMsg("取消預約成功") ;
+        // echo "取消預約成功";
+        // alertMsg("取消預約成功") ;
         echo'<script>history.go(-1)</script>';
     }
     else{
-        echo "失敗";
+        // echo "失敗";
         alertMsg("失敗") ;
         echo'<script>history.go(-1)</script>';
         

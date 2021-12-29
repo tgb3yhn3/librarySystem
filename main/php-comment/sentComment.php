@@ -14,6 +14,6 @@ header("location:../php-book/book.php?search=".$ISBN);
 }else{
 echo "Error creating table: " . mysqli_error($link);
 }
-$sql="Update user_book_history set comment_status='已評論'";
+$sql="Update user_book_history set comment_status='已評論' where numbering=$num";
 mysqli_query($conn, $sql);
 ?>
