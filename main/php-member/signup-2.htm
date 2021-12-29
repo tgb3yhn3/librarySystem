@@ -18,7 +18,7 @@
             var x = document.forms["registerForm"]["password"].value;
             var y = document.forms["registerForm"]["password_check"].value;
             if(x.length<6){
-                alert("密碼長度不足");
+                alert("密碼長度不足6位");
                 return false;
             }
             if (x != y) {
