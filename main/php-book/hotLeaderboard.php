@@ -1,8 +1,24 @@
-<!DOCTYPE html>
-<HTML>
-<HEAD>
-    <meta charset="utf-8">
-   
+<?php
+//hotLeaderboard.php
+//熱門排行
+session_start();
+$conn=require_once("../config.php");
+require("search.php");
+$book=new stdClass();
+
+$leaderboardAccordingTo = $_GET["leaderboardAccordingTo"];
+if($leaderboardAccordingTo == "discussion"){
+    $book=get_search_book("",7,1,$conn);
+}
+else{
+    $book=get_search_book("",0,1,$conn);
+}
+mysqli_close($conn);
+?>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,28 +27,17 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>熱門排行</title>
-    <style>
-        table {
-            background-color: powderblue;
-            border-collapse: collapse;
-            border: 5px solid gray;
-        }
-        th {
-            padding: 5px;
-            border: 3px solid gray;
-        }
-        td {
-            padding: 5px;
-            border: 3px solid gray;
-        }
+    <title>Search_result!</title>
+    <script>
+            function reserve_post(){
+                book.action = "reserve_book.php";
+                book.submit();
+            }
+    </script>
+  </head>
+  <body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        tr:nth-child(odd) {
-            background-color: white;
-        }
-    </style>
-</HEAD>
-<BODY>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
@@ -41,12 +46,11 @@
         <a href="../index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
           <img width="50px" height="50px"src="ntou_logo.png">
         </a>
-        <span class="fs-1">海大資工系圖書館系統-熱門排行
-        </span>
+        <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-搜尋結果</span></span>
   
         <div class="col-md-3 text-end">
-          <?php 
-          session_start();
+        <?php 
+        //   session_start();
           if(isset($_SESSION['username'])){
 
             // echo ($_SESSION["status"]);
@@ -59,95 +63,87 @@
             <a href="../php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
-          </div>
+        </div>
       </header>
     </div>
+    <div class="container" >
+    <form action="search_php.php" method="POST">
+      <div class="row justify-content-center">
+       
+          <div class="col-4">
+            <input class="form-control me-2" name="search"type="search" placeholder="Search" required  aria-label="Search">
+          </div>
+          <div class="col-1">
+          <input class="btn btn-outline-success" type="submit"value="Search"></input>
+          </div>
+          
+      </div>
+      </form>
+      <br>
+      <div style}>
+         <!-- 開始 -->
+         <?php
+         for($i=0;$i<count($book);$i++){
+           echo'<div class="card mb-3 offset-2" style="max-width: 650px;">
+           <div class="row">
+             <div class="col-md-3"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">
+             <img src="'.$book[$i]->img.'" class="img-fluid rounded-start"></a>
+              </div>
+              <div class="col-md-7">
+                <div class="card-body">';
+                    if($leaderboardAccordingTo == "discussion"){
+                        echo'<p class="card-text"><a class="text-muted"><span style="color:red">討論度&emsp;'.$book[$i]->commentnum.'</span></a></p>';
+                    }
+             echo'<h4 class="card-title"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">'.$book[$i]->bookName.'</a></h4>
+                  <p class="card-text">'.mb_substr(strip_tags ($book[$i]->describeBook),0,80).'</p>
+                  <p class="card-text"><small class="text-muted">publish at&emsp;'.$book[$i]->publish_year.'</small></p>
+                </div>
+              </div>
+              <div class="col-md-2 row align-items-center">
+                <div class="d-grid gap-5">
+                '.(isset($_SESSION['admin'])&&$_SESSION['admin']==true?'<button  class="btn btn-danger " id="delete_'.$book[$i]->ISBN.'">刪除此書</button>
+                <script>
+          $("#delete_'.$book[$i]->ISBN.'").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "delete.php",
+                    data : {delete : "'.$book[$i]->ISBN.'"},
+                    success:function(data){
+                        alert("刪除成功")
+                        location.reload();
+                    }
+                })
+            })
+        ;
+
+
+</script>':'').'<form name="book" method="POST" action="reserve_book.php">
+                 '.($book[$i]->num==0?'<button type="submit" class="btn btn-primary mr-1" >預約租書</button>':'').' 
+                 
+                        <input type = "hidden" id = "userID" name="userID" value = "'.$_SESSION["userID"].'"><br>
+                        <input type = "hidden" id = "ISBN" name="ISBN" value = "'.$book[$i]->ISBN .'"><br>
+
+                  <button type="button" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>
+                </form>
+                  </div>
+              </div>
+            </div>
+        </div>';
+         }
+         ?>
+        
     <div class="container">
-        <?php
-            //hotLeaderboard.php
-            //熱門排行
-
-            $leaderboardAccordingTo = $_GET["leaderboardAccordingTo"];
-
-            if($leaderboardAccordingTo == "discussion"){
-                leaderboardAccordingToDiscussion();
-            }
-            
-
-            function leaderboardAccordingToDiscussion(){//依照書籍討論度排行
-                echo"<h1>討論度排行</h1><a href='../index.php'>返回首頁</a>";
-                $conn = require_once("../config.php");//連線至資料庫
-                if(!$conn){
-                    die("Fatal Errorr");//若未成功連線，終止程式並回報錯誤
-                }
-                echo
-                "<table>
-                      <tr>
-                          <th>討論度</th>
-                          <th>書名</th>
-                          <th>作者</th>
-                          <th>ISBN</th>
-                          
-                      </tr>";
-                //抓取討論度>0的書
-                $sql = "SELECT book.bookName,book.author,book.ISBN,book.describeBook,book.publish_year,book.img_url,count(*) as commentnum 
-                        FROM book,comment
-                        where book.ISBN = comment.ISBN 
-                        group by comment.ISBN
-                        order by commentnum DESC";
-                mysqli_query($conn,$sql);
-                $result = mysqli_query($conn,$sql);//抓取的結果
-                if (!$result) die("Fatal Error");//若抓取的結果不存在，終止程式並回報錯誤
-                $arr = array();//將所有資料存成陣列形式
-                $rows = $result->num_rows;//抓取的結果中共有幾列資料
-
-                for ($i = 0 ; $i < $rows ; ++$i){
-                    $result->data_seek($i);//查找第i列資料
-                    $row = $result->fetch_assoc();//讀取第i列資料
-                    echo
-                    "<tr style='cursor:pointer;' onclick=location.href='book.php?search=".$row['ISBN']."'>
-                        <td>".$row['commentnum']."</td>
-                        <td>".$row['bookName']."</td>
-                        <td>".$row['author']."</td>
-                        <td>".$row['ISBN']."</td>
-                    </tr>";  
-                }
-                //抓取討論度=0的書
-                $sql = "SELECT book.bookName,book.author,book.ISBN,book.describeBook,book.publish_year,book.img_url,0 as commentnum 
-                        FROM   book
-                        where  book.ISBN not in (SELECT comment.ISBN FROM comment) AND
-                            SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'";
-                mysqli_query($conn,$sql);
-                $result = mysqli_query($conn,$sql);//抓取的結果
-                if (!$result) die("Fatal Error");//若抓取的結果不存在，終止程式並回報錯誤
-                $arr = array();//將所有資料存成陣列形式
-                $rows = $result->num_rows;//抓取的結果中共有幾列資料
-
-                for ($i = 0 ; $i < $rows ; ++$i){
-                    $result->data_seek($i);//查找第i列資料
-                    $row = $result->fetch_assoc();//讀取第i列資料
-                    echo
-                    "<tr style='cursor:pointer;' onclick=location.href='book.php?search=".$row['ISBN']."'>
-                        <td>".$row['commentnum']."</td>
-                        <td>".$row['bookName']."</td>
-                        <td>".$row['author']."</td>
-                        <td>".$row['ISBN']."</td>
-                    </tr>";  
-                }
-                echo"
-              </table>";
-
-            }
-        ?>
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-muted">&copy; 2021 Kamel, Inc</p>
+    
+    
+        <ul class="nav col-md-4 justify-content-end">
+          <li class="nav-item"><a href="../index.php" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+      </footer>
     </div>
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top ">
-          <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
-          <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="../index.php" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-          </ul>
-        </footer>
-    </div>
-</BODY>
-</HTML>
+  </body>
+  
+
+</html>

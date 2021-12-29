@@ -82,7 +82,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                 公告標題：<br><input    name="title" type="text" required="required" style="width:100%;"><br>
                 公告內容：<br><textarea name="message" required="required" style="min-height:80%;max-height:80%;min-width:100%;max-width:100%;"></textarea><br>
                 傳送給<input  name="sent_to"   value="" placeholder="請輸入使用者學號，若要傳送給全體使用者，則不用輸入" type="text"  style="width:35%;">
-                <input value="送出" type="submit" >
+                <input class="btn btn-primary" value="送出" type="submit" >
             </form>
         </div>
     <div id="editWindow" title="修改公告">
@@ -92,7 +92,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             公告標題：<br><input    id="input_edit_titie" name="title"   value="" type="text" required="required" style="width:100%;"><br>
             公告內容：<br><textarea id="input_edit_message" name="message"  required="required" style="min-height:80%;max-height:80%;min-width:100%;max-width:100%;"></textarea><br>
             傳送給<input  name="sent_to" id="input_edit_sent_to" value="" placeholder="請輸入使用者學號，若要傳送給全體使用者，則不用輸入" type="text"  style="width:35%;">
-            <input value="送出" type="submit" >
+            <input class="btn btn-primary" value="送出" type="submit" >
         </form>
     </div>
     <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">

@@ -90,6 +90,9 @@
     function blackList_editReason(){
         $userID = $_POST["userID"];
         $reason = $_POST["reason"];
+        if($reason==""){
+            $reason ="無";
+        }
         $conn = require_once("../config.php");//連線至資料庫
         if(!$conn){
             die("Fatal Error");//若未成功連線，終止程式並回報錯誤
