@@ -27,7 +27,8 @@
             adjust_book_history($userID,$bookuniqueID,$conn);//調整歷史借書紀錄為已還書或遲還
         }
         else{
-            echo "此使用者無借閱此書";
+            echo"<script>alert('此使用者無借閱此書');history.go(-1);</script>";
+            exit;
         }
     }
 ?>

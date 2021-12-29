@@ -31,15 +31,18 @@
                         push_book_history($userID,$bookuniqueID,$conn,$ISBN);//將借書資訊放到history
                     }
                     else{
-                        echo "此書已被借走";
+                        echo"<script>alert('此書已被借走');history.go(-1);</script>";
+                        exit;
                     }
                 }
                 else{
-                    echo "有逾期書籍未歸還";
+                    echo"<script>alert('有逾期書籍未歸還');history.go(-1);</script>";
+                    exit;
                 }
             }
             else{
-                echo "已達借書上限,不得借書";
+                echo"<script>alert('已達借書上限,不得借書');history.go(-1);</script>";
+                exit;
             }
         }
         echo "借書成功";
