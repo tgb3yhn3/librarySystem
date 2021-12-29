@@ -120,7 +120,7 @@ mysqli_close($conn);
 </script>':'').'<form name="book" method="POST" action="reserve_book.php">
                  '.($book[$i]->num==0?'<button type="submit" class="btn btn-primary mr-1" >預約租書</button>':'').' 
                  
-                        <input type = "hidden" id = "userID" name="userID" value = "'.$_SESSION["userID"].'"><br>
+                        <input type = "hidden" id = "userID" name="userID" value = "'.(isset($_SESSION["userID"])?$_SESSION["userID"]:"").'"><br>
                         <input type = "hidden" id = "ISBN" name="ISBN" value = "'.$book[$i]->ISBN .'"><br>
 
                   <button type="button" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>

@@ -46,8 +46,32 @@
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>使用者權限</title>
+    <script>
+      (function() {'use strict';
+        window.addEventListener('load', function() {
+          var forms = document.getElementsByClassName("needs-validation");
+          var validation = Array.prototype.filter.call(forms, function(forms) {
+            forms.addEventListener('submit', function(event) {
+              if (forms.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+            forms.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
   </head>
-  <body>
+  <body onbeforeunload="goodbye()">
+  <script>
+    
+      window.onbeforeunload=function(e){     
+        var e = (window.event||e);  
+        e.returnValue=("確定離開當前頁面嗎？");
+      } 
+    
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
@@ -76,7 +100,7 @@
           </div>
         </header>
     </div>
-
+    
       <div class="container" >
         <table class="table align-middle">
             <thead class="table-dark">
@@ -91,11 +115,12 @@
             </thead>
             <br>
             <tbody>
+            
               <?php 
               for($i = 0;$i<count($datas);$i++){
                 echo'
               <tr>
-                <form action="condiction.php" method="POST" id="user'.$i.'">
+                <form action="condiction.php" method="POST" id="user'.$i.'" >
                 <input type="hidden" name="userID" value='.$datas[$i]["userID"].'>
                 <th scope="row"><input type="text" class="form-control" type="text" value="'.$datas[$i]["userID"].'" readonly></th>
                 <td>
@@ -111,15 +136,17 @@
                   <input type="text" class="form-control" type="text" placeholder="'.$datas[$i]["credit"].'"onchange="change_color(this.id)" readonly>
                 </td>
                 <td>
-                  <button class="btn btn-primary">設定</button>
+                  <button class="btn btn-primary" onclick="window.document.body.onbeforeunload=null;return true;">設定</button>
                 </td>
                 </form>
               </tr>';
               }
             ?>
+           
             </tbody>
           </table>
-      </div>
+      
+       </form>
       <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
           <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
