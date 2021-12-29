@@ -36,7 +36,7 @@
     }
     $_SESSION['reserve'] = $reserve;
     $_SESSION['uncomment'] = $uncomment;
-    $_SESSION['unreturn'] = $result_datas[0]['renting_book_num'];
+    $_SESSION['unreturn'] = $result_datas[0]['renting_book_num']-$reserve;
     $_SESSION['book_num'] = $result_datas[0]['book_num'];
     $_SESSION['book_time'] = $result_datas[0]['book_time'];
 
@@ -84,10 +84,10 @@
                 echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
             }else{
                 echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-                <a href="../php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+                <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
             ';
             } ?>
-                <p><font size="1" color="gray">可借/預約:<?php  echo $_SESSION["book_num"];?>&ensp;可借天數:<?php  echo $_SESSION["book_time"];?></font></p>
+                <p><font size="1" color="gray">總共可借/預約本數:<?php  echo $_SESSION["book_num"];?>&ensp;可借天數:<?php  echo $_SESSION["book_time"];?></font></p>
             </div>
         </header>
     </div>
@@ -112,7 +112,7 @@
                 <tbody bgcolor='#D2E9FF'>";
     for($i=0;$i<$res_count;$i++){
                 echo "<tr style='height:30px'>
-                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_name']."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'><a href='book.php?search=".$res_datas[$i]['ISBN']."'>".$res_datas[$i]['book_name']."</a></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['return_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'> ".(($res_datas[$i]['book_status']=='已預約')?'<a target="" href="cancel_reserve_book.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'&userID='.$res_datas[$i]['userID'].'">已預約</a>':$res_datas[$i]['book_status'])."</th>

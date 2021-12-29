@@ -162,7 +162,7 @@ else{
             echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="../php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
         </div>
@@ -186,14 +186,15 @@ else{
                     <form name="book" method="POST" >
                         <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>"><br>
                         <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>"><br>
-                    <?php echo($book[0]->num==0)?' <input type="button"  class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >':''?>
+                    <?php echo($book[0]->num==0&&isset($_SESSION['username']))?' <input type="button"  class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >':''?>
                     </form>
                 </div>
                 <div class="card-body text-center">
                     <form action="../php-favorite/favoriteBook_API.php" method="POST">
                         <input type="hidden" name="ISBN"value="<?php echo $search;  ?>"/>
                         <input type="hidden" name="bookName"value="<?php echo $book[0]->bookName;  ?>"/>
-                        <input  type ="submit" class="bt_love" value="<?php echo($isFavorite?'移除':'加入') ?>最愛"></input>
+                        <?php if(isset($_SESSION['username'])){
+                        echo '<input  type ="submit" class="bt_love" value=" '.($isFavorite?'移除':'加入').' 最愛"></input>';}?>
                     </form>  
                 </div>
             </div>

@@ -45,13 +45,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
     else{
         echo "該帳號已有人使用!<br>3秒後將自動跳轉頁面<br>";
-        echo "<a href='register.html'>未成功跳轉頁面請點擊此</a>";
+        echo "<a href='signup-2.htm'>未成功跳轉頁面請點擊此</a>";
         header('HTTP/1.0 302 Found');
-        header("refresh:3;url=register.html",true);
+        header("refresh:3;url=signup-2.htm",true);
         exit;
     }
 }else{
-    header("location:register.html");
+    header("location:signup-2.htm");
 }
 
 

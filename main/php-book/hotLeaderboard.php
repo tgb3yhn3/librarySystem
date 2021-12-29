@@ -60,7 +60,7 @@ mysqli_close($conn);
             echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="../php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
         </div>
@@ -118,7 +118,7 @@ mysqli_close($conn);
 
 
 </script>':'').'<form name="book" method="POST" action="reserve_book.php">
-                 '.($book[$i]->num==0?'<button type="submit" class="btn btn-primary mr-1" >預約租書</button>':'').' 
+                 '.($book[$i]->num==0&&isset($_SESSION["userID"])?'<button type="submit" class="btn btn-primary mr-1" >預約租書</button>':'').' 
                  
                         <input type = "hidden" id = "userID" name="userID" value = "'.(isset($_SESSION["userID"])?$_SESSION["userID"]:"").'"><br>
                         <input type = "hidden" id = "ISBN" name="ISBN" value = "'.$book[$i]->ISBN .'"><br>

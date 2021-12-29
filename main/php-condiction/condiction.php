@@ -94,7 +94,7 @@
             echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="../php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
           </div>
@@ -153,7 +153,7 @@
       
       
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="../welcome.php" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
           </ul>
         </footer>

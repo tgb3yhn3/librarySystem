@@ -15,7 +15,7 @@
             echo'<script>history.go(-1)</script>';
         }
         else{
-            alertMsg("已達借書上限,不得預約") ;
+            alertMsg("已達 借書/預約 上限,不得預約") ;
             echo'<script>history.go(-1)</script>';
         }
     }
