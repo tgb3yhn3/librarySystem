@@ -11,8 +11,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     //檢查帳號是否重複
     $check="SELECT * FROM users WHERE userID='".$userID."'";
     if(mysqli_num_rows(mysqli_query($conn,$check))==0){
-        $sql="INSERT INTO users (username,userID,email, password,token)
-            VALUES('".$username."','".$userID."','".$email."','".$password."','".$token."')";
+        $sql="INSERT INTO users (username,userID,email, password,token,status)
+            VALUES('".$username."','".$userID."','".$email."','".$password."','".$token."',0)";
        
         
         if(mysqli_query($conn, $sql)){
@@ -45,13 +45,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
     else{
         echo "該帳號已有人使用!<br>3秒後將自動跳轉頁面<br>";
-        echo "<a href='register.html'>未成功跳轉頁面請點擊此</a>";
+        echo "<a href='signup-2.htm'>未成功跳轉頁面請點擊此</a>";
         header('HTTP/1.0 302 Found');
-        header("refresh:3;url=register.html",true);
+        // header("refresh:3;url=signup-2.htm",true);
         exit;
     }
 }else{
-    header("location:register.html");
+    // header("location:signup-2.htm");
 }
 
 

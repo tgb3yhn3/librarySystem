@@ -70,11 +70,11 @@
             $credit = -20;
         }
         $credit = $credit+$number;
-        echo $book_num."<br>";
-        echo $book_time."<br>";
-        echo $book_fine."<br>";
-        echo $credit."<br>";
-        echo $userID."<br>";
+        // echo $book_num."<br>";
+        // echo $book_time."<br>";
+        // echo $book_fine."<br>";
+        // echo $credit."<br>";
+        // echo $userID."<br>";
         $adjust = "UPDATE user_condition SET book_num = '".$book_num."',book_time = '".$book_time."',book_fine = '".$book_fine."',credit = '".$credit."' WHERE userID = '".$userID."'";
         mysqli_query($conn,$adjust);
     }

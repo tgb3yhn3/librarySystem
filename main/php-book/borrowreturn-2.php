@@ -1,3 +1,10 @@
+<?php
+session_start();
+         
+if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+  header("location:../index.php");
+}
+?>
 <!DOCTYPE html>
 <HTML>
 <HEAD>
@@ -36,8 +43,20 @@
             <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-借還書</span></span>
             
             <div class="  col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2">Login</button>
-                <button type="button" class="btn btn-primary">Sign-up</button>
+            <?php
+            //   session_start();
+          if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
+            echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
+            echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+          }else{
+            echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
+         ';
+          } ?>
             </div>
         </header>
     </div>
@@ -74,7 +93,7 @@
 
 
             <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a href="../welcome.php" class="nav-link px-2 text-muted">Home</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
             </ul>
         </footer>

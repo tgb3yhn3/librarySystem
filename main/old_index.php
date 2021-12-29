@@ -34,7 +34,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 密碼：
 <input type="password" name="password"><br><br>
 <input type="submit" value="登入" name="submit"><br><br>
-<a href="php-member/register.html">還沒有帳號？現在就註冊！</a>
+<a href="php-member/signup-2.htm">還沒有帳號？現在就註冊！</a>
 <a href="php-member/forget.html">忘記密碼了?</a>
 </form>
 <table>

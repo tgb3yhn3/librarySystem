@@ -44,7 +44,7 @@ if($_SESSION['admin']==true){
  echo '<a href="php-blacklist\blackList.php"><button>黑名單</button></a>';
  echo '<a href="#"><button>匯出資料</button></a>';
  echo '<a href="php-condiction\condiction.php"><button>使用者權限</button></a>';
- echo '<a href="php-book\borrowreturn-2.htm"><button>借還書</button>';
+ echo '<a href="php-book\borrowreturn-2.php"><button>借還書</button>';
 }
 echo '<a href="php-book\borrow_history.php"><button>借閱紀錄</button>';
  echo '<a href="php-favorite/viewFavoriteBook.html"><button>查看最愛</button></a>';

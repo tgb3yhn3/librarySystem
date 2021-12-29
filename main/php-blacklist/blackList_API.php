@@ -55,7 +55,7 @@
                         $sql = "  insert into blacklist VALUES('$userID','$username','$reason')";
                     }
                     mysqli_query($conn,$sql);
-                    echo "<script>alert('加入成功!');window.location.replace('blackList.html');</script>";
+                    echo "<script>alert('加入成功!');window.location.replace('blackList.php');</script>";
     
                 }
                 else{//使用者不存在，返回輸入頁面
@@ -83,13 +83,16 @@
                 where userID = '$userID'";
         mysqli_query($link,$sql);
         mysqli_close($link);//關閉資料庫連線
-        echo "<script>alert('刪除成功!');window.location.replace('blackList.html');</script>";
+        echo "<script>alert('刪除成功!');window.location.replace('blackList.php');</script>";
     }
     
     //編輯加入黑名單原因
     function blackList_editReason(){
         $userID = $_POST["userID"];
         $reason = $_POST["reason"];
+        if($reason==""){
+            $reason ="無";
+        }
         $conn = require_once("../config.php");//連線至資料庫
         if(!$conn){
             die("Fatal Error");//若未成功連線，終止程式並回報錯誤
@@ -99,7 +102,7 @@
                 where userID = '$userID'";
         mysqli_query($link,$sql);
         mysqli_close($link);//關閉資料庫連線
-        echo "<script>alert('編輯成功!');window.location.replace('blackList.html');</script>";
+        echo "<script>alert('編輯成功!');window.location.replace('blackList.php');</script>";
     }
     
 ?>

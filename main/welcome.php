@@ -77,7 +77,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <a href="php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
         </div>
@@ -85,7 +85,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
     </div>
     <div class="container"> 
             <div class="row justify-content-center">
-                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/borrowreturn-2.htm'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
+                <input type ="button" class = "bt" onclick="javascript:location.href='php-book/borrowreturn-2.php'" value="出借/還書"></input><!-- //放入要跳轉的網址 -->
                 <input type ="button" class = "bt" onclick="javascript:location.href='php-book/bookchange.php'" value="館藏調整"></input><!-- //放入要跳轉的網址 -->  
             </div>
             
@@ -121,8 +121,12 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                 <thead>
                     <tr class="table-warning">
                         <th colspan="2">
-                            <form action="php-announcement/announcement_admin.html">
-                                系統公告<input type="submit" class="btn btn-outline-primary pull-right" value="編輯公告" />
+                        系統公告
+                            <form style="display: inline " action="php-announcement/announcement_admin.php">                       
+                                <input type="submit" class="btn btn-outline-primary pull-right" value="編輯公告" />
+                            </form>
+                            <form style="display: inline " action="php-announcement/sentOverdueMail.php">
+                                <button  type="submit" class="btn btn-outline-primary pull-right" value="">發布逾期通知(電子郵件)</button>
                             </form>
                         </th>
                     </tr>

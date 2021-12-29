@@ -1,13 +1,17 @@
 <?php
+//hotLeaderboard.php
+//熱門排行
 session_start();
 $conn=require_once("../config.php");
 require("search.php");
 $book=new stdClass();
-if(array_key_exists(("search"),$_POST)){
-  
-  $book=get_search_book($_POST['search'],1,1,$conn);
-}else{
-  $book=get_search_book("",0,1,$conn);
+
+$leaderboardAccordingTo = $_GET["leaderboardAccordingTo"];
+if($leaderboardAccordingTo == "discussion"){
+    $book=get_search_book("",7,1,$conn);
+}
+else{
+    $book=get_search_book("",0,1,$conn);
 }
 mysqli_close($conn);
 ?>
@@ -86,9 +90,11 @@ mysqli_close($conn);
              <img src="'.$book[$i]->img.'" class="img-fluid rounded-start"></a>
               </div>
               <div class="col-md-7">
-                <div class="card-body">
-                 
-                  <h4 class="card-title"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">'.$book[$i]->bookName.'</a></h4>
+                <div class="card-body">';
+                    if($leaderboardAccordingTo == "discussion"){
+                        echo'<p class="card-text"><a class="text-muted"><span style="color:red">討論度&emsp;'.$book[$i]->commentnum.'</span></a></p>';
+                    }
+             echo'<h4 class="card-title"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">'.$book[$i]->bookName.'</a></h4>
                   <p class="card-text">'.mb_substr(strip_tags ($book[$i]->describeBook),0,80).'</p>
                   <p class="card-text"><small class="text-muted">publish at&emsp;'.$book[$i]->publish_year.'</small></p>
                 </div>

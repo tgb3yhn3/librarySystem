@@ -1,3 +1,7 @@
+<?php 
+session_start();
+
+?>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -23,8 +27,20 @@
         <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-公告</span></span>
   
         <div class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-primary me-2">Login</button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
+        <?php 
+        //   session_start();
+          if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
+            echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
+            echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+          }else{
+            echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
+         ';
+          } ?>
         </div>
       </header>
     </div>
@@ -40,7 +56,6 @@
 
             $arr = array();//將所有資料存成陣列形式
             if($ID == "overdue_notice"){//若身分為使用者,可能會收到逾期通知
-               session_start();
                 /*取得使用者學號*/
                 $userID = $_SESSION["userID"];
                 $today = date('Y-m-d');
@@ -49,6 +64,7 @@
                         from 	user_book_history,book
                         WHERE 	SUBSTRING_INDEX(user_book_history.book_unique_ID, '_', 1) = book.ISBN and 
                                 user_book_history.userID = '$userID' and 
+                                user_book_history.start_rent_date <> '-' and 
                                 user_book_history.return_date = '-' and 
                                 user_book_history.lasting_return_date < '$today'
                         ORDER by user_book_history.lasting_return_date ";
@@ -58,7 +74,7 @@
                 $temparr = array();
                 $overdue_notice = array(
                   'ID'         => "overdue_notice",
-                  'title'      => "(逾期未還通知)".$username."(".$userID.")同學好，您有書籍未歸還且已超過還書期限，請盡速歸還",
+                  'title'      => "<span style='color:red;'>【逾期未還通知】</span>".$username."(".$userID.")同學好，您有書籍未歸還且已超過還書期限，請盡速歸還",
                   'message'    => "",
                   'annouceTime'=> $today,
                   'sent_to'    => "",
@@ -98,12 +114,17 @@
             echo"
             <html>
                 <body>
-                    <h1>".$arr[0]["title"]."</h1><hr><hr>".$arr[0]["message"]."<br>
+                    <h3 style='font-weight:bold;'>".$arr[0]["title"]."</h3><hr>".$arr[0]["message"]."<br>
                 </body>
             </html>
             ";
-
-            echo "<a href='javascript:history.back()'>返回公告頁面</a>";
+            if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
+              echo "<a href='announcement_admin.php'>返回編輯公告頁面</a>";
+            }
+            else{
+              echo "<a href='announcement_visitor_user.php'>返回公告頁面</a>";
+            }
+            
 
             $result->close();// 釋放抓取結果的記憶體
             $conn->close();//關閉與資料庫的連線
@@ -115,7 +136,7 @@
     
     
         <ul class="nav col-md-4 justify-content-end">
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item"><a href="../index.php" class="nav-link px-2 text-muted">Home</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
         </ul>
       </footer>
