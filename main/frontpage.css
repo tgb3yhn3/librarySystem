@@ -120,5 +120,5 @@ span ~ #tab > div:first-of-type,
 }
 
 span {
-    display: none;
+    /*display: none;*/
 }
