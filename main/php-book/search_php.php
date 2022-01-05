@@ -24,6 +24,12 @@ mysqli_close($conn);
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Search_result!</title>
+    <script>
+            function reserve_post(){
+                book.action = "reserve_book.php";
+                book.submit();
+            }
+    </script>
   </head>
   <body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -33,14 +39,26 @@ mysqli_close($conn);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script> -->
     <div class="container">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="../welcome.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <a href="../index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
           <img width="50px" height="50px"src="ntou_logo.png">
         </a>
         <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-搜尋結果</span></span>
   
         <div class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-primary me-2">Login</button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
+        <?php 
+        //   session_start();
+          if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
+            echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
+            echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+          }else{
+            echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
+         ';
+          } ?>
         </div>
       </header>
     </div>
@@ -91,10 +109,17 @@ mysqli_close($conn);
                 })
             })
         ;
-</script>':'').'
-                  <button type="button" class="btn btn-primary mr-1" href="#">預約租書</button>
+
+
+</script>':'').'<form name="book" method="POST" action="reserve_book.php">
+                 '.($book[$i]->num==0&&isset($_SESSION["userID"])?'<button type="submit" class="btn btn-primary mr-1" >預約租書</button>':'').' 
+                 
+                        <input type = "hidden" id = "userID" name="userID" value = "'.(isset($_SESSION["userID"])?$_SESSION["userID"]:"").'"><br>
+                        <input type = "hidden" id = "ISBN" name="ISBN" value = "'.$book[$i]->ISBN .'"><br>
+
                   <button type="button" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>
-                </div>
+                </form>
+                  </div>
               </div>
             </div>
         </div>';
@@ -107,7 +132,7 @@ mysqli_close($conn);
     
     
         <ul class="nav col-md-4 justify-content-end">
-          <li class="nav-item"><a href="../welcome.php" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item"><a href="../index.php" class="nav-link px-2 text-muted">Home</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
         </ul>
       </footer>

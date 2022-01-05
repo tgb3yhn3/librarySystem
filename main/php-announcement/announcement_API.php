@@ -41,7 +41,7 @@
                 where ID = (SELECT MAX(ID) from announcement)";
         mysqli_query($conn,$sql);
 
-        echo "<script>alert('加入成功!');window.location.replace('announcement_admin.html');</script>";
+        echo "<script>alert('加入成功!');window.location.replace('announcement_admin.php');</script>";
     
         $conn->close();//關閉與資料庫的連線 
     }
@@ -52,13 +52,13 @@
         if(!$ID){
             die("Fatal Error");//若ID不存在，終止程式並回報錯誤
         }
-        $conn = require_once("config.php");//連線至資料庫
+        $conn = require_once("../config.php");//連線至資料庫
         if(!$conn){
             die("Fatal Error");//若未成功連線，終止程式並回報錯誤
         }   
         $sql="delete from announcement where ID = '$ID'";
         mysqli_query($conn,$sql);
-        echo "<script>alert('刪除成功!');window.location.replace('announcement_admin.html');</script>";
+        echo "<script>alert('刪除成功!');window.location.replace('announcement_admin.php');</script>";
 
         $conn->close();//關閉與資料庫的連線 
     }
@@ -74,7 +74,7 @@
         if(!$ID){
             die("Fatal Error");//若ID不存在，終止程式並回報錯誤
         }
-        $conn = require_once("config.php");//連線至資料庫
+        $conn = require_once("../config.php");//連線至資料庫
         if(!$conn){
             die("Fatal Error");//若未成功連線，終止程式並回報錯誤
         }   
@@ -102,7 +102,7 @@
                 where ID = '$ID'";
         mysqli_query($conn,$sql);
 
-        echo "<script>alert('修改成功!');window.location.replace('announcement_admin.html');</script>";
+        echo "<script>alert('修改成功!');window.location.replace('announcement_admin.php');</script>";
 
         $conn->close();//關閉與資料庫的連線 
     }

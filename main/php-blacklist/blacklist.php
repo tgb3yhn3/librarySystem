@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+  header("location:../index.php");
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -66,10 +69,9 @@ session_start();
 
             </tbody>
           </table>
-          <a href="blackList_addpage.html">
           <div class="d-grid gap-2">
-            <button class="btn btn-outline-primary me-2" type="button">新增</button>
-          </div></a>
+            <button class="btn btn-outline-primary me-2" type="button" id="addNew">新增</button>
+          </div>
       </div>
       <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -82,11 +84,29 @@ session_start();
           </ul>
         </footer>
       </div>
-
+      <div id="addWindow" title="新增使用者到黑名單">
+          <form method="post" action="blackList_API.php">
+              <input name="action" type="hidden" value="add"><br>
+              使用者學號:<br><input name="userID" type="text" required="required" style="width:25%;"placeholder="請輸入使用者學號"><br>
+              原因:<br><input name="reason" type="text" style="width:100%;"placeholder="請輸入該使用者被加入黑名單原因"><br><br>
+              <input  class="btn btn-primary" type="submit" value="加入到黑名單">
+          </form>
+     </div> 
+     <div id="editWindow" title="編輯使用者被加入黑名單原因">
+          <form method="post" action="blackList_API.php">
+              <input  name="action" type="hidden" value="edit">
+              <input id="userID_edit1" name="userID" type="hidden" value="">
+              使用者：<span id="username_edit"></span>(<span id="userID_edit2"></span>)<br><br>
+              原因:<br><input id="reason_edit" name="reason" type="text" style="width:100%;" placeholder="請輸入該使用者被加入黑名單原因"><br><br>
+              <input  class="btn btn-primary" type="submit" value="確認修改">
+          </form>
+     </div>   
       
   </body>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-  </script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
   <script type="text/javascript">
         
     /*將從資料庫抓到的資料輸出成html的table*/
@@ -98,9 +118,10 @@ session_start();
                 "<td>" + data[item].userID + "</td>" +
                 "<td>" + data[item].username + "</td>" +
                 "<td>" + data[item].reason +"</td>" +
-                "<td>" + "<input type='button' id='editReason' value='編輯原因' onclick='editReason(\""+data[item].userID+"\")'>&emsp;" + "<input type='submit' value='刪除' form="+data[item].userID+">" +"</td>" +
+                "<td>" + "<input type='button' class='btn btn-outline-success btn-sm ' id='editReason"+data[item].userID+"' value='編輯原因'>&emsp;" + "<input type='submit' class='btn btn-outline-danger btn-sm ' value='刪除' form="+data[item].userID+">" +"</td>" +
                 "</tr>";
             $("#menu").append(content);
+
             let content2 =  "<form action='blackList_API.php' method='post' id="+data[item].userID+">"+
                             "<input name='userID'   type='hidden' value="+data[item].userID   +">"+
                             "<input name='username' type='hidden' value="+data[item].username +">"+
@@ -108,13 +129,31 @@ session_start();
                             "<input name='action'   type='hidden' value='delete'>"+
                             "</form>";
             $("#formlist").append(content2);
+
+            //「修改公告」按鈕按下去後，會打開「修改公告小視窗」
+            $( "#editReason"+data[item].userID).click(function() {
+                $( "#editWindow" ).dialog( "open" );
+                $( "#userID_edit1" ).val(data[item].userID);
+                $( "#userID_edit2" ).html(data[item].userID);
+                $( "#username_edit" ).html(data[item].username);
+                $( "#reason_edit" ).val(data[item].reason);
+            });
         }
     });
 
-    //編輯原因用，將使用者資料傳給編輯頁面
-    function editReason(userID){
-        localStorage.setItem('blackList_userID',userID);
-        window.location.replace('blackList_editpage.html');
-    }
+    //「新增黑名單小視窗」預設為隱藏
+    $(function() {
+        $( "#addWindow" ).dialog({autoOpen: false,height:window.innerHeight*0.7,width:window.innerWidth*0.7});
+    });
+
+    //「編輯使用者被加入黑名單原因」預設為隱藏
+    $(function() {
+        $( "#editWindow" ).dialog({autoOpen: false,height:window.innerHeight*0.7,width:window.innerWidth*0.7});
+    });
+
+    //「新增」按鈕按下去後，會打開「新增黑名單小視窗」
+        $( "#addNew" ).click(function() {
+            $( "#addWindow" ).dialog( "open" );
+    });
 </script>
 </html>

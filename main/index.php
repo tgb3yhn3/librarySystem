@@ -1,3 +1,9 @@
+<?php session_start();
+// echo isset($_SESSION["admin"]);
+// echo $_SESSION["admin"];
+if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
+    header("location:welcome.php");
+}?>
 <!DOCTYPE html>
 <HTML>
 <HEAD>
@@ -45,13 +51,18 @@
         <span class="fs-1">海大資工系圖書館系統</span>
   
         <div class="col-md-3 text-end">
-          <?php session_start();
+          <?php 
+          
           if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
             echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
             echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
           }else{
             echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-            <a href="php-member/register.html"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <a href="php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
           </div>
@@ -61,7 +72,7 @@
         <div class="row justify-content-center">
             <div class="col-4">
               <form action="php-book/search_php.php" method="POST">
-              <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋">
+              <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋" required>
             </div>
             <div class="col-1">
               <button class="btn btn-outline-success" type="submit">Search</button>
@@ -73,13 +84,13 @@
     <div class="text-center">
         <div class="btn-group">
             <a href="php-book/search_php.php"><button  type="button" class="btn btn-secondary btn-lg">館藏查詢</button></a>
-            <a href="php-book/borrow_history.php" ><button type="button" class="btn btn-secondary btn-lg">借閱歷史</button></a>
-            <a href="php-favorite/viewFavoriteBook.html"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>
+            <?php echo((isset($_SESSION['userID'])?'<a href="php-book/borrow_history.php" ><button type="button" class="btn btn-secondary btn-lg">借閱歷史</button></a>':''));?>
+            <?php echo((isset($_SESSION['userID'])?'<a href="php-favorite/myFavoriteBook.php"><button  type="button" class="btn btn-secondary btn-lg">我的最愛</button></a>':''));?>
         </div>
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.html">更多</a></div>
+            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.php">更多</a></div>
             <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -111,7 +122,7 @@
                   <p id=""></p>
                 </div>
               </div>
-              <div id="recommendNewBook2" class="carousel-item" data-bs-interval="2000">
+              <div id="recommendNewBook2"class="carousel-item" data-bs-interval="2000">
                 <img id="recommendNewBook_img2" src="" class="d-block w-20" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h5 id="recommendNewBook_bookName2"></h5>
@@ -151,7 +162,10 @@
                 <div class="card-body">
                   <h4 class="card-title">借閱</h4>
                   <p class="card-text">依照最多人借閱書籍排行</p>
-                  <button type="button" class="btn btn-outline-primary me-2">前往</button>
+                  <form method="get" action="php-book/hotLeaderboard.php">
+                      <input type="hidden"  name="leaderboardAccordingTo" value="borrow" />
+                      <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
+                  </form>
                 </div>
               </div>
             </div>
@@ -175,7 +189,6 @@
                       <input type="hidden"  name="leaderboardAccordingTo" value="discussion" />
                       <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
                   </form>
-                  
                 </div>
               </div>
             </div>

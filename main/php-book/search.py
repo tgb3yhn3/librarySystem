@@ -82,6 +82,7 @@ for i in seperate:
         date = i[5:]
         # print(date)
         break
+text=text.replace('\'','')
 book_json = {'book_name':book_name,'author':author,'company':company,'date':date,'img_url':img_url,'text':text}
 str1 = json.dumps(book_json,ensure_ascii=True)
 # bs=str1.encode('cp950')
