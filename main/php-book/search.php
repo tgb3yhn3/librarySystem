@@ -24,12 +24,19 @@
      }else if($modeNum==6){
         $sql="SELECT * FROM `user_book_history` group by book_unique_ID order by count(book_unique_ID)'";
      }else if($modeNum==7){//討論度排行(先抓討論度>0)
-      $sql="SELECT book.*,count(*) as commentnum 
-            FROM   book,comment
-            where  book.ISBN = comment.ISBN AND SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'
-            group  by comment.ISBN
-            order  by commentnum DESC";
-     }
+        $sql="SELECT book.*,count(*) as commentnum 
+              FROM   book,comment
+              where  book.ISBN = comment.ISBN AND SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'
+              group  by comment.ISBN
+              order  by commentnum DESC";
+     }else if($modeNum==8){//最多人借閱排行(先抓借閱數>0)
+        $sql="SELECT book.*,count(*) as borrownum 
+              FROM   book,user_book_history
+              where  book.ISBN = SUBSTRING_INDEX(user_book_history.book_unique_ID, '_', 1) AND
+                     user_book_history.book_status <>'已預約'
+              group by book.ISBN
+              order by borrownum DESC";
+    }
      $ISBN="";
      $result = mysqli_query($conn,$sql);
      $datas=array();
@@ -50,6 +57,24 @@
                    FROM   book
                    where  book.ISBN not in (SELECT comment.ISBN FROM comment) AND
                          SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'";
+            $result2 = mysqli_query($conn,$sql2);
+            if($result2){
+                if (mysqli_num_rows($result2)>0) {
+                    // 取得大於0代表有資料
+                    // while迴圈會根據資料數量，決定跑的次數
+                    // mysqli_fetch_assoc方法可取得一筆值
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+                        $datas[] = $row2;
+                    }
+                }
+            }
+         }
+         else if($modeNum==8){//最多人借閱排行(再抓借閱數=0)
+            $sql2="SELECT book.*,0 as borrownum 
+                   FROM   book
+                   where  book.ISBN not in (SELECT SUBSTRING_INDEX(user_book_history.book_unique_ID,'_', 1) FROM user_book_history) AND
+                          book.ISBN <> ''";
             $result2 = mysqli_query($conn,$sql2);
             if($result2){
                 if (mysqli_num_rows($result2)>0) {
@@ -86,6 +111,9 @@
             $num=mysqli_fetch_assoc(mysqli_query($conn,$sql))['num'];
             if($modeNum==7){
                 $commentnum = $datas[$i]['commentnum'];    
+            }
+            if($modeNum==8){
+                $borrownum = $datas[$i]['borrownum'];    
             }
             // $num=$datas[$i]['num'];
             
@@ -135,6 +163,9 @@
             $bookdata->num=$num;
             if($modeNum==7){
                 $bookdata->commentnum=$commentnum;    
+            }
+            else if($modeNum==8){
+                $bookdata->borrownum=$borrownum;    
             }
             array_push($book,$bookdata);
             $return_value=$return_value."<hr>";

@@ -10,6 +10,9 @@ $leaderboardAccordingTo = $_GET["leaderboardAccordingTo"];
 if($leaderboardAccordingTo == "discussion"){
     $book=get_search_book("",7,1,$conn);
 }
+else if($leaderboardAccordingTo == "borrow"){
+  $book=get_search_book("",8,1,$conn);
+}
 else{
     $book=get_search_book("",0,1,$conn);
 }
@@ -93,6 +96,9 @@ mysqli_close($conn);
                 <div class="card-body">';
                     if($leaderboardAccordingTo == "discussion"){
                         echo'<p class="card-text"><a class="text-muted"><span style="color:red">討論度&emsp;'.$book[$i]->commentnum.'</span></a></p>';
+                    }
+                    else if($leaderboardAccordingTo == "borrow"){
+                        echo'<p class="card-text"><a class="text-muted"><span style="color:red">借閱總人次:&emsp;'.$book[$i]->borrownum.'</span></a></p>';
                     }
              echo'<h4 class="card-title"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">'.$book[$i]->bookName.'</a></h4>
                   <p class="card-text">'.mb_substr(strip_tags ($book[$i]->describeBook),0,80).'</p>
