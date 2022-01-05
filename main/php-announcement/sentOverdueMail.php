@@ -1,9 +1,4 @@
 <?php
-echo "<script>
-    if(!confirm('確定發送？')){
-        window.location.replace('../welcome.php');
-    };
-</script>";
 
 //function 後端 發送逾期通知的email
 
@@ -18,7 +13,7 @@ require '../PHPMailer/PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/PHPMailer/src/SMTP.php';
 //Load Composer's autoloader
 
-function sentOverdueMail(){
+function sentOverdueMail(){//發送逾期信件
     $mail = new PHPMailer(true);
 
     try {
@@ -105,13 +100,20 @@ function sentOverdueMail(){
         return false;
     }
 }
-//sentOverdueMail();
-if(sentOverdueMail()==true){//發送成功
-    echo "<script>alert('發送成功!');window.location.replace('../welcome.php');</script>";
-}
-else{//發送失敗
-    echo "<script>alert('發送失敗!');window.location.replace('../welcome.php');</script>";
-}
-//Create an instance; passing `true` enables exceptions
 
+
+/*以下執行自動發信(需要用瀏覽器先打開此PHP一次，關閉瀏覽器後可背景執行)*/
+
+ignore_user_abort(); //即使Client斷開(如關掉瀏覽器)，PHP腳本也可以繼續執行.
+set_time_limit(0); // 執行時間為無限制，可以讓程序無限制的執行下去
+date_default_timezone_set('Asia/Taipei');//設定時區
+
+$interval = 60;//每分鐘檢查一次(單位:秒),至少要1分鐘,否則一天可能重複發送信件2次
+do{
+    if(date("H:i")=="00:00"){//每天凌晨12點0分自動發信
+        sentOverdueMail();
+        //file_put_contents("123.txt",date("H-i-s"));//測試背景執行用
+    }
+    sleep($interval);
+}while(true);
 ?>
