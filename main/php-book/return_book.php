@@ -85,6 +85,13 @@
               <button id="html" type="button" class="btn btn-success btn-lg" >還書憑據</button>
               <br><br>
               <?php
+              $late_total_date=0;
+              $start_rent_date=0;
+              $return_date=0;
+              $book_name=0;
+              $lasting_return_date=0;
+              $book_fine=0;
+              $total_fine=0;
                 if($data = check_this_book_late_return($bookuniqueID,$conn)){//late
                   echo '<button id="fine" type="button" class="btn btn-success btn-lg">罰金繳費單</button>';
                   $late_total_date = late_total_day($data);
@@ -96,7 +103,7 @@
                   $total_fine = total_fine($late_total_date,$book_fine);
                 }
                 else{//no late
-                  echo '<button href="#" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>';
+                  echo '<button id="fine" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>';
                 }
               ?>
               
