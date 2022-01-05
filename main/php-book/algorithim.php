@@ -64,10 +64,10 @@
         }
         //--------------------------------------超過處理
         else if($credit==20&&$number==1){//20->21
-            $credit = 20;
+            $credit = 19;
         }
         else if($credit==-20&&$number==-1){//-20->-21
-            $credit = -20;
+            $credit = -19;
         }
         $credit = $credit+$number;
         // echo $book_num."<br>";
