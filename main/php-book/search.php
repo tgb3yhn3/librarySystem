@@ -1,6 +1,6 @@
 <?php
 //後端 function 用來查詢書籍
-    if(isset($_POST['search'])){
+    if(isset($_POST['modeNum'])){
         $conn= require_once("../config.php");
         
         get_search_book($_POST['search'],$_POST['modeNum'],0,$conn);
