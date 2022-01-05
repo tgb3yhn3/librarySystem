@@ -5,6 +5,7 @@ $conn=require_once("../config.php");
 require_once("search.php");//包含config.php了
 require_once("../php-comment/comment.php");
 require_once("../php-favorite/isFavorite.php");
+require_once("../php-like/like_query.php");
 $search=$_GET["search"];
 $book=get_search_book($search,2,1,$conn);
 $comment=get_comment($search,$conn);
@@ -221,19 +222,29 @@ else{
                     <div class="list-group list-group-flush">
                     <?php 
                         for($i=0;$i<count($comment);$i++){
-                    echo'
-                      <a class="list-group-item">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                          <strong class="mb-1">'.$comment[$i]->username.'</strong>
-                          <small class="text-muted"></small>
-                        </div>
-                        <div class="col-10 mb-1 small">'.$comment[$i]->context.'</div>
-                      </a>
-                      ';
+                            echo'
+                            <a class="list-group-item">
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                <strong class="mb-1">'.$comment[$i]->username.'</strong>
+                                <small class="text-muted"></small>
+                                </div>
+                                <div class="col-10 mb-1 small">'.$comment[$i]->context;
+                            if(isset($_SESSION['username'])){
+                                if(strcmp($_SESSION['username'],$comment[$i]->username)){
+                                    echo '
+                                        <form action="../php-like/like_API.php" method="POST">
+                                            <input type="hidden" name="ISBN" value='.$search.'>
+                                            <input type="hidden" name="commentUsername" value='.$comment[$i]->username.'>
+                                            <input type="hidden" name="context" value='.$comment[$i]->context.'>
+                                            <input type="submit" value="喜歡評論">
+                                        </form>
+                                    ';
+                                } 
+                            }
+                            echo "score:".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn);
+                            echo '</div></a>'; 
                         }
-                      ?>
-    
-    
+                    ?>
                     </div>
                     </div>
                     <div class="container">
