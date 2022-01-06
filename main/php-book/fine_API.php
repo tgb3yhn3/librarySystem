@@ -19,7 +19,7 @@
     function lasting_return_date($data){
         return $data[0]["lasting_return_date"];
     }
-    function get_book_fine($userID,$conn){
+    function get_book_fine($userID,$conn){//dont care
         $get_data =  "SELECT * FROM user_condition WHERE userID = '".$userID."'" ;
         $result = mysqli_query($conn,$get_data);
         if ($result) {

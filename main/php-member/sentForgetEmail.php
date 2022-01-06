@@ -7,9 +7,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/PHPMailer/src/Exception.php';
-require 'PHPMailer/PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/PHPMailer/src/SMTP.php';
+require '../PHPMailer/PHPMailer/src/Exception.php';
+require '../PHPMailer/PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/PHPMailer/src/SMTP.php';
 //Load Composer's autoloader
 
 function sentForgetMail($mailto,$token){
@@ -40,13 +40,13 @@ try {
     
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Here is the subject';
+    $mail->Subject = 'Kamel 忘記密碼驗證信';
     $mail->Body    = '<p>同學您好：</p>
 
-    <p>請點選「<a href="http://grassr.ddns.net/main/validForget.php?verify='.$token.'">這裡</a>」以重設您的密碼</p>
+    <p>請點選「<a href="http://grassr.ddns.net/main/php-member/validForget.php?verify='.$token.'">這裡</a>」以重設您的密碼</p>
     
     <p>若連結無法啟用，請在瀏覽器上貼上以下網址：
-    <br>http://grassr.ddns.net/main/validForget.php?verify='.$token.'</p>
+    <br>http://grassr.ddns.net/main/php-member/validForget.php?verify='.$token.'</p>
     <p>祝您有美好的一天!</p>
     
     <p>提醒您，為維護您的權益，請儘速取得您的密碼或變更密碼。</p>
