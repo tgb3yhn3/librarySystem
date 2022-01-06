@@ -1,9 +1,6 @@
 <?php
     if(isset($_GET['num'])){
-        require_once('adjust_user_condition.php');
-        require_once('adjust_line_up.php');
-        require_once('check_adjust_balance.php');
-        require_once('set_book_status_to_0.php');
+        require_once('bookAPI.php');
         define('DB_SERVER', 'localhost');
         define('DB_USERNAME', 'root');
         define('DB_PASSWORD', '123456');

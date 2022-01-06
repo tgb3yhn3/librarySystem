@@ -1,11 +1,5 @@
 <?php
-    require_once('check_user_renting_book.php');
-    require_once('adjust_book_status.php');
-    require_once('adjust_user_condition.php');
-    require_once('adjust_book_history.php');
-    require_once('check_line_up.php');
-    require_once('adjust_line_up.php');
-    require_once('check_this_book_late_return.php');
+    require_once('bookAPI.php');
     require_once('fine_API.php');
     $conn=require_once("config.php");
     if($_SERVER["REQUEST_METHOD"]=="POST"){

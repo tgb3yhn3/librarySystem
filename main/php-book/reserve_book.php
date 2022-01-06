@@ -1,8 +1,5 @@
 <?php
-    require_once('check_condition.php');
-    require_once('push_line_up.php');
-    require_once('push_book_history_reserve.php');
-    require_once('adjust_user_condition.php');
+    require_once('bookAPI.php');
     $conn=require_once("config.php");
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $userID=$_POST["userID"];
