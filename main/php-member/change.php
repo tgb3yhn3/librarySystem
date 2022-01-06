@@ -21,10 +21,10 @@
             <a href="../index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                 <img width="50px" height="50px" src="ntou_logo.png">
             </a>
-            <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-登入</span></span>
+            <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-修改密碼</span></span>
 
             <div class="col-md-3 text-end">
-                <a href="#"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+                <a href="login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
                 <a href="signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
             </div>
         </header>
@@ -34,25 +34,18 @@
               <div class=" col-4 h-100 ">
                 <br>
                 
-                <form action="login.php" name="book" method="POST" style="width:atuo; text-align:center;">
-                
-                    &emsp;學號:
-                    <input name="userID" type="text" >
+                <form action="change.php" name="book" method="POST" style="width:atuo; text-align:center;">
+                    <input type="hidden" value=<?php echo "'$userID'" ?> name="userID">
+                    &emsp;
+                    請輸入原本密碼:<input id="password" name="password" type="password" >
                      &emsp;
                 <br>
                 <br>
                 
-                    &emsp;密碼:
-                    <input name="password" type="password" >  &emsp;
-                    <br>
-                    <br>
-                  &emsp;<input type="submit" value="登入">&emsp;<input type="reset" value="清除" onClick="return_post()">
-                  <a href="forget.html">忘記密碼</a>
-                  
+                   
+                <input type="submit"></button>
             </form>
-                
               </div>
-              
         </div>
     </div>
     <div class="container">
@@ -69,3 +62,21 @@
 
 </BODY>
 </HTML>
+<?php
+    if(isset($_POST['userID'])){
+        $conn=require_once("../config.php");
+        $userID=$_POST['userID'];
+        $sql = "SELECT * FROM users WHERE userID ='".$userID."'";
+        $result=mysqli_query($conn,$sql);
+        $row=$result ->fetch_assoc();
+        if($row['password']==$_POST['password']){
+            $forgetToken=md5($userID.time());
+            $sql="UPDATE users SET forgettoken='".$forgetToken."' WHERE userID=".$userID;
+            mysqli_query($conn,$sql);
+            header("refresh:0.005;url=http://grassr.ddns.net/main/php-member/validForget.php?verify='.$token.'",true);
+        }else{
+            //ERROR
+        }
+        
+    }
+?>

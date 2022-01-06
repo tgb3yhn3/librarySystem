@@ -102,6 +102,7 @@
                 <thead bgcolor='#84C1FF'>
                     <tr style='height:30px'>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>書名</font></th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>書籍ID</font></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>借閱日期</font></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>還書日期</font></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>書籍狀態</font></th>
@@ -113,6 +114,7 @@
     for($i=0;$i<$res_count;$i++){
                 echo "<tr style='height:30px'>
                         <th style='width:150px;border:1px black solid; text-align:center;'><a href='book.php?search=".$res_datas[$i]['ISBN']."'>".$res_datas[$i]['book_name']."</a></th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_unique_ID']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['return_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'> ".(($res_datas[$i]['book_status']=='已預約')?'<a target="" href="cancel_reserve_book.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'&userID='.$res_datas[$i]['userID'].'">已預約</a>':$res_datas[$i]['book_status'])."</th>

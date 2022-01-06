@@ -1,10 +1,6 @@
 <?php
-    require_once('check_user_renting_book.php');
-    require_once('adjust_book_status.php');
-    require_once('adjust_user_condition.php');
-    require_once('adjust_book_history.php');
-    require_once('check_line_up.php');
-    require_once('adjust_line_up.php');
+    require_once('bookAPI.php');
+    require_once('fine_API.php');
     $conn=require_once("config.php");
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $userID=$_POST["userID"];
@@ -82,7 +78,29 @@
               <button href="#" type="button" class="btn btn-success btn-lg mx-4" disabled>出借憑據</button>
               <button id="html" type="button" class="btn btn-success btn-lg" >還書憑據</button>
               <br><br>
-            <button href="#" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>
+              <?php
+              $late_total_date=0;
+              $start_rent_date=0;
+              $return_date=0;
+              $book_name=0;
+              $lasting_return_date=0;
+              $book_fine=0;
+              $total_fine=0;
+                if($data = check_this_book_late_return($bookuniqueID,$conn)){//late
+                  echo '<button id="fine" type="button" class="btn btn-success btn-lg">罰金繳費單</button>';
+                  $late_total_date = late_total_day($data);
+                  $start_rent_date = start_rent_date($data);
+                  $return_date = return_date($data);
+                  $book_name = book_name($data);
+                  $lasting_return_date = lasting_return_date($data);
+                  $book_fine = get_book_fine($userID,$conn);
+                  $total_fine = total_fine($late_total_date,$book_fine);
+                }
+                else{//no late
+                  echo '<button id="fine" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>';
+                }
+              ?>
+              
           </div>
           
       </div>
@@ -103,6 +121,11 @@
         $(document).ready(function(){
             $("#html").click(function(){
                 window.open("returnReceipt.php?ISBN=<?=$ISBN?>&bookuniqueID=<?=$bookuniqueID?>&userID=<?=$userID?>","_blnk");
+            });
+        });
+        $(document).ready(function(){
+            $("#fine").click(function(){
+                window.open("fineReceipt.php?ISBN=<?=$ISBN?>&bookuniqueID=<?=$bookuniqueID?>&userID=<?=$userID?>&late_total_date=<?=$late_total_date?>&start_rent_date=<?=$start_rent_date?>&return_date=<?=$return_date?>&book_name=<?=$book_name?>&lasting_return_date=<?=$lasting_return_date?>&book_fine=<?=$book_fine?>&total_fine=<?=$total_fine?>","_blnk");
             });
         });
     </script> 
