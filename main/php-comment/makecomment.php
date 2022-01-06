@@ -64,6 +64,7 @@
         <input type="hidden" name='username'value='<?php echo  $_SESSION['username'];?>'>
         <input type="hidden" name='ISBN'value='<?php echo  $_GET['book']?>'>
         <input type="hidden" name='num'value='<?php echo  $_GET['num']?>'>
+		<input id="Good" type="hidden" name='good'>
         
     
                 &emsp;&emsp;&emsp;&emsp;
@@ -199,8 +200,8 @@
 				ratingPercent: '20%', // percentage star system should start 
 				canRate: true, // can the user rate this star system?
 				onRate: function() { // this function runs when a star is clicked on
-					console.log( rating2 );
-					alert('You rated ' + rating2.newRating + ' starts' );
+					//alert('You rated ' + rating2.newRating + ' starts' );
+					$("#Good").val(rating2.ratingPercent);
 				}
 			} );
 		} );
