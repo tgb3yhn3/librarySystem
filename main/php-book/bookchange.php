@@ -62,7 +62,7 @@
             <!-- create Book -->
             <form action="create.php" method="post" enctype="multipart/form-data">
             <br>
-            <p>書名:&emsp;<input name="bookName" id="bookName" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;分類:&emsp;<input name="class" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
+            <p>書名:&emsp;<input name="bookName" id="bookName" type="text" size="15" maxlength="25" style="border-color:#84C1FF;">&emsp;分類:&emsp;<select name="class" maxlength="30" style="border-color:#84C1FF;"><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
             <p>作者:&emsp;<input name="author" id="author"type="text" size="12" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="ISBN" id="ISBN"type="text" size="10" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
             <p>出版日期:<input name="publish_year" id="publish_year" type="text" size="10" maxlength="30" style="border-color:#84C1FF;">出版社:<input name="publisher"id="publisher" type="text" size="5" maxlength="30" style="border-color:#84C1FF;"></p>
             <p>數量:<input name="num" type="text"value="1" size="1" maxlength="30" style="border-color:#84C1FF;">簡介:&emsp;<input name="describeBook" id="describeBook" type="text" size="20" maxlength="30" style="border-color:#84C1FF;"></p>
@@ -70,6 +70,7 @@
             <p>書籍圖片&emsp;<input name="image" type="file" accept="image/png, image/jpeg,image/gif" size="1" maxlength="30" style="border-color:#84C1FF;"></p>
             
            <p><input type="submit" value="上架"/>&emsp;&emsp;&emsp;<input type="reset" value="清除">&emsp;<button type="button"id="crawl">自動爬取書籍資料</button></p>
+            
             
             
         </form>
