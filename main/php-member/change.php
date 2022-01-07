@@ -22,11 +22,30 @@
                 <img width="50px" height="50px" src="ntou_logo.png">
             </a>
             <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-修改密碼</span></span>
-
             <div class="col-md-3 text-end">
-                <a href="login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-                <a href="signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            <?php 
+          session_start();
+          if(isset($_SESSION['username'])){
+
+            // echo ($_SESSION["status"]);
+            // echo $_SESSION["admin"];
+            echo $_SESSION['username'].'&emsp;你好&emsp;';
+            
+            echo '
+            <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="../php-member/logout.php" class="text-decoration-none"><button type="button" class="dropdown-item ">登出</button></a>
+                <a href="../php-member/change.php" class="text-decoration-none"><button type="button" class="dropdown-item ">修改密碼</button></a>
             </div>
+          </div>
+          ';
+          }else{
+            echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+            <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
+         ';
+          } ?>
         </header>
     </div>
     <div class="container">
@@ -35,7 +54,8 @@
                 <br>
                 
                 <form action="change.php" name="book" method="POST" style="width:atuo; text-align:center;">
-                    <input type="hidden" value=<?php echo "'$userID'" ?> name="userID">
+                    <input type="hidden" value=<?php 
+                    echo '"'.$_SESSION['userID'].'"' ?> name="userID">
                     &emsp;
                     請輸入原本密碼:<input id="password" name="password" type="password" >
                      &emsp;
@@ -73,10 +93,16 @@
             $forgetToken=md5($userID.time());
             $sql="UPDATE users SET forgettoken='".$forgetToken."' WHERE userID=".$userID;
             mysqli_query($conn,$sql);
-            header("refresh:0.005;url=http://grassr.ddns.net/main/php-member/validForget.php?verify='.$token.'",true);
+            header("refresh:0;url=http://grassr.ddns.net/main/php-member/validForget.php?verify=$forgetToken",true);
         }else{
+            alertMsg("密碼錯誤");
             //ERROR
         }
         
+    }
+    function alertMsg($msg){
+        echo "<script>
+        window.alert('$msg');
+        </script>";
     }
 ?>
