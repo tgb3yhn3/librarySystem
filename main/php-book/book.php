@@ -140,7 +140,70 @@ else{
                 book.action = "reserve_book.php";
                 book.submit();
             }
-    </script>
+            
+		// create object
+		var starRating = ( function() {
+
+			var starRating = function( args ) {
+				// give us our self
+				var self = this;
+
+				// set global vars for our object
+				self.container = jQuery( '#' + args.containerId );
+				self.containerId = args.containerId;
+				self.starClass = 'sr-star' + args.containerId;
+				self.starWidth = args.starWidth;
+				self.starHeight = args.starHeight;
+				self.containerWidth = args.starWidth * 5;
+				self.ratingPercent = args.ratingPercent;
+				self.newRating = 0;
+				self.canRate = args.canRate;
+
+				// draw the 5 star rating system out to the dom
+				self.draw();
+			};
+
+			starRating.prototype.draw = function() {
+				var self = this;
+				var pointerStyle = ( self.canRate ? 'cursor:pointer' : '' );
+				var starImg = '<img src="staroutline.png" style="width:' + self.starWidth + 'px" />';
+				var html = '<div style="width:' + self.containerWidth + 'px;height:' + self.starHeight + 'px;position:relative;' + pointerStyle + '">';
+
+				// create the progress bar that sits behinde the png star outlines
+				html += '<div class="sr-star-bar' + self.containerId + '" style="width:' + self.ratingPercent + ';background:#FFD700;height:100%;position:absolute"></div>';
+
+				for ( var i = 0; i < 5; i++ ) { // add each star to the page
+					var currStarStyle = 'position:absolute;margin-left:' + self.starWidth * i + 'px';
+					html += '<div class="' + self.starClass + '" data-stars="' + ( i + 1 ) + '" style="' + currStarStyle + '">' + 
+						starImg + 
+					'</div>';
+				}
+
+				html += '</div>';
+
+				// write out to the dom
+				self.container.html( html );
+			};
+
+			// return it all!
+			return starRating;
+		} )();
+
+		$( function() {
+			var rating2 = new starRating( { // create second star rating system on page load
+				containerId: 'star_rating2', // element id in the dom for this star rating system to use
+				starWidth: 30, // width of stars
+				starHeight: 30, // height of stars
+				ratingPercent: '50%', // percentage star system should start 
+				canRate: true, // can the user rate this star system?
+				onRate: function() { // this function runs when a star is clicked on
+					console.log( rating2 );
+					alert('You rated ' + rating2.newRating + ' starts' );
+				}
+			} );
+		} );
+	</script>
+    
 </head>
 <body>
 <div class="container">
@@ -190,7 +253,8 @@ else{
         <div class="row justify-content-center">
             <div class="card col-4 " >
                 <img src="<?php echo $book[0]->img ?>" class="card-img">
-                
+                <div class="card-body row justify-content-center w-auto" id="star_rating2">
+                </div>
                 <div class="card-body text-center ">
                     <form name="book" method="POST" >
                         <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>"><br>
