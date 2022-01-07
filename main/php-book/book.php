@@ -131,7 +131,7 @@ else{
     transform: translate(-50%,-50%);
     }
     .content{
-    padding: 13px 16px;
+    padding: 5px 8px;
     display: flex;
     border: 2px solid #eae2e1;
     border-radius: 5px;
@@ -146,10 +146,10 @@ else{
     background: url("img.png") no-repeat;
     background-position: left;
     background-size: 2900%;
-    height: 45px;
-    width: 45px;
+    height: 60px;
+    width: 60px;
     top: 50%;
-    left: 30%;
+    left: 25%;
     transform: translate(-50%,-50%);
     }
     .text{
@@ -160,7 +160,7 @@ else{
     }
     .numb:before{
     content: '12';/*點讚數*/
-    font-size: 12px;
+    font-size: 15px;
     margin-left: 7px;
     font-weight: 600;
     color: #9C9496;
