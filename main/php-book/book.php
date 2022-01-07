@@ -34,7 +34,7 @@ else{
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>書籍資訊</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <title>書籍資訊</title>
     <style>
     h1 {
@@ -62,9 +62,6 @@ else{
         border-radius: 5px;/*圓角*/
     }
     .bt_love {
-        
-        
-
         background-repeat: no-repeat;
         /* background-position: left; */
         background-size: 30px;
@@ -83,6 +80,20 @@ else{
         echo 'background-image:url(love.png);' ;
     }?>
     }
+    .bt_comment_love{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #FFF2F2;
+        color: white;
+        font-size: 10px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 40px;/*按鈕寬*/
+        border-radius: 25px;/*圓角*/
+        background-image:url(love.png);
+    }
     .bt_sure:hover{
         background-color: #000;
         color: #fff;
@@ -90,8 +101,6 @@ else{
     .bt_love:hover{
         background-color: #000;
         color: #fff;
-    }table{
-       
     }
     .comment{
         /* border:2px solid rgb(189, 234, 252); */
@@ -114,6 +123,69 @@ else{
         max-height: 300px;
         overflow-y: auto;
     }
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+    .heart-btn{
+    position: absolute;
+    top: 50%;
+    right:-6%;
+    transform: translate(-50%,-50%);
+    }
+    .content{
+    padding: 13px 16px;
+    display: flex;
+    border: 2px solid #eae2e1;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+    .content.heart-active{
+    border-color: #f9b9c4;
+    background: #fbd0d8;
+    }
+    .heart{
+    position: absolute;
+    background: url("img.png") no-repeat;
+    background-position: left;
+    background-size: 2900%;
+    height: 45px;
+    width: 45px;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%,-50%);
+    }
+    .text{
+    font-size: 15px;
+    margin-left: 30px;
+    color: grey;
+    font-family: 'Montserrat',sans-serif;
+    }
+    .numb:before{
+    content: '12';/*點讚數*/
+    font-size: 12px;
+    margin-left: 7px;
+    font-weight: 600;
+    color: #9C9496;
+    font-family: sans-serif;
+    }
+    .numb.heart-active:before{
+    content: '13';/*點讚數*/
+    color: #000;
+    }
+    .text.heart-active{
+    color: #000;
+    }
+    .heart.heart-active{
+    animation: animate .8s steps(28) 1;
+    background-position: right;
+    }
+    @keyframes animate {
+    0%{
+        background-position: left;
+    }
+    100%{
+        background-position: right;
+    }
+    }
+
     @media (max-width: 768px) {
         .bt_sure {
             width: 150px;/*按鈕寬*/
@@ -202,6 +274,15 @@ else{
 				}
 			} );
 		} );
+        //comment_heart
+        $(document).ready(function(){
+        $('.content').click(function(){
+          $('.content').toggleClass("heart-active")
+          $('.text').toggleClass("heart-active")
+          $('.numb').toggleClass("heart-active")
+          $('.heart').toggleClass("heart-active")
+        });
+      });
 	</script>
     
 </head>
@@ -286,8 +367,8 @@ else{
                         <?php echo $book[0]->describeBook ?>  
             </div>
             <div class="card-footer bg-transparent text-center">剩餘: <?php echo $book[0]->num ?></div>
+            </div>
         </div>
-    </div>
         <br>
         <div class="row justify-content-center">    
             <div class="card col-8 comment_scroll">
@@ -297,8 +378,14 @@ else{
                     echo'
                       <a class="list-group-item">
                         <div class="d-flex w-100 align-items-center justify-content-between">
-                          <strong class="mb-1">'.$comment[$i]->username.'</strong>
-                          <small class="text-muted"></small>
+                            <strong class="mb-1">'.$comment[$i]->username.'</strong>
+                            <div class="heart-btn ">
+                                <div class="content">
+                                    <span class="heart"></span>
+                                    <span class="text">Like</span>
+                                    <span class="numb"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-10 mb-1 small">'.$comment[$i]->context.'</div>
                       </a>
@@ -308,9 +395,10 @@ else{
     
     
                     </div>
-                    </div>
-                    <div class="container">
-
+            </div>
+        </div>
+    </div>
+    <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
 
