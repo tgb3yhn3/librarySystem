@@ -139,7 +139,7 @@
                 <input type="number"class="form-control" id="book_time'.$i.'" id="book_time'.$i.'" name="book_time" value="'.$datas[$i]["book_time"].'"onchange="change_color(this.id)"required>
                 </td>
                 <td>
-                <input type="number"class="form-control" id="book_fine'.$i.'" name="book_fine" value="'.$datas[$i]["book_fine"].'" onchange="change_color(this.id)" required>
+                <input type="float"class="form-control" id="book_fine'.$i.'" name="book_fine" value="'.$datas[$i]["book_fine"].'" onchange="change_color(this.id)" required>
                 </td>
                 <td>
                   <input type="text" class="form-control" type="text" placeholder="'.$datas[$i]["credit"].'"onchange="change_color(this.id)" readonly>
