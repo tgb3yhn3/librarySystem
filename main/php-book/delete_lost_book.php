@@ -60,18 +60,36 @@
     </head>
 
     <body onload="main()" >
-      <div id="view">
-        <p>罰款憑據</p>
-        <br>
-        <h>名字 : <?php $name = userName_query_API($userID,$conn); echo $name[0]['username']?></h>
-        <br>
-        <h>學號 : <?php echo $name[0]['userID']?></h>
-        <br>
-        <h>書名 : <?php $bookname = get_book_name($ISBN,$conn);echo $bookname?></h>
-        <br>
-        <h>今日日期 : <?php date_default_timezone_set('Asia/Taipei'); $d1 = date("Y").'-'.date("m").'-'.date("d"); echo $d1;?></h>
-        <br>
-        <h>金額:<?php echo '1000'?></h>
+    <div id="view">
+      <div style="border-width:3px;border-style:dashed;border-color:#FFAC55;padding:5px;">
+      <div style="border-width:3px;border-style:dashed;border-color:#FFAC55;padding:5px;">
+      <div style="border-width:3px;border-style:dashed;border-color:#FFAC55;padding:5px;">
+      <div class="card " style="max-width: 760px;">
+      <div class="row g-0">
+        
+        <div class="col-md-7">
+          <div class="card-body">
+            <h4 class="card-title text-center">*****罰款憑據*****</h4>
+            <p class="card-text">
+            <h>名字 : <?php $name = userName_query_API($userID,$conn); echo $name[0]['username']?></h>
+            <br>
+            <h>學號 : <?php echo $name[0]['userID']?></h>
+            <br>
+            <h>書名 : <?php $bookname = get_book_name($ISBN,$conn);echo $bookname?></h>
+            <br>
+            <h>今日日期 : <?php date_default_timezone_set('Asia/Taipei'); $d1 = date("Y").'-'.date("m").'-'.date("d"); echo $d1;?></h>
+            <br>
+            <h>金額:<?php echo '1000'?></h>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <img src="001.png" class="img-fluid rounded-start" style="max-width: 340px;" >
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
       </div>
       <br>
       <button id="export-pdf">Export PDF</button>
