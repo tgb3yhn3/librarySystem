@@ -436,7 +436,7 @@
         return false;
     }
     function delete_the_book($bookuniqueID,$conn){
-        $delete = "DELETE FROM book WHERE bookUniqueID = $bookuniqueID";
+        $delete = "DELETE FROM book WHERE bookUniqueID = '".$bookuniqueID."'";
         mysqli_query($conn,$delete);
     }
     function get_book_name($ISBN,$conn){//get book name

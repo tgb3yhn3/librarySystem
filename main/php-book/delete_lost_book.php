@@ -48,7 +48,7 @@
             function main() {
                 var view = document.getElementById("view");
                 var exportPDF = document.getElementById("export-pdf");
-                var options = { filename: '罰款憑據<?php echo $userName[0]['username']?>.pdf'};
+                var options = { filename: '罰款憑據.pdf'};
                 exportPDF.onclick = (e) => html2pdf(view,options);
             }
         </script>
