@@ -85,8 +85,13 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
             </div>
             <div class="col-1">
               <button class="btn btn-outline-success" type="submit">Search</button>
-            </div>
            </form>
+           </div>
+           <div class="col-1">
+             <form action="php-book/advancedSearch.php" method="POST">
+              <button class="btn btn-outline-danger" type="submit">進階搜尋</button>
+              </form>
+           </div>
         </div>
     </div>
     <br>
@@ -171,7 +176,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
                 <div class="card-body">
                   <h4 class="card-title">借閱</h4>
                   <p class="card-text">依照最多人借閱書籍排行</p>
-                  <form method="get" action="php-book/hotLeaderboard.php">
+                  <form method="get" action="php-book/search_php.php">
                       <input type="hidden"  name="leaderboardAccordingTo" value="borrow" />
                       <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
                   </form>
@@ -194,7 +199,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
                 <div class="card-body">
                   <h4 class="card-title">討論度</h4>
                   <p class="card-text">依照討論度排行</p>
-                  <form method="get" action="php-book/hotLeaderboard.php">
+                  <form method="get" action="php-book/search_php.php">
                       <input type="hidden"  name="leaderboardAccordingTo" value="discussion" />
                       <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
                   </form>

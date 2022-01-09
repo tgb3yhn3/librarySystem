@@ -25,18 +25,60 @@
         $sql="SELECT * FROM `user_book_history` group by book_unique_ID order by count(book_unique_ID)'";
      }else if($modeNum==7){//討論度排行(先抓討論度>0)
         $sql="SELECT book.*,count(*) as commentnum 
-              FROM   book,comment
-              where  book.ISBN = comment.ISBN AND SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'
+              FROM   book JOIN comment USING(ISBN)
+              where  SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'
               group  by comment.ISBN
               order  by commentnum DESC";
      }else if($modeNum==8){//最多人借閱排行(先抓借閱數>0)
         $sql="SELECT book.*,count(*) as borrownum 
-              FROM   book,user_book_history
-              where  book.ISBN = SUBSTRING_INDEX(user_book_history.book_unique_ID, '_', 1) AND
-                     user_book_history.book_status <>'已預約'
+              FROM   book JOIN user_book_history on book.ISBN = SUBSTRING_INDEX(user_book_history.book_unique_ID, '_', 1)
+              where  user_book_history.book_status <>'已預約'
               group by book.ISBN
               order by borrownum DESC";
+     }else if($modeNum==9){//評分排行(未完成)
+        $sql="";
+     }else if($modeNum==10){//進階搜尋(至少含1個以上搜尋條件,若無勾選任何條件則與「$modeNum==0」時是一樣的搜尋結果)
+        $sql="select * from `book` where num<>'0'";
+        if(isset($_SESSION["adv_bookname"])){
+            $adv_bookname = $_SESSION["adv_bookname"];
+            $sql=$sql." and bookName like '%$adv_bookname%'";
+        }
+        if(isset($_SESSION["adv_author"])){
+            $adv_author = $_SESSION["adv_author"];
+            $sql=$sql." and author like '%$adv_author%'";
+        }
+        if(isset($_SESSION["adv_ISBN"])){
+            $adv_ISBN = $_SESSION["adv_ISBN"];
+            $sql=$sql." and ISBN like '%$adv_ISBN%'";
+        }
+        if(isset($_SESSION["adv_publisher"])){
+            $adv_publisher = $_SESSION["adv_publisher"];
+            $sql=$sql." and publisher like '%$adv_publisher%'";
+        }
+        if(isset($_SESSION["adv_publish_year"])){
+            $adv_publish_year = $_SESSION["adv_publish_year"]." 00:00:00";
+            if(isset($_SESSION['adv_publish_year_before_after']) && $_SESSION['adv_publish_year_before_after'] =="before"){
+                $sql=$sql." and unix_timestamp(publish_year) < unix_timestamp('$adv_publish_year') ";
+            }
+            else{
+                $sql=$sql." and unix_timestamp(publish_year) > unix_timestamp('$adv_publish_year') ";
+            }
+        }
+        if(isset($_SESSION["adv_create_time"])){
+            $adv_create_time = $_SESSION["adv_create_time"]." 00:00:00";
+            if(isset($_SESSION['adv_create_time_before_after']) && $_SESSION['adv_create_time_before_after'] =="before"){
+                $sql=$sql." and unix_timestamp(create_time) < unix_timestamp('$adv_create_time') ";
+            }
+            else{
+                $sql=$sql." and unix_timestamp(create_time) > unix_timestamp('$adv_create_time') ";
+            }
+        }
+        if(isset($_SESSION["adv_class"])){
+            $adv_class = $_SESSION["adv_class"];
+            $sql=$sql." and class = '$adv_class'";
+        }
     }
+
      $ISBN="";
      $result = mysqli_query($conn,$sql);
      $datas=array();
@@ -167,7 +209,25 @@
             else if($modeNum==8){
                 $bookdata->borrownum=$borrownum;    
             }
-            array_push($book,$bookdata);
+            if(isset($_SESSION['adv_inventory'])){
+                $adv_inventory = $_SESSION['adv_inventory'];
+                if($adv_inventory=="inventory_in"){//館內有庫存(可借閱)
+                    if($bookdata->num != 0){
+                        array_push($book,$bookdata);
+                    }
+                }
+                else if($adv_inventory=="inventory_not_in"){//館內無庫存(需預約)
+                    if($bookdata->num == 0){
+                        array_push($book,$bookdata);
+                    }
+                }
+                else{//全部
+                    array_push($book,$bookdata);
+                }
+            }else{//全部
+                array_push($book,$bookdata);
+            }
+            
             $return_value=$return_value."<hr>";
             if($modeNum==4){
                 $data=new stdClass();
