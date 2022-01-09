@@ -17,7 +17,8 @@
     $today = date('Y-m-d');
     $sql="  select  COUNT(DISTINCT numbering) as overdueNum
             from 	user_book_history
-            WHERE 	user_book_history.return_date = '-' and 
+            WHERE 	book_status='出借中' and
+                    user_book_history.return_date = '-' and 
                     user_book_history.lasting_return_date < '$today'";
     $result = mysqli_query($conn,$sql);//抓取的結果
     if (!$result) die("Fatal Error");//若抓取的結果不存在，終止程式並回報錯誤
