@@ -25,6 +25,8 @@ function get_star($ISBN,$link){
     for($i=0; $i<$times; $i++){
         $starnum += $datas[$i]['good']; 
     }
+    if($times==0)
+    return 0;
     return $starnum/$times;
     // if(!empty($datas)){
     //     for($i=0;$i<count($datas);$i++){
