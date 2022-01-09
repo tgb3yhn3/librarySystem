@@ -7,6 +7,7 @@ require_once("../php-comment/comment.php");
 require_once("../php-favorite/isFavorite.php");
 require_once("../php-like/like_query.php");
 require_once("star_queryAPI.php");
+require_once("../php-like/isLike.php");
 $search=$_GET["search"];
 $book=get_search_book($search,2,1,$conn);
 $comment=get_comment($search,$conn);
@@ -23,6 +24,7 @@ if(isset($_SESSION['userID'])){
 else{
     $isFavorite=false;//訪客
 }
+
 // echo $book;
 ?>
 
@@ -126,6 +128,50 @@ else{
         max-height: 300px;
         overflow-y: auto;
     }
+
+    .bt-good{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #a5a5a5;
+        color: white;
+        font-size: 15px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 180px;/*按鈕寬*/
+        border-radius: 5px;/*圓角*/
+        background-image:url(loveed.png);
+    }
+    .bt-ungood{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #a5a5a5;
+        color: white;
+        font-size: 15px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 180px;/*按鈕寬*/
+        border-radius: 5px;/*圓角*/
+        background-image:url(love.png);
+    }
+    .bt-nogood{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #a5a5a5;
+        color: white;
+        font-size: 15px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 180px;/*按鈕寬*/
+        border-radius: 5px;/*圓角*/
+        /* //background-image:url(love.png); */
+        
+    }
     @import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
     .heart-btn{
     position: absolute;
@@ -162,7 +208,7 @@ else{
     font-family: 'Montserrat',sans-serif;
     }
     .numb:before{
-    content: '12';/*點讚數*/
+    content: <?php echo "'".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn)."';" ?>;/*點讚數*/
     font-size: 15px;
     margin-left: 7px;
     font-weight: 600;
@@ -170,7 +216,7 @@ else{
     font-family: sans-serif;
     }
     .numb.heart-active:before{
-    content: '13';/*點讚數*/
+    content: <?php echo "'".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn)."';" ?>;/*點讚數*/
     color: #000;
     }
     .text.heart-active{
@@ -382,22 +428,33 @@ else{
                             <a class="list-group-item">
                                 <div class="d-flex w-100 align-items-center justify-content-between">
                                 <strong class="mb-1">'.$comment[$i]->username.'</strong>
-                                <small class="text-muted"></small>
+                                <div class="heart-btn ">
+                                    <div class="content">
+                                        <span class="heart"></span>
+                                        <span class="text">Like</span>
+                                        <span class="numb"></span>
+                                    </div>
+                                </div>
+
                                 </div>
                                 <div class="col-10 mb-1 small">'.$comment[$i]->context;
                             if(isset($_SESSION['username'])){
                                 if(strcmp($_SESSION['username'],$comment[$i]->username)){
+                                    $isLike = isLike($comment[$i]->username,$search,$comment[$i]->context,$_SESSION['username'],$conn);
                                     echo '
                                         <form action="../php-like/like_API.php" method="POST">
                                             <input type="hidden" name="ISBN" value='.$search.'>
                                             <input type="hidden" name="commentUsername" value='.$comment[$i]->username.'>
                                             <input type="hidden" name="context" value='.$comment[$i]->context.'>
-                                            <input type="submit" value="喜歡評論">
+                                            <input type="submit" class="'.($isLike?'bt-good':'bt-ungood').'" value='.getLike($comment[$i]->username,$search,$comment[$i]->context,$conn).'>
                                         </form>
                                     ';
                                 } 
+                                else{
+                                    echo '<br><input type="submit" class="bt-nogood" value='.getLike($comment[$i]->username,$search,$comment[$i]->context,$conn).'>';
+                                }
                             }
-                            echo "score:".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn);
+                            
                             echo '</div></a>'; 
                         }
                     ?>
