@@ -104,7 +104,7 @@
         <!-- updateBook -->
         <form action="update.php" method="POST">
             <br>
-            <p>書名:&emsp;<input id="update_bookName" name="bookName" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;分類:&emsp;<input name="class"id="update_class" type="text" size="3" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
+            <p>書名:&emsp;<input id="update_bookName" name="bookName" type="text" size="15" maxlength="25" style="border-color:#84C1FF;">&emsp;分類:&emsp;<select name="class" maxlength="30" style="border-color:#84C1FF;"><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
             <p>作者:&emsp;<input name="author"id="update_author" type="text" size="12" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="ISBN"id="update_ISBN" type="text" size="10" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
             <p>出版日期:<input name="publish_year"id="update_publish_year" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">出版社:<input name="publisher"id="update_publisher" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">&emsp;<button type="button" id="update">館內搜尋</button></p>
             <p>數量:<input name="num"id="update_num" type="text" size="1" maxlength="30" style="border-color:#84C1FF;">簡介:&emsp;<input name="describeBook" id="update_describeBook"type="text" size="20" maxlength="30" style="border-color:#84C1FF;"></p>

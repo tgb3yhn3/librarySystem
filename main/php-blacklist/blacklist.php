@@ -98,7 +98,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
               <input name="action" type="hidden" value="add"><br>
               使用者學號:<br><input name="userID" type="text" required="required" style="width:25%;"placeholder="請輸入使用者學號"><br>
               原因:<br><input name="reason" type="text" style="width:100%;"placeholder="請輸入該使用者被加入黑名單原因"><br><br>
-              <input  class="btn btn-primary" type="submit" value="加入到黑名單">
+              <input  class="btn btn-primary" onClick="javascript: return confirm('確認將該使用者加入黑名單?');" type="submit" value="加入到黑名單">
           </form>
      </div> 
      <div id="editWindow" title="編輯使用者被加入黑名單原因">
@@ -107,7 +107,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
               <input id="userID_edit1" name="userID" type="hidden" value="">
               使用者：<span id="username_edit"></span>(<span id="userID_edit2"></span>)<br><br>
               原因:<br><input id="reason_edit" name="reason" type="text" style="width:100%;" placeholder="請輸入該使用者被加入黑名單原因"><br><br>
-              <input  class="btn btn-primary" type="submit" value="確認修改">
+              <input  class="btn btn-primary" onClick="javascript: return confirm('確認修改嗎?');" type="submit" value="修改">
           </form>
      </div>   
       
@@ -127,7 +127,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                 "<td>" + data[item].userID + "</td>" +
                 "<td>" + data[item].username + "</td>" +
                 "<td>" + data[item].reason +"</td>" +
-                "<td>" + "<input type='button' class='btn btn-outline-success btn-sm ' id='editReason"+data[item].userID+"' value='編輯原因'>&emsp;" + "<input type='submit' class='btn btn-outline-danger btn-sm ' value='刪除' form="+data[item].userID+">" +"</td>" +
+                "<td>" + "<input type='button' class='btn btn-outline-success btn-sm ' id='editReason"+data[item].userID+"' value='編輯原因'>&emsp;" + "<input type='submit' class='btn btn-outline-danger btn-sm ' onClick=\"javascript: return confirm('確認將該使用者從黑名單移除?');\" value='刪除' form="+data[item].userID+">" +"</td>" +
                 "</tr>";
             $("#menu").append(content);
 

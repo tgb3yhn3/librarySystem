@@ -98,7 +98,7 @@ session_start();
                     "<td style='border-right:2px white solid;'><a href='../php-book/book.php?search="+data[item].ISBN+"'>" + data[item].bookName + "</a></td>" +
                     
                     "<td style='border-right:2px white solid; text-align:center;'>" + data[item].ISBN + "<input type='hidden' name='ISBN' value="+data[item].ISBN+" form="+data[item].ISBN+">" + "</td>" +
-                    "<td style=' text-align:center;'>" + "<input type='submit' class='btn btn-outline-primary'  value='從最愛清單刪除' form="+data[item].ISBN+">" + "</td>" +
+                    "<td style=' text-align:center;'>" + "<input type='submit' class='btn btn-outline-primary' onClick=\"javascript: return confirm('確定要將該書從我的最愛移除嗎?');\" value='從最愛清單刪除' form="+data[item].ISBN+">" + "</td>" +
                     "</tr>";
                 $("#menu").append(content);
                 let content2 = "<form action='favoriteBook_API.php' method='post' id="+data[item].ISBN+"></form>"
