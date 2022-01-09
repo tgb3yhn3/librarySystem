@@ -43,19 +43,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }else{
             
             function_alert("您的帳號已被列為黑名單 ，故無法使用 原因  ".$isblackList);
+            header("refresh:0;url=login-2.htm",false);
         }
         
     }
     else if($row['status']==0&&$row['password']==$password){
         //帳號密碼都對但是還沒註冊=> stastus=0
         function_alert("您的帳號尚未通過信箱驗證 ，故無法使用");
+        header("refresh:0;url='login-2.htm'",false);
         
     }else{//打錯密碼
         function_alert("帳號或密碼錯誤"); 
-            
+        header("refresh:0;url='login-2.htm'",false);
      }
 }else{
-    function_alert("請聯絡管理員，wrong request method");   
+    function_alert("請聯絡管理員，wrong request method");
+    header("refresh:0;url='login-2.htm'",false);   
 }
 
     // Close connection

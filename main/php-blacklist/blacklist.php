@@ -31,7 +31,16 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
     
           <div class="col-md-3 text-end">
             <button type="button" class="btn btn-outline-primary me-2" disabled><?php echo $_SESSION['username']?></button>
-            <a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>
+           <?php echo '
+            <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="../php-member/logout.php" class="text-decoration-none"><button type="button" class="dropdown-item ">登出</button></a>
+                <a href="../php-member/change.php" class="text-decoration-none"><button type="button" class="dropdown-item ">修改密碼</button></a>
+            </div>
+          </div>
+          ';?>
           </div>
         </header>
     </div>
