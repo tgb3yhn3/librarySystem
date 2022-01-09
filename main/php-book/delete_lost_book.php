@@ -12,20 +12,25 @@
         if(check_book_exist($bookuniqueID,$conn)){//看這個書存不存在
             if(check_book_status($bookuniqueID,$conn)){//查看此書是否在圖書館內
                 delete_the_book($bookuniqueID,$conn);//刪掉TODO
-                adjust_book_num($ISBN,-1,$conn);//調整數量
-                echo"<script>alert('刪除成功');history.go(-1);</script>";
-                exit;
+                if(get_book_name($ISBN,$conn)){
+                    adjust_book_num($ISBN,-1,$conn);//調整數量
+                    echo"<script>alert('刪除成功');history.go(-1);</script>";
+                    exit;
+                }
+                else{}         
             }
             else{
                 $userID = adjust_special_user_book_history($bookuniqueID,$conn);//調整user_book_history
                 adjust_user_condition($userID,-1,$conn);//調整使用者正在借閱的數量//調整user的renting_book_num 
                 adjust_credit($userID,-1,$conn);//調整user的credit
                 delete_the_book($bookuniqueID,$conn);//刪掉TODO
-                adjust_book_num($ISBN,-1,$conn);//調整數量
-                //罰金TODO
+                if(get_book_name($ISBN,$conn)){
+                    adjust_book_num($ISBN,-1,$conn);//調整數量
+                    echo"<script>alert('刪除成功');history.go(-1);</script>";
+                    exit;
+                }
+                else{}
             }
-            
-            
         }
         else{
             echo"<script>alert('館藏無此書');history.go(-1);</script>";

@@ -379,7 +379,7 @@
     function check_this_book_late_return($bookuniqueID,$conn){//如果這本書有遲還，回傳此書資料
         date_default_timezone_set('Asia/Taipei');
         $d1 = date("Y").'-'.date("m").'-'.date("d");//現在日期->即歸還日期
-        $get_data =  "SELECT * FROM user_book_history WHERE book_unique_ID = '".$bookuniqueID."' AND book_status = '遲還' AND return_date = '".$d1."'" ;
+        $get_data =  "SELECT * FROM user_book_history WHERE book_unique_ID = '".$bookuniqueID."' ORDER BY numbering DESC" ;
         $result = mysqli_query($conn,$get_data);
         $count = 0;
         if ($result) {
@@ -442,13 +442,18 @@
     function get_book_name($ISBN,$conn){//get book name
         $sql = "SELECT bookName FROM book WHERE ISBN = '".$ISBN."'";
         $result = mysqli_query($conn,$sql);
+        $count = 0;
         if ($result) {
             if (mysqli_num_rows($result)>0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     $datas[] = $row;
+                    $count++;
                 }
             }
             mysqli_free_result($result);
+        }
+        if($count==0){
+            return 0;
         }
         return $datas[0]['bookName'];
     }
