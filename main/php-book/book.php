@@ -6,9 +6,11 @@ require_once("search.php");//包含config.php了
 require_once("../php-comment/comment.php");
 require_once("../php-favorite/isFavorite.php");
 require_once("../php-like/like_query.php");
+require_once("star_queryAPI.php");
 $search=$_GET["search"];
 $book=get_search_book($search,2,1,$conn);
 $comment=get_comment($search,$conn);
+$star = get_star($search,$conn);
 $isFavorite = false;
 if(isset($_SESSION['userID'])){
     if($_SESSION["admin"]!=true){
@@ -267,7 +269,7 @@ else{
 				containerId: 'star_rating2', // element id in the dom for this star rating system to use
 				starWidth: 30, // width of stars
 				starHeight: 30, // height of stars
-				ratingPercent: '50%', // percentage star system should start 
+				ratingPercent: <?php echo '"'.$star.'%"'?>, // percentage star system should start 
 				canRate: true, // can the user rate this star system?
 				onRate: function() { // this function runs when a star is clicked on
 					console.log( rating2 );
