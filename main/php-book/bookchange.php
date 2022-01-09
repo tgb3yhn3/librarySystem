@@ -53,6 +53,7 @@
     <span id="tab-1">上架</span>
     <span id="tab-2">下架</span>
     <span id="tab-3">館藏調整</span>
+    <span id="tab-4">刪除書籍</span>
     
     
        
@@ -64,6 +65,7 @@
             <li><a href="#tab-1">上架</a></li>
             <li><a href="#tab-2">下架</a></li>
             <li><a href="#tab-3">館藏調整</a></li>
+            <li><a href="#tab-4">刪除書籍</a></li>
         </ul>
 
         <!-- 頁籤的內容區塊 -->
@@ -113,6 +115,18 @@
         </form>
         </div>
         
+       
+    
+    <div class="tab-content-4">
+        <!-- updateBook -->
+        <form action="delete_lost_book.php" method="POST">
+            <br><br><br><br><br><br><br>
+            <p>&emsp;&emsp;&emsp;&emsp;&emsp;書號:&emsp;<input id="bookuniqueID" name="bookuniqueID" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
+            <br>
+            <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="刪除此書">&emsp;&emsp;&emsp;</p>
+        </form>
+        </div>
+    </div>
        
     </div>
     <div class="container">

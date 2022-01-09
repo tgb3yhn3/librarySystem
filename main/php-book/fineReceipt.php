@@ -35,7 +35,7 @@
 
     <body onload="main()" >
       <div id="view">
-        <p>出借憑據</p>
+        <p>罰款憑據</p>
         <br>
         <h>名字 : <?php echo $userName[0]['username']?></h>
         <br>

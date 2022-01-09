@@ -53,6 +53,21 @@
         $adjust_status = "UPDATE book SET status = '".$number."' WHERE bookUniqueID = '".$bookuniqueID."'";
         mysqli_query($conn,$adjust_status);
     }
+    function adjust_book_num($ISBN,$number,$conn){//調整書籍數量
+        $get_book_data =  "SELECT * FROM book WHERE ISBN = '".$ISBN."'";
+        $result = mysqli_query($conn,$get_book_data);
+        if ($result) {
+            if (mysqli_num_rows($result)>0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $datas[] = $row;
+                }
+            }
+            mysqli_free_result($result);
+        }
+        $after_adjust = $datas[0]['num']+$number;
+        $adjust_status = "UPDATE book SET num = '".$after_adjust."' WHERE ISBN = '".$ISBN."'";
+        mysqli_query($conn,$adjust_status);
+    }
     function adjust_credit($userID,$number,$conn){//調整使用者的信用點數
         $get_user_credit =  "SELECT * FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_credit);
@@ -66,7 +81,7 @@
         }
         algorithim($datas,$number,$conn);
     }
-    function adjust_line_up($ISBN,$conn){
+    function adjust_line_up($ISBN,$conn){//通知下一個預約的拿書
         $get_user_book_time =  "SELECT * FROM line_up WHERE ISBN = $ISBN AND lasting_time = '-' LIMIT 1";
         $result = mysqli_query($conn,$get_user_book_time);
         $count = 0;
@@ -90,7 +105,24 @@
         }
         
     }
-    function adjust_user_condition($userID,$number,$conn){
+    function adjust_special_user_book_history($bookuniqueID,$conn){//特殊情況發生時，調整user_book_history
+        $sql =  "SELECT * FROM user_book_history WHERE book_unique_ID = '".$bookuniqueID."' AND book_status = '出借中'" ;
+        $result = mysqli_query($conn,$sql);
+        if ($result) {
+            if (mysqli_num_rows($result)>0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $datas[] = $row;
+                }
+            }
+            mysqli_free_result($result);
+        }
+        date_default_timezone_set('Asia/Taipei');
+        $d1 = date("Y").'-'.date("m").'-'.date("d");//現在日期->即歸還日期
+        $reset = "UPDATE user_book_history SET return_date = '".$d1."',book_status = '特殊狀況',comment_status = '未評論' WHERE numbering = '".$datas[0]['numbering']."'";
+        mysqli_query($conn,$reset);
+        return $datas[0]['userID'];
+    }
+    function adjust_user_condition($userID,$number,$conn){//調整使用者正在借閱的數量
         $get_user_renting_book_num =  "SELECT renting_book_num FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_renting_book_num);
         if ($result) {
@@ -106,7 +138,7 @@
         $adjust = "UPDATE user_condition SET renting_book_num = '".$result."' WHERE userID = $userID";
         mysqli_query($conn,$adjust);
     }
-    function algorithim($datas,$number,$conn){
+    function algorithim($datas,$number,$conn){//用credit算使用者的condition
         $userID = $datas[0]["userID"];
         $book_num = $datas[0]["book_num"];
         $book_time = $datas[0]["book_time"];
@@ -185,7 +217,7 @@
         $adjust = "UPDATE user_condition SET book_num = '".$book_num."',book_time = '".$book_time."',book_fine = '".$book_fine."',credit = '".$credit."' WHERE userID = '".$userID."'";
         mysqli_query($conn,$adjust);
     }
-    function check_adjust_balance($ISBN,$conn){
+    function check_adjust_balance($ISBN,$conn){//看status2的書籍數量和預約的數量是否一致
         $get_book_status2_num =  "SELECT * FROM book WHERE bookUniqueID like '".$ISBN."%' AND status = '2'";
         $result = mysqli_query($conn,$get_book_status2_num);
         $book_status2_num = 0;
@@ -219,23 +251,17 @@
             return false;
         }
     }
-    function check_book_exist($bookuniqueID,$conn){
+    function check_book_exist($bookuniqueID,$conn){//看這個書存不存在
         $get_data =  "SELECT * FROM book WHERE bookUniqueID = '".$bookuniqueID."' " ;
         $result = mysqli_query($conn,$get_data);
         $count = 0;
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                     $count++;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         if($count){
@@ -243,21 +269,15 @@
         }
         return false;
     }
-    function check_book_status($bookuniqueID,$conn){
+    function check_book_status($bookuniqueID,$conn){//查看此書是否在圖書館內
         $check_status = "SELECT * FROM book WHERE bookUniqueID = '$bookuniqueID'";
         $result = mysqli_query($conn,$check_status);
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         if($datas[0]["status"]==0){
@@ -267,21 +287,15 @@
             return false;
         }
     }
-    function check_condition($userID,$conn){
+    function check_condition($userID,$conn){//查看此使用者有沒有資格藉此書
         $get_user_credit =  "SELECT * FROM user_condition WHERE userID = $userID";
         $result = mysqli_query($conn,$get_user_credit);
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         if($datas[0]["book_num"]>$datas[0]["renting_book_num"]){
@@ -291,23 +305,17 @@
             return false;
         }
     }
-    function check_late_return ($userID,$conn){
+    function check_late_return ($userID,$conn){//查看此使用者有沒有
         $get_user_credit =  "SELECT * FROM user_book_history WHERE userID = $userID AND book_status = '出借中'" ;
         $result = mysqli_query($conn,$get_user_credit);
         $count = 0;
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                     $count++;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         if($count){
@@ -326,7 +334,7 @@
         }
         return true;
     }
-    function check_line_up($ISBN,$conn){
+    function check_line_up($ISBN,$conn){//查看此書是否還有未收到簡訊的
         $get_user_book_time =  "SELECT * FROM line_up WHERE ISBN = $ISBN AND lasting_time = '-'";
         $result = mysqli_query($conn,$get_user_book_time);
         $count = 0;
@@ -368,25 +376,19 @@
             return false;
         }
     }
-    function check_this_book_late_return($bookuniqueID,$conn){
+    function check_this_book_late_return($bookuniqueID,$conn){//如果這本書有遲還，回傳此書資料
         date_default_timezone_set('Asia/Taipei');
         $d1 = date("Y").'-'.date("m").'-'.date("d");//現在日期->即歸還日期
         $get_data =  "SELECT * FROM user_book_history WHERE book_unique_ID = '".$bookuniqueID."' AND book_status = '遲還' AND return_date = '".$d1."'" ;
         $result = mysqli_query($conn,$get_data);
         $count = 0;
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                     $count++;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         if($count){
@@ -395,23 +397,17 @@
         }
         return false;
     }
-    function check_user_exist($userID,$conn){
+    function check_user_exist($userID,$conn){//查看此學號是否存在
         $get_data =  "SELECT * FROM users WHERE userID = '".$userID."' " ;
         $result = mysqli_query($conn,$get_data);
         $count = 0;
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                     $count++;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         if($count){
@@ -419,23 +415,17 @@
         }
         return false;
     }
-    function check_user_renting_book($userID,$bookuniqueID,$conn){
+    function check_user_renting_book($userID,$bookuniqueID,$conn){//查看此使用者是否有借用此書
         $get_user_credit =  "SELECT * FROM user_book_history WHERE userID = $userID AND book_status = '出借中'";
         $result = mysqli_query($conn,$get_user_credit);
         $count=0;
         if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
             if (mysqli_num_rows($result)>0) {
-                // 取得大於0代表有資料
-                // while迴圈會根據資料數量，決定跑的次數
-                // mysqli_fetch_assoc方法可取得一筆值
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
                     $count++;
                 }
             }
-            // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
         for($i = 0;$i<$count;$i++){
@@ -445,7 +435,11 @@
         }
         return false;
     }
-    function get_book_name($ISBN,$conn){
+    function delete_the_book($bookuniqueID,$conn){
+        $delete = "DELETE FROM book WHERE bookUniqueID = $bookuniqueID";
+        mysqli_query($conn,$delete);
+    }
+    function get_book_name($ISBN,$conn){//get book name
         $sql = "SELECT bookName FROM book WHERE ISBN = '".$ISBN."'";
         $result = mysqli_query($conn,$sql);
         if ($result) {
@@ -458,14 +452,14 @@
         }
         return $datas[0]['bookName'];
     }
-    function push_book_history_reserve($userID,$ISBN,$conn){
+    function push_book_history_reserve($userID,$ISBN,$conn){//幫此使用者預約此書
         require_once('bookAPI.php');
         $book_name = get_book_name($ISBN,$conn);
         $set_book_history = "INSERT INTO user_book_history (userID,book_unique_ID,start_rent_date,return_date,lasting_return_date,book_status,comment_status,ISBN,book_name) 
             VALUES('".$userID."','".$ISBN."','-','-','-','已預約','-','".$ISBN."','".$book_name."')";
         mysqli_query($conn,$set_book_history);
     }
-    function push_book_history($userID,$book_unique_ID,$conn,$ISBN){
+    function push_book_history($userID,$book_unique_ID,$conn,$ISBN){//把借書資訊push到user_book_history
         require_once('bookAPI.php');
         date_default_timezone_set('Asia/Taipei');
         $start_rent_date = date("Y").'-'.date("m").'-'.date("d");
@@ -487,7 +481,7 @@
             VALUES('".$userID."','".$book_unique_ID."','".$start_rent_date."','-','".$lasting_return_date."','出借中','-','".$ISBN."','".$book_name."')";
         mysqli_query($conn,$set_book_history);
     }
-    function push_line_up($userID,$ISBN,$conn){
+    function push_line_up($userID,$ISBN,$conn){//新增預約(排隊)
         date_default_timezone_set('Asia/Taipei');
         $start_time = date("Y").'-'.date("m").'-'.date("d");
         // $get_user_book_time =  "SELECT book_time FROM user_condition WHERE userID = $userID";
@@ -506,7 +500,7 @@
             VALUES('".$userID."','".$ISBN."','".$start_time."','-')";
         mysqli_query($conn,$set_line_up);
     }
-    function set_book_status_to_0($ISBN,$conn){
+    function set_book_status_to_0($ISBN,$conn){//把book_status從2->0
         $sql =  "SELECT * FROM book WHERE bookUniqueID like '".$ISBN."%' AND status = '2'" ;
         $result = mysqli_query($conn,$sql);
         if ($result) {
@@ -518,7 +512,8 @@
             mysqli_free_result($result);
         }
         $adjust_status = "UPDATE book SET status = '0' WHERE bookUniqueID = '".$datas[0]["bookUniqueID"]."'";
-        echo "把".$datas[0]["bookUniqueID"]."的status設為0<br>";
+        //echo "把".$datas[0]["bookUniqueID"]."的status設為0<br>";
         mysqli_query($conn,$adjust_status);
     }
+    
 ?>
