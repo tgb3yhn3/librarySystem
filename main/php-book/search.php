@@ -35,8 +35,12 @@
               where  user_book_history.book_status <>'已預約'
               group by book.ISBN
               order by borrownum DESC";
-     }else if($modeNum==9){//評分排行(未完成)
-        $sql="";
+     }else if($modeNum==9){//評分排行(先抓有被評分過的)
+        $sql="SELECT book.*,avg(good)/20 as star 
+              FROM   book JOIN comment USING(ISBN)
+              where  SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'
+              group  by comment.ISBN
+              order  by star DESC";
      }else if($modeNum==10){//進階搜尋(至少含1個以上搜尋條件,若無勾選任何條件則與「$modeNum==0」時是一樣的搜尋結果)
         $sql="select * from `book` where num<>'0'";
         if(isset($_SESSION["adv_bookname"])){
@@ -130,6 +134,24 @@
                 }
             }
          }
+         else if($modeNum==9){//評分排行(再抓沒被評分過的)
+            $sql2="SELECT book.*,0 as star 
+                   FROM   book 
+                   where  book.ISBN not in (SELECT comment.ISBN FROM comment) AND 
+                          SUBSTRING_INDEX(book.bookUniqueID, '_', -1) ='0'";
+            $result2 = mysqli_query($conn,$sql2);
+            if($result2){
+                if (mysqli_num_rows($result2)>0) {
+                    // 取得大於0代表有資料
+                    // while迴圈會根據資料數量，決定跑的次數
+                    // mysqli_fetch_assoc方法可取得一筆值
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        // 每跑一次迴圈就抓一筆值，最後放進data陣列中
+                        $datas[] = $row2;
+                    }
+                }
+            }
+         }
          // 釋放資料庫查到的記憶體
          mysqli_free_result($result);
      }
@@ -156,6 +178,9 @@
             }
             if($modeNum==8){
                 $borrownum = $datas[$i]['borrownum'];    
+            }
+            if($modeNum==9){
+                $star= $datas[$i]['star'];    
             }
             // $num=$datas[$i]['num'];
             
@@ -208,6 +233,9 @@
             }
             else if($modeNum==8){
                 $bookdata->borrownum=$borrownum;    
+            }
+            else if($modeNum==9){
+                $bookdata->star=$star;    
             }
             if(isset($_SESSION['adv_inventory'])){
                 $adv_inventory = $_SESSION['adv_inventory'];

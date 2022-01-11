@@ -189,7 +189,10 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
                 <div class="card-body">
                   <h4 class="card-title">評價</h4>
                   <p class="card-text">依照最高評價書籍排行</p>
-                  <button type="button" class="btn btn-outline-primary me-2">前往</button>
+                  <form method="get" action="php-book/search_php.php">
+                      <input type="hidden"  name="leaderboardAccordingTo" value="star" />
+                      <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
+                  </form>
                 </div>
               </div>
             </div>
