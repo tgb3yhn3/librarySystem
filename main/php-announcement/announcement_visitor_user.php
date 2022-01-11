@@ -83,6 +83,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     <script type="text/javascript">
         //將從資料庫抓到的資料輸出成公告欄的項目
         const jsonUrl = "announcement_view_API.php";
+        var announcement_num = 0;
         $.getJSON(jsonUrl, function (data) {
             for (let item in data) {
                 let content =
@@ -92,7 +93,13 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
                         "<small class='text-muted'>"+data[item].annouceTime+"</small>"+
                     "</div>"+
                 "</a>";
-                $("#announcement_area").append(content);    
+                $("#announcement_area").append(content);
+                announcement_num +=1;  
+            }
+            if(announcement_num == 0){
+              let content =
+              "<strong style='text-align:center;'>暫無公告或通知</strong>";
+                $("#announcement_area").append(content);
             }
         });
     </script>

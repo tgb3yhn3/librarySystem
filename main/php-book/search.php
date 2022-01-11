@@ -171,6 +171,7 @@
             $ISBN=$datas[$i]["ISBN"];
             $publisher=$datas[$i]['publisher'];
             $publish_year=$datas[$i]['publish_year'];
+            $class=$datas[$i]['class'];
             $sql="SELECT count(status) as num FROM `book` where bookUniqueID like '$ISBN%' and status=0;";
             $num=mysqli_fetch_assoc(mysqli_query($conn,$sql))['num'];
             if($modeNum==7){
@@ -228,6 +229,7 @@
             $bookdata->publisher=$publisher;
             $bookdata->publish_year=$publish_year;
             $bookdata->num=$num;
+            $bookdata->class=$class;
             if($modeNum==7){
                 $bookdata->commentnum=$commentnum;    
             }

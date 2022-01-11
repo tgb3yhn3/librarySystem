@@ -110,6 +110,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
         <script type="text/javascript">
             //將從資料庫抓到的資料輸出成公告欄的項目
             const jsonUrl = "announcement_view_API.php";
+            var announcement_num = 0;
             $.getJSON(jsonUrl, function (data) {
                 for (let item in data) {
                     let content =
@@ -124,6 +125,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                             "<input onClick=\"javascript: return confirm('確認刪除公告?');\" type='submit' value='刪除' form=delete_"+data[item].ID+" class='btn btn-outline-danger btn-sm col-1'>"+
                     "</div>";
                     $("#announcement_area").append(content);
+                    announcement_num +=1; 
                         
                     let content2 = 
                     "<form action='announcement_API.php' method='post' id=delete_"+data[item].ID+">"+
@@ -141,6 +143,11 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                         $( "#input_edit_sent_to" ).val(data[item].sent_to);
 
                     });
+                }
+                if(announcement_num == 0){
+                    let content =
+                    "<strong style='text-align:center;'>暫無公告或通知</strong>";
+                        $("#announcement_area").append(content);
                 }
             });
             //「新增公告小視窗」預設為隱藏
