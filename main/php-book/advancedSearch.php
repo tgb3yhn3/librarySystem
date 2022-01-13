@@ -61,8 +61,9 @@
       </header>
     </div>
     <div class="container">
-        <p>請勾選並輸入搜尋條件(若無勾選任何條件則為無條件查詢)</p>
-        <form action="search_php.php" method="POST">
+      <div class="card">
+        <p Align="Center">請勾選並輸入搜尋條件(若無勾選任何條件則為無條件查詢)</p>
+        <form action="search_php.php" method="POST" style="width:atuo; text-align:center;">
             <div class="tab-content-2" margin:0 auto>
                 <p><input name="bybookname"     type="checkbox">      <input name="adv_bookname"    placeholder="書名"      size="25" maxlength="30" style="border-color:#84C1FF;"></p>
                 <p><input name="byauthor"       type="checkbox">      <input name="adv_author"      placeholder="作者"      size="25" maxlength="30" style="border-color:#84C1FF;"></p>
@@ -74,11 +75,12 @@
                 <input  type="radio" name="inventory" value="" checked>全部
                 <input  type="radio" name="inventory" value="inventory_in">尚有庫存(可借閱)
                 <input  type="radio" name="inventory" value="inventory_not_in">暫無庫存(需預約)
-                
-
+                <br>
+                <br>
                 <input type="submit" name="advancedSearch" value="查詢">
             </div>
         </form>
+      </div>
     </div>
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top ">
