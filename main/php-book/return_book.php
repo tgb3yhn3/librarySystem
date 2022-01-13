@@ -95,7 +95,11 @@
               $lasting_return_date=0;
               $book_fine=0;
               $total_fine=0;
-                if($data = check_this_book_late_return($bookuniqueID,$conn)){//late
+              $data = check_this_book_late_return($bookuniqueID,$conn);
+                if($data!=0){//no late
+                  echo '<button id="fine" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>';
+                }
+                else{//late
                   echo '<button id="fine" type="button" class="btn btn-success btn-lg">罰金繳費單</button>';
                   $late_total_date = late_total_day($data);
                   $start_rent_date = start_rent_date($data);
@@ -105,9 +109,7 @@
                   $book_fine = get_book_fine($userID,$conn);
                   $total_fine = total_fine($late_total_date,$book_fine);
                 }
-                else{//no late
-                  echo '<button id="fine" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>';
-                }
+                
               ?>
               
           </div>

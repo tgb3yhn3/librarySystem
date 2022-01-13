@@ -14,6 +14,10 @@
             echo"<script>alert('書號輸入錯誤');history.go(-1);</script>";
             exit;
           }
+          if($array[14]=='0'){
+            echo"<script>alert('書號輸入錯誤');history.go(-1);</script>";
+            exit;
+          }
           if(check_book_exist($bookuniqueID,$conn)){//看有沒有此書
             if(check_reserve($userID,$ISBN,$conn)){//看是不是已被預約的書
               // echo "有預約<br>";

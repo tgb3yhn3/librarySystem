@@ -26,8 +26,7 @@
                 delete_the_book($bookuniqueID,$conn);//刪掉TODO
                 if(get_book_name($ISBN,$conn)){
                     adjust_book_num($ISBN,-1,$conn);//調整數量
-                    echo"<script>alert('刪除成功');history.go(-1);</script>";
-                    exit;
+                    echo"<script>alert('刪除成功');</script>";
                 }
                 else{}
             }

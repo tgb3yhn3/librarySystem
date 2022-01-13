@@ -49,7 +49,7 @@ else {
     echo "不正確連接資料庫</br>" . mysqli_connect_error();
 }
 $stmt = $link->prepare("INSERT INTO `book`(`bookName` , `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class` , `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
-                                          ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype' ,?              ,'$class' ,'$publish_year','$num',''       ,'$publisher','$img_url')");
+                                          ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype' ,?              ,'$class' ,'$publish_year','$num','99'       ,'$publisher','$img_url')");
 echo "INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
 ('$bookName','$author','$ISBN','$describeBook','$imageBlob','$filetype',?,'','$publish_year','$num','','$publisher','$img_url')";
 $stmt->bind_param("s",$bookUniqueID);
@@ -72,7 +72,7 @@ if (mysqli_affected_rows($link)>0) {
 $stmt = $link->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
                                           ('','','','','','',?,'','','','','','')");
 $stmt->bind_param("s",$bookUniqueID);
-for($i=1;$i<$num;$i++){
+for($i=1;$i<=$num;$i++){
     $bookUniqueID=$ISBN.'_'.$i;
     $stmt->execute();
 }
