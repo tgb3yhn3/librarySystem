@@ -81,10 +81,12 @@ session_start();
      /*將從資料庫抓到的資料輸出成html的table*/
      const jsonUrl = "viewFavoriteBook_API.php";
         var odd = 1;
+        var atLeastOne = 0;
         var color_controller;
         $.getJSON(jsonUrl, function (data) {
 
             for (let item in data) {
+                atLeastOne =1;
                 if(odd==1){
                     color_controller = "#FFF6D9";
                     console.log(odd);
@@ -110,7 +112,16 @@ session_start();
                     odd=1;
                 }
             }
+            if (atLeastOne == 0){
+            let content =
+                "<tr bgcolor=#FFF6D9>" +
+                "<td style='border-right:2px white solid; font-weight:bolder; text-align:center;' colspan=3>目前沒有任何書籍加入最愛</td>" +
+          
+                "</tr>";
+            $("#menu").append(content);
+        }
         });
+
 
 </script>
 </html>

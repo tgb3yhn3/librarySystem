@@ -107,6 +107,9 @@ else if(isset($_GET["leaderboardAccordingTo"])){//熱門排行搜尋結果
   else if($leaderboardAccordingTo == "borrow"){//借閱數排行
     $book=get_search_book("",8,1,$conn);
   }
+  else if($leaderboardAccordingTo == "star"){//評分排行
+    $book=get_search_book("",9,1,$conn);
+  }
   else{
     $book=get_search_book("",0,1,$conn);
   }
@@ -189,7 +192,7 @@ mysqli_close($conn);
               <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋" required>
             </div>
             <div class="col-1">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+              <button class="btn btn-outline-success" type="submit">🔍</button>
            </form>
            </div>
            <div class="col-1">
@@ -212,14 +215,29 @@ mysqli_close($conn);
               <div class="col-md-7">
                 <div class="card-body">';
                     if($leaderboardAccordingTo == "discussion"){
-                        echo'<p class="card-text"><a class="text-muted"><span style="color:red">討論度&emsp;'.$book[$i]->commentnum.'</span></a></p>';
+                        echo'<p class="card-text"><a class="text-muted"><span style="color:red">討論度:&emsp;'.$book[$i]->commentnum.'</span></a></p>';
                     }
                     else if($leaderboardAccordingTo == "borrow"){
                         echo'<p class="card-text"><a class="text-muted"><span style="color:red">借閱總人次:&emsp;'.$book[$i]->borrownum.'</span></a></p>';
                     }
-             echo'<h4 class="card-title"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">'.$book[$i]->bookName.'</a></h4>
-                  <p class="card-text">'.mb_substr(strip_tags ($book[$i]->describeBook),0,80).'</p>
-                  <p class="card-text"><small class="text-muted">publish at&emsp;'.$book[$i]->publish_year.'</small></p>
+                    else if($leaderboardAccordingTo == "star"){
+                        if($book[$i]->star == 0){
+                            echo'<p class="card-text"><a class="text-muted"><span style="color:red">暫無評價</span></a></p>';
+                        }
+                        else{
+                            echo'<p class="card-text"><a class="text-muted"><span style="color:red">'.sprintf('%.1f', $book[$i]->star).'★</span></a></p>';
+                        }
+
+                    }
+             echo'<h4 class="card-title"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">'.$book[$i]->bookName.'</a></h4>';
+                  if(strlen($book[$i]->describeBook)>=75){
+                      echo'<p class="card-text">'.mb_substr(strip_tags ($book[$i]->describeBook),0,75).'......</p>';
+                  }
+                  else{
+                      echo'<p class="card-text">'.$book[$i]->describeBook.'</p>';
+                  }
+             
+             echo'<p class="card-text"><small class="text-muted">publish at&emsp;'.$book[$i]->publish_year.'</small></p>
                 </div>
               </div>
               <div class="col-md-2 row align-items-center">

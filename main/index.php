@@ -84,7 +84,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
               <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋" required>
             </div>
             <div class="col-1">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+              <button class="btn btn-outline-success" type="submit">🔍</button>
            </form>
            </div>
            <div class="col-1">
@@ -104,7 +104,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.php">更多</a></div>
+            <div><h3 style="display:inline;">📢系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.php">更多</a></div>
             <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -120,7 +120,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3>新書推薦</h3></div>
+            <div><h3>👍新書推薦</h3></div>
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -168,11 +168,11 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     
     <div class="container">
         <div class="w-75 p-3 offset-2">
-            <div><h3>熱門排行</h3></div>
+            <div><h3>🔥熱門排行</h3></div>
         <div class="row">
             <div class="col">
               <div class="card h-100">
-                <img src="mostview.png" class="card-img-top" >
+                <img src="mostview2.png" class="card-img-top">
                 <div class="card-body">
                   <h4 class="card-title">借閱</h4>
                   <p class="card-text">依照最多人借閱書籍排行</p>
@@ -185,11 +185,14 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
             </div>
             <div class="col">
               <div class="card h-100">
-                <img src="mostfavorite.png" class="card-img-top" >
+                <img src="mostfavorite2.png" class="card-img-top" >
                 <div class="card-body">
                   <h4 class="card-title">評價</h4>
                   <p class="card-text">依照最高評價書籍排行</p>
-                  <button type="button" class="btn btn-outline-primary me-2">前往</button>
+                  <form method="get" action="php-book/search_php.php">
+                      <input type="hidden"  name="leaderboardAccordingTo" value="star" />
+                      <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
+                  </form>
                 </div>
               </div>
             </div>
