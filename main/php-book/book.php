@@ -241,7 +241,7 @@ else{
 			starRating.prototype.draw = function() {
 				var self = this;
 				var pointerStyle = ( self.canRate ? 'cursor:pointer' : '' );
-				var starImg = '<img src="staroutline.png" style="width:' + self.starWidth + 'px" />';
+				var starImg = '<img class="star_img" src="staroutline.png" style="width:' + self.starWidth + 'px" />';
 				var html = '<div style="width:' + self.containerWidth + 'px;height:' + self.starHeight + 'px;position:relative;' + pointerStyle + '">';
 
 				// create the progress bar that sits behinde the png star outlines
@@ -327,7 +327,7 @@ else{
     <!-- Teset -->
     <div class="container">
         <div class="row justify-content-center">
-            <div class="card col-8">
+            <div id="rwd_a"class="card col-8">
                 <div class="card-body">
                     <h3 class="card-title text-center"><?php echo $book[0]->bookName ?></h3>                
                 </div>
@@ -335,27 +335,26 @@ else{
         </div>
         <br>
         <div class="row justify-content-center">
-            <div class="card col-4 " >
-                <img src="<?php echo $book[0]->img ?>" class="card-img">
+            <div class="card col-4 " id="rwd_b">
+                <img src="<?php echo $book[0]->img ?>" class="card-img" >
                 <div class="card-body row justify-content-center w-auto" id="star_rating2">
                 </div>
                 <div class="card-body text-center ">
                     <form name="book" method="POST" >
-                        <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>"><br>
-                        <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>"><br>
-                    <?php echo($book[0]->num==0&&isset($_SESSION['username']))?' <input type="button"  class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >':''?>
+                        <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>">
+                        <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>">
+                        <input type="hidden" id="bt_sure" class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >
                     </form>
                 </div>
                 <div class="card-body text-center">
                     <form action="../php-favorite/favoriteBook_API.php" method="POST">
                         <input type="hidden" name="ISBN"value="<?php echo $search;  ?>"/>
                         <input type="hidden" name="bookName"value="<?php echo $book[0]->bookName;  ?>"/>
-                        <?php if(isset($_SESSION['username'])){
-                        echo '<input  type ="submit" class="bt_love" value=" '.($isFavorite?'移除':'加入').' 最愛"></input>';}?>
+                        <input type ="submit" id="bt_love" class="bt_love" value=""></input>
                     </form>  
                 </div>
             </div>
-            <div class="card col-4 ">
+            <div class="card col-4" id="rwd_c">
                 <div class="card-body scroll" >
                     <p>作者： <?php echo $book[0]->author ?>
                         <br> 
@@ -374,7 +373,7 @@ else{
         </div>
         <br>
         <div class="row justify-content-center">    
-            <div class="card col-8 comment_scroll">
+            <div id="rwd_d"class="card col-8 comment_scroll">
                     <div class="list-group list-group-flush">
                     <?php 
                         for($i=0;$i<count($comment);$i++){
@@ -416,7 +415,43 @@ else{
             </ul>
         </footer>
     </div>
-    
+    <script>
+        <?php
+            if($book[0]->num==0&&isset($_SESSION['username'])){
+                echo'document.getElementById("bt_sure").setAttribute("type","button");';
+            }
+            if(isset($_SESSION['username'])){
+                echo'document.getElementById("bt_love").setAttribute("type","submit");';
+                if($isFavorite){
+                    echo'document.getElementById("bt_love").setAttribute("value","移除最愛");';
+                }
+                else{
+                    echo'document.getElementById("bt_love").setAttribute("value","加入最愛");';
+                }
+            }
+        ?>
+        rwd();
+        window.addEventListener('resize', rwd);
+        function rwd(){
+            if(document.documentElement.clientWidth<=576){
+                document.getElementById('rwd_a').setAttribute("class","card col-10");
+                document.getElementById('rwd_b').setAttribute("class","card col-10");
+                document.getElementById('rwd_c').setAttribute("class","card col-10");
+                document.getElementById('rwd_d').setAttribute("class","card col-10");
+                document.getElementById('bt_sure').setAttribute("style","width:"+document.documentElement.clientWidth/100*50+"px;");
+                document.getElementById('bt_love').setAttribute("style","width:"+document.documentElement.clientWidth/100*50+"px;");
+            }
+            else{
+                document.getElementById('rwd_a').setAttribute("class","card col-8");
+                document.getElementById('rwd_b').setAttribute("class","card col-4");
+                document.getElementById('rwd_c').setAttribute("class","card col-4");
+                document.getElementById('rwd_d').setAttribute("class","card col-8");
+                document.getElementById('bt_sure').removeAttribute("style");
+                document.getElementById('bt_love').removeAttribute("style");
+                
+            }
+        }
+	</script>
 </body>
      
 </html>
