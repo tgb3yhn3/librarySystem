@@ -32,6 +32,25 @@
       #recommendNewBook3:hover{
         cursor:pointer;
       }
+      .inputt{
+        width: 50%;
+        height: 32px;
+        border: 1px solid #84C1FF;
+        /*设置边框圆角*/
+        border-radius: 5px;
+        padding-left: 10px;
+      }
+      .inputt_date{
+        width: 25%;
+        height: 32px;
+        border: 1px solid #84C1FF;
+        /*设置边框圆角*/
+        border-radius: 5px;
+        padding-left: 10px;
+      }
+      option{
+        text-align:center;
+      }
     </style>
 </HEAD>
 <BODY>
@@ -62,16 +81,16 @@
     </div>
     <div class="container">
       <div class="card">
-        <p Align="Center">請勾選並輸入搜尋條件(若無勾選任何條件則為無條件查詢)</p>
+        <p Align="Center"></p>
         <form action="search_php.php" method="POST" style="width:atuo; text-align:center;">
             <div class="tab-content-2" margin:0 auto>
-                <p><input name="bybookname"     type="checkbox">      <input name="adv_bookname"    placeholder="書名"      size="25" maxlength="30" style="border-color:#84C1FF;"></p>
-                <p><input name="byauthor"       type="checkbox">      <input name="adv_author"      placeholder="作者"      size="25" maxlength="30" style="border-color:#84C1FF;"></p>
-                <p><input name="byISBN"         type="checkbox">      <input name="adv_ISBN"        placeholder="ISBN"      size="25" maxlength="30" style="border-color:#84C1FF;"></p>
-                <p><input name="bypublisher"    type="checkbox">      <input name="adv_publisher"   placeholder="出版社"    size="25" maxlength="30" style="border-color:#84C1FF;"></p>
-                <p><input name="byclass"        type="checkbox">分類<select  name="adv_class"     maxlength="30" style="border-color:#84C1FF;"><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p></p>
-                <p><input name="bypublish_year" type="checkbox">出版日期在<input name="adv_publish_year" type="date" ><input  type="radio" name="adv_publish_year_before_after" value="before" checked>之前<input  type="radio" name="adv_publish_year_before_after" value="after">之後</p>
-                <p><input name="bycreate_time"  type="checkbox">上架日期在<input name="adv_create_time" type="date" ><input  type="radio" name="adv_create_time_before_after" value="before" checked>之前<input  type="radio" name="adv_create_time_before_after" value="after">之後</p>
+                <p><label>&ensp;&ensp;&ensp;&ensp;書名： </label><input name="adv_bookname"    placeholder="書名"   class="inputt"></p>
+                <p><label>&ensp;&ensp;&ensp;&ensp;作者： </label><input name="adv_author"      placeholder="作者"   class="inputt"></p>
+                <p><label>&ensp;&ensp;&ensp;ISBN：       </label><input name="adv_ISBN"        placeholder="ISBN"  class="inputt"></p>
+                <p><label>&ensp;&ensp;出版社：           </label><input name="adv_publisher"   placeholder="出版社" class="inputt"></p>
+                <p><label>&ensp;&ensp;&ensp;&ensp;分類：</label><select  name="adv_class" class="inputt"    ><option value="">不限</option><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p></p>
+                <p><label>出版日期：</label><input name="adv_publish_year_s" type="date" class="inputt_date">到<input name="adv_publish_year_g" type="date" class="inputt_date"></p>
+                <p><label>上架日期：</label><input name="adv_create_time_s" type="date" class="inputt_date">到<input name="adv_create_time_g" type="date" class="inputt_date"></p>
                 <input  type="radio" name="inventory" value="" checked>全部
                 <input  type="radio" name="inventory" value="inventory_in">尚有庫存(可借閱)
                 <input  type="radio" name="inventory" value="inventory_not_in">暫無庫存(需預約)

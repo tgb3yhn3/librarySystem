@@ -59,23 +59,31 @@
             $adv_publisher = $_SESSION["adv_publisher"];
             $sql=$sql." and publisher like '%$adv_publisher%'";
         }
-        if(isset($_SESSION["adv_publish_year"])){
-            $adv_publish_year = $_SESSION["adv_publish_year"]." 00:00:00";
-            if(isset($_SESSION['adv_publish_year_before_after']) && $_SESSION['adv_publish_year_before_after'] =="before"){
-                $sql=$sql." and unix_timestamp(publish_year) < unix_timestamp('$adv_publish_year') ";
-            }
-            else{
-                $sql=$sql." and unix_timestamp(publish_year) > unix_timestamp('$adv_publish_year') ";
-            }
+        if(isset($_SESSION["adv_publish_year_s"]) && isset($_SESSION["adv_publish_year_g"])){
+            $adv_publish_year_s = $_SESSION["adv_publish_year_s"]." 00:00:00";
+            $adv_publish_year_g = $_SESSION["adv_publish_year_g"]." 23:59:59";
+            $sql=$sql."and unix_timestamp(publish_year) >= unix_timestamp('$adv_publish_year_s') and unix_timestamp(publish_year) <= unix_timestamp('$adv_publish_year_g')  ";
         }
-        if(isset($_SESSION["adv_create_time"])){
-            $adv_create_time = $_SESSION["adv_create_time"]." 00:00:00";
-            if(isset($_SESSION['adv_create_time_before_after']) && $_SESSION['adv_create_time_before_after'] =="before"){
-                $sql=$sql." and unix_timestamp(create_time) < unix_timestamp('$adv_create_time') ";
-            }
-            else{
-                $sql=$sql." and unix_timestamp(create_time) > unix_timestamp('$adv_create_time') ";
-            }
+        else if(isset($_SESSION["adv_publish_year_s"])){
+            $adv_publish_year_s = $_SESSION["adv_publish_year_s"]." 00:00:00";
+            $sql=$sql." and unix_timestamp(publish_year) >= unix_timestamp('$adv_publish_year_s') ";
+        }
+        else if(isset($_SESSION["adv_publish_year_g"])){
+            $adv_publish_year_g = $_SESSION["adv_publish_year_g"]." 23:59:59";
+            $sql=$sql." and unix_timestamp(publish_year) <= unix_timestamp('$adv_publish_year_g') ";
+        }
+        if(isset($_SESSION["adv_create_time_s"]) && isset($_SESSION["adv_create_time_g"])){
+            $adv_create_time_s = $_SESSION["adv_create_time_s"]." 00:00:00";
+            $adv_create_time_g = $_SESSION["adv_create_time_g"]." 23:59:59";
+            $sql=$sql."and unix_timestamp(create_time) >= unix_timestamp('$adv_create_time_s') and unix_timestamp(create_time) <= unix_timestamp('$adv_create_time_g')  ";
+        }
+        else if(isset($_SESSION["adv_create_time_s"])){
+            $adv_create_time_s = $_SESSION["adv_create_time_s"]." 00:00:00";
+            $sql=$sql." and unix_timestamp(create_time) >= unix_timestamp('$adv_create_time_s') ";
+        }
+        else if(isset($_SESSION["adv_create_time_g"])){
+            $adv_create_time_g = $_SESSION["adv_create_time_g"]." 23:59:59";
+            $sql=$sql." and unix_timestamp(create_time) <= unix_timestamp('$adv_create_time_g') ";
         }
         if(isset($_SESSION["adv_class"])){
             $adv_class = $_SESSION["adv_class"];

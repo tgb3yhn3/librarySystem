@@ -5,47 +5,55 @@ require("search.php");
 $book=new stdClass();
 $leaderboardAccordingTo = "";
 if(isset($_POST['advancedSearch'])){//進階搜尋
-  if(isset($_POST['bybookname']) && isset($_POST['adv_bookname'])){//有勾選書名(若有勾選卻沒輸入書名則等同於沒勾選)
+  if(isset($_POST['adv_bookname'])){//書名
       $adv_bookname = $_POST['adv_bookname'];
   }
   else{
       $adv_bookname = "";
   }
-  if(isset($_POST['byauthor']) && isset($_POST['adv_author'])){//有勾選作者(若有勾選卻沒輸入作者則等同於沒勾選)
+  if(isset($_POST['adv_author'])){//作者
       $adv_author = $_POST['adv_author'];
   }
   else{
       $adv_author = "";
   }
-  if(isset($_POST['byISBN']) && isset($_POST['adv_ISBN'])){//有勾選ISBN(若有勾選卻沒輸入ISBN則等同於沒勾選)
+  if(isset($_POST['adv_ISBN'])){//ISBN
       $adv_ISBN = $_POST['adv_ISBN'];
   }
   else{
       $adv_ISBN = "";
   }
-  if(isset($_POST['bypublisher']) && isset($_POST['adv_publisher'])){//有勾選出版社(若有勾選卻沒輸入出版社則等同於沒勾選)
+  if(isset($_POST['adv_publisher'])){//出版社
       $adv_publisher = $_POST['adv_publisher'];
   }
   else{
       $adv_publisher = "";
   }
-  if(isset($_POST['bypublish_year']) && isset($_POST['adv_publish_year'])){//有勾選出版日期
-      $adv_publish_year = $_POST['adv_publish_year'];
-      $adv_publish_year_before_after = $_POST['adv_publish_year_before_after'];
+  if(isset($_POST['adv_publish_year_s'])){//出版日期
+      $adv_publish_year_s = $_POST['adv_publish_year_s'];
   }
   else{
-      $adv_publish_year = "";
-      $adv_publish_year_before_after = "";
+      $adv_publish_year_s = "";
   }
-  if(isset($_POST['bycreate_time']) && isset($_POST['adv_create_time'])){//有勾選上架日期
-      $adv_create_time = $_POST['adv_create_time'];
-      $adv_create_time_before_after = $_POST['adv_create_time_before_after'];
+  if(isset($_POST['adv_publish_year_g'])){//出版日期
+      $adv_publish_year_g = $_POST['adv_publish_year_g'];
   }
   else{
-      $adv_create_time = "";
-      $adv_create_time_before_after = "";
+      $adv_publish_year_g = "";
   }
-  if(isset($_POST['byclass']) && isset($_POST['adv_class'])){//有勾選分類
+  if(isset($_POST['adv_create_time_s'])){//上架日期
+      $adv_create_time_s = $_POST['adv_create_time_s'];
+  }
+  else{
+      $adv_create_time_s = "";
+  }
+  if(isset($_POST['adv_create_time_g'])){//上架日期
+      $adv_create_time_g = $_POST['adv_create_time_g'];
+  }
+  else{
+      $adv_create_time_g = "";
+  }
+  if(isset($_POST['adv_class'])){//分類
       $adv_class = $_POST['adv_class'];
   }
   else{
@@ -62,13 +70,13 @@ if(isset($_POST['advancedSearch'])){//進階搜尋
   unset($_SESSION['adv_author']); 
   unset($_SESSION['adv_ISBN']);
   unset($_SESSION['adv_publisher']);  
-  unset($_SESSION['adv_publish_year']); 
-  unset($_SESSION['adv_publish_year_before_after']);
-  unset($_SESSION['adv_create_time']);
-  unset($_SESSION['adv_create_time_before_after']);
+  unset($_SESSION['adv_publish_year_s']); 
+  unset($_SESSION['adv_publish_year_g']);
+  unset($_SESSION['adv_create_time_s']);
+  unset($_SESSION['adv_create_time_g']);
   unset($_SESSION['adv_class']); 
   unset($_SESSION['adv_inventory']); 
-  //如果有勾選條件並且有輸入東西，則session才會被建立，session是給search.php進階搜尋時用的
+  //如果條件並且有輸入東西，則session才會被建立，session是給search.php進階搜尋時用的
   if($adv_bookname != ""){
       $_SESSION['adv_bookname'] = $adv_bookname;
   }
@@ -81,13 +89,17 @@ if(isset($_POST['advancedSearch'])){//進階搜尋
   if($adv_publisher != ""){
       $_SESSION['adv_publisher'] = $adv_publisher;
   }
-  if($adv_publish_year != ""){
-      $_SESSION['adv_publish_year'] = $adv_publish_year;
-      $_SESSION['adv_publish_year_before_after'] = $adv_publish_year_before_after;
+  if($adv_publish_year_s != ""){
+      $_SESSION['adv_publish_year_s'] = $adv_publish_year_s;
   }
-  if($adv_create_time != ""){
-      $_SESSION['adv_create_time'] = $adv_create_time;
-      $_SESSION['adv_create_time_before_after'] = $adv_create_time_before_after;
+  if($adv_publish_year_g != ""){
+      $_SESSION['adv_publish_year_g'] = $adv_publish_year_g;
+  }
+  if($adv_create_time_s != ""){
+      $_SESSION['adv_create_time_s'] = $adv_create_time_s;
+  }
+  if($adv_create_time_g != ""){
+      $_SESSION['adv_create_time_g'] = $adv_create_time_g;
   }
   if($adv_class != ""){
       $_SESSION['adv_class'] = $adv_class;
