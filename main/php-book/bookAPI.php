@@ -307,6 +307,21 @@
             return false;
         }
     }
+    function check_late ($data){
+        date_default_timezone_set('Asia/Taipei');
+        $d1 = date("Y").'-'.date("m").'-'.date("d");//現在日期->即歸還日期
+        $today = explode("-",$d1);
+        $return = mktime(0,0,0,$today[1],$today[2],$today[0]);
+        $lasting_date = explode("-",$data[0]["lasting_return_date"]);
+        $lasting = mktime(0,0,0,$lasting_date[1],$lasting_date[2],$lasting_date[0]);
+        $days = round(($lasting-$return)/3600/24);
+        if($days>0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     function check_late_return ($userID,$conn){//查看此使用者有沒有
         $get_user_credit =  "SELECT * FROM user_book_history WHERE userID = $userID AND book_status = '出借中'" ;
         $result = mysqli_query($conn,$get_user_credit);
@@ -379,10 +394,6 @@
         }
     }
     function check_this_book_late_return($bookuniqueID,$conn){//如果這本書有遲還，回傳此書資料
-        date_default_timezone_set('Asia/Taipei');
-        $d1 = date("Y").'-'.date("m").'-'.date("d");//現在日期->即歸還日期
-        $today = explode("-",$d1);
-        $return = mktime(0,0,0,$today[1],$today[2],$today[0]);
         $get_data =  "SELECT * FROM user_book_history WHERE book_unique_ID = '".$bookuniqueID."' ORDER BY numbering DESC" ;
         $result = mysqli_query($conn,$get_data);
         $count = 0;
@@ -395,13 +406,8 @@
             }
             mysqli_free_result($result);
         }
-        $lasting_date = explode("-",$datas[0]["lasting_return_date"]);
-        $lasting = mktime(0,0,0,$lasting_date[1],$lasting_date[2],$lasting_date[0]);
-        $days = round(($lasting-$return)/3600/24);
-        if($days>=0){
-            return $datas;
-        }
-        return 0;
+
+        return $datas;
     }
     function check_user_exist($userID,$conn){//查看此學號是否存在
         $get_data =  "SELECT * FROM users WHERE userID = '".$userID."' " ;

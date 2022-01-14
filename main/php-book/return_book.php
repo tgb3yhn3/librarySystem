@@ -96,7 +96,7 @@
               $book_fine=0;
               $total_fine=0;
               $data = check_this_book_late_return($bookuniqueID,$conn);
-                if($data!=0){//no late
+                if(check_late($data)){//no late
                   echo '<button id="fine" type="button" class="btn btn-success btn-lg" disabled>罰金繳費單</button>';
                 }
                 else{//late
