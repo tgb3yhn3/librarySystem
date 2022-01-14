@@ -1,12 +1,21 @@
+<?php
+session_start();
+if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+  header("location:../index.php");
+}
+?>
 <!DOCTYPE html>
 <HTML>
 <HEAD>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="frontpage.css?v=<?=time()?>">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <TITLE>館藏調整</TITLE>
     <style>
     .inputt{
@@ -58,18 +67,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <div class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="../welcome.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <img width="50px" height="50px" src="ntou_logo.png">
-            </a>
-            <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-上下架</span></span>
-
-            <div class="col-md-3 text-end">
-            <?php 
-          session_start();
-         
-             if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
-            header("location:../index.php");
-            }
+          <a href="../welcome.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img width="50px" height="50px"src="../ntou_logo.png">
+          </a>
+          <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-館藏調整</span></span>
+    
+          <div class="col-md-3 text-end">
+          <?php 
+        
           if(isset($_SESSION['username'])){
 
             // echo ($_SESSION["status"]);
@@ -90,10 +95,10 @@
             echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
             <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
-          } ?>       
-            </div>
+          } ?>
+          </div>
         </header>
-    </div >
+    </div>
     
     <div  class="panel-group container"style="width:60%;">
         <input type="radio" name="panel-radio" id="radio1" class="panel-control" checked>
