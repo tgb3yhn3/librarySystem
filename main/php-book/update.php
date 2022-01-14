@@ -89,24 +89,25 @@ if(!isset($_POST['ISBN'])){
             
             
         
-            for($i=$oldnum-1;$i>=$num;$i--){
+            for($i=$oldnum;$i>$num;$i--){
                 $stmt =$conn->prepare("delete from book where bookUniqueID='".$ISBN."_".$i."'");
                 
                 $stmt->execute();
             }
             alertMsg("調整成功");
+            echo"<hr>原數量:".$oldnum."<br>調整後數量:".$num;
         }
     }else if($oldnum<$num){
         $stmt->execute();
         $stmt = $conn->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
                                           ('','','','','','',?,'','','','','','')");
          $stmt->bind_param("s",$bookUniqueID);
-        for($i=$oldnum-1;$i<$num;$i++){
+        for($i=$oldnum-1;$i<=$num;$i++){
             $bookUniqueID=$ISBN.'_'.$i;
             $stmt->execute();
-            echo"新增";
         }
         alertMsg("調整成功");
+        echo"<hr>原數量:".$oldnum."<br>調整後數量:".$num;
     }else{
         echo("<br>無調整數量");
     }

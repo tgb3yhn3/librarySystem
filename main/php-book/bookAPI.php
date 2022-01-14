@@ -100,6 +100,8 @@
             $lasting_time = date("Y-m-d",strtotime($now_time."+5 day"));//5天不取的話就取消資格
             $unique = $datas[0]['numbering'];
             $sql = "UPDATE line_up SET lasting_time = '".$lasting_time."' WHERE numbering = '".$unique."'";
+            require_once '../php-announcement/sentCanBorrowMail.php';
+            sentCanBorrowMail($datas[0]['userID'],$datas[0]['ISBN'],$lasting_time,$conn);
             // echo "向".$datas[0]['userID']."寄簡訊<br>";
             mysqli_query($conn,$sql);
         }
