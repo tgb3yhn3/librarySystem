@@ -106,10 +106,10 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
         <input type="radio" name="panel-radio" id="radio3" class="panel-control">
         <input type="radio" name="panel-radio" id="radio4" class="panel-control">
         <div class="tab-group">
-          <label for="radio1" class="active">上架書籍</label>
-          <label for="radio2">下架書籍</label>
-          <label for="radio3">館藏調整</label>
-          <label for="radio4">刪除書籍</label>
+          <label for="radio1" class="active">&emsp;&emsp;&emsp;&emsp;&emsp;上架書籍</label>
+          <label for="radio2">&emsp;&emsp;&emsp;&emsp;&emsp;下架書籍</label>
+          <label for="radio3">&emsp;&emsp;&emsp;&emsp;&emsp;館藏調整</label>
+          <label for="radio4">&emsp;&emsp;&emsp;&emsp;&emsp;刪除書籍</label>
         </div>
         <div class="content-group"style="background-color: #fff;" >
             <!-- 上架書籍-->
