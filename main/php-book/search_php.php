@@ -224,7 +224,7 @@ mysqli_close($conn);
              <div class="col-md-3"><a style="text-decoration:none;"href="book.php?search='.$book[$i]->ISBN.'">
              <img src="'.$book[$i]->img.'" class="img-fluid rounded-start"></a>
               </div>
-              <div class="col-md-7">
+              <div class="col-md-6">
                 <div class="card-body">';
                     if($leaderboardAccordingTo == "discussion"){
                         echo'<p class="card-text"><a class="text-muted"><span style="color:red">討論度:&emsp;'.$book[$i]->commentnum.'</span></a></p>';
@@ -252,7 +252,7 @@ mysqli_close($conn);
              echo'<p class="card-text"><small class="text-muted">publish at&emsp;'.$book[$i]->publish_year.'</small></p>
                 </div>
               </div>
-              <div class="col-md-2 row align-items-center">
+              <div class="col-md-3 ">
                 <div class="d-grid gap-5">
                 '.(isset($_SESSION['admin'])&&$_SESSION['admin']==true?'<button  class="btn btn-danger " id="delete_'.$book[$i]->ISBN.'">刪除此書</button>
                 <script>
@@ -269,11 +269,12 @@ mysqli_close($conn);
             })
         ;
 </script>':'').'<form name="book" method="POST" action="reserve_book.php">
-                 '.($book[$i]->num==0&&isset($_SESSION["userID"])?'<button type="submit" class="btn btn-primary mr-1" >預約租書</button>':'').' 
+                  <br>
+                 '.($book[$i]->num==0&&isset($_SESSION["userID"])?'<button type="submit" id = "reservation_btn" class="btn btn-primary mr-1" >預約租書</button>':'').' 
                  
                         <input type = "hidden" id = "userID" name="userID" value = "'.(isset($_SESSION["userID"])?$_SESSION["userID"]:"").'"><br>
                         <input type = "hidden" id = "ISBN" name="ISBN" value = "'.$book[$i]->ISBN .'"><br>
-                  <button type="button" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>
+                  <button type="button" id = "num_btn" class="btn btn-secondary " disabled>'.($book[$i]->num==0?'無庫存':'剩餘'.$book[$i]->num.'本').'</button>
                 </form>
                   </div>
               </div>
