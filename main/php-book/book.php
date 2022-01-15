@@ -350,7 +350,7 @@ else{
                     <form action="../php-favorite/favoriteBook_API.php" method="POST">
                         <input type="hidden" name="ISBN"value="<?php echo $search;  ?>"/>
                         <input type="hidden" name="bookName"value="<?php echo $book[0]->bookName;  ?>"/>
-                        <input type ="submit" id="bt_love" class="bt_love" value=""></input>
+                        <input type ="hidden" id="bt_love" class="bt_love" value=""></input>
                     </form>  
                 </div>
             </div>

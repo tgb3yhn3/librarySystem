@@ -1,30 +1,80 @@
+<?php
+session_start();
+if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
+  header("location:../index.php");
+}
+?>
 <!DOCTYPE html>
 <HTML>
 <HEAD>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="frontpage.css?v=<?=time()?>">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <TITLE>館藏查詢</TITLE>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <TITLE>館藏調整</TITLE>
+    <style>
+    .inputt{
+        width: 35%;
+        height: 32px;
+        border: 1px solid #84C1FF;
+        /*设置边框圆角*/
+        border-radius: 5px;
+        padding-left: 10px;
+    }
+    .inputt_double{
+        width: 65%;
+        height: 32px;
+        border: 1px solid #84C1FF;
+        /*设置边框圆角*/
+        border-radius: 5px;
+        padding-left: 10px;
+    }
+    .panel-control {
+        position:absolute;
+        opacity:0;
+    }
+    .tab-group label {
+        width:17.5%;
+        display:inline-block;
+        padding: 10px 0px;
+        border:1px solid #ccc;
+        border-bottom:none;
+        background-color: gray;
+        bottom:-6px;
+        position:relative;
+    }
+    .content-group {
+        border:1px solid #ccc;
+        padding: 20px;
+    }
+    .content{display:none;}
+    #radio1:checked ~ .tab-group [for="radio1"],
+    #radio2:checked ~ .tab-group [for="radio2"],
+    #radio3:checked ~ .tab-group [for="radio3"],
+    #radio4:checked ~ .tab-group [for="radio4"]{background-color: #fff;}
+    #radio1:checked ~ .content-group .content1,
+    #radio2:checked ~ .content-group .content2,
+    #radio3:checked ~ .content-group .content3,
+    #radio4:checked ~ .content-group .content4 {display:block}
+    </style>
 </HEAD>
 <BODY>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <div class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="../welcome.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <img width="50px" height="50px" src="ntou_logo.png">
-            </a>
-            <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-上下架</span></span>
-
-            <div class="col-md-3 text-end">
-            <?php 
-          session_start();
-         
-             if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
-            header("location:../index.php");
-            }
+          <a href="../welcome.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img width="50px" height="50px"src="../ntou_logo.png">
+          </a>
+          <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-館藏調整</span></span>
+    
+          <div class="col-md-3 text-end">
+          <?php 
+        
           if(isset($_SESSION['username'])){
 
             // echo ($_SESSION["status"]);
@@ -46,88 +96,69 @@
             <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
          ';
           } ?>
-                
-            </div>
+          </div>
         </header>
     </div>
-    <span id="tab-1">上架</span>
-    <span id="tab-2">下架</span>
-    <span id="tab-3">館藏調整</span>
-    <span id="tab-4">刪除書籍</span>
     
-    
-       
-
-    
-    
-    <div id="tab">
-        <ul>
-            <li><a href="#tab-1">上架</a></li>
-            <li><a href="#tab-2">下架</a></li>
-            <li><a href="#tab-3">館藏調整</a></li>
-            <li><a href="#tab-4">刪除書籍</a></li>
-        </ul>
-
-        <!-- 頁籤的內容區塊 -->
-        <div class="tab-content-1">
-            <!-- create Book -->
-            <form action="create.php" method="post" enctype="multipart/form-data">
-            <br>
-            <p>書名:&emsp;<input name="bookName" id="bookName" type="text" size="15" maxlength="25" style="border-color:#84C1FF;">&emsp;分類:&emsp;<select id="class" name="class" maxlength="30" style="border-color:#84C1FF;"><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
-            <p>作者:&emsp;<input name="author" id="author"type="text" size="12" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="ISBN" id="ISBN"type="text" size="10" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
-            <p>出版日期:<input name="publish_year" id="publish_year" type="text" size="10" maxlength="30" style="border-color:#84C1FF;">出版社:<input name="publisher"id="publisher" type="text" size="5" maxlength="30" style="border-color:#84C1FF;"></p>
-            <p>數量:<input name="num" type="text"value="1" size="1" maxlength="30" style="border-color:#84C1FF;">簡介:&emsp;<input name="describeBook" id="describeBook" type="text" size="20" maxlength="30" style="border-color:#84C1FF;"></p>
-            <p>書籍圖片網址<input name="img_url" id="img_url" type="text" size="30" maxlength="30" style="border-color:#84C1FF;"></p>
-            <p>書籍圖片&emsp;<input name="image" type="file" accept="image/png, image/jpeg,image/gif" size="1" maxlength="30" style="border-color:#84C1FF;"></p>
-            
-           <p><input type="submit" value="上架"/>&emsp;&emsp;&emsp;<input type="reset" value="清除">&emsp;<button type="button"id="crawl">自動爬取書籍資料</button></p>
-            
-            
-            
-        </form>
-        
+    <div  class="panel-group container"style="width:60%;">
+        <input type="radio" name="panel-radio" id="radio1" class="panel-control" checked>
+        <input type="radio" name="panel-radio" id="radio2" class="panel-control">
+        <input type="radio" name="panel-radio" id="radio3" class="panel-control">
+        <input type="radio" name="panel-radio" id="radio4" class="panel-control">
+        <div class="tab-group">
+          <label for="radio1" class="active">上架書籍</label>
+          <label for="radio2">下架書籍</label>
+          <label for="radio3">館藏調整</label>
+          <label for="radio4">刪除書籍</label>
         </div>
-        <div class="tab-content-2" margin:0 auto>
-            <form action="delete.php" method="POST">
-                <br>
-                <!--Delete Book  -->
-           <p>ISBN:&emsp;<input name="ISBN"  id="takeoff_ISBN"type="text" size="10" maxlength="30" style="border-color:#84C1FF;">&emsp;<button id='takeoff'type="button">館內搜尋</button>&emsp;<input type="reset" value="清除"></p>
-            
-            
-        
-           <p>書名為:<div id="takeoff_name"></div>&emsp;</p>
-            <p>作者為:<div id="takeoff_author"></div>&emsp;</p>
-            <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="刪除">&emsp;&emsp;&emsp;</p>
-        </form>
-    </div>
-    <div class="tab-content-3">
-        <!-- updateBook -->
-        <form action="update.php" method="POST">
-            <br>
-            <p>書名:&emsp;<input id="update_bookName" name="bookName" type="text" size="15" maxlength="25" style="border-color:#84C1FF;">&emsp;分類:&emsp;<select id="update_class" name="class" maxlength="30" style="border-color:#84C1FF;"><option id="update_總類" value="總類">總類</option><option id="update_哲學類" value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
-            <p>作者:&emsp;<input name="author"id="update_author" type="text" size="12" maxlength="30" style="border-color:#84C1FF;">&emsp;ISBN:&emsp;<input name="ISBN"id="update_ISBN" type="text" size="10" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
-            <p>出版日期:<input name="publish_year"id="update_publish_year" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">出版社:<input name="publisher"id="update_publisher" type="text" size="5" maxlength="30" style="border-color:#84C1FF;">&emsp;<button type="button" id="update">館內搜尋</button></p>
-            <p>數量:<input name="num"id="update_num" type="text" size="1" maxlength="30" style="border-color:#84C1FF;">簡介:&emsp;<input name="describeBook" id="update_describeBook"type="text" size="20" maxlength="30" style="border-color:#84C1FF;"></p>
-            <p>書籍圖片網址<input name="img_url" id="update_img_url" type="text" size="30" maxlength="30" style="border-color:#84C1FF;"></p>
-            <p>書籍圖片&emsp;<input name="image" type="file" accept="image/png, image/jpeg,image/gif" size="1" maxlength="30" style="border-color:#84C1FF;"></p>
-            
-            <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="送出修改">&emsp;&emsp;&emsp;<input type="submit" value="清除"></p>
-        </form>
+        <div class="content-group"style="background-color: #fff;" >
+            <!-- 上架書籍-->
+            <div class="content content1" style="height:500px;" >
+                <form action="create.php" method="post" enctype="multipart/form-data">
+                    <br>
+                    <p>&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input  class="inputt" name="ISBN" id="ISBN"type="text">&emsp;<button  type="button" id="crawl">自動爬取書籍資料</button></p>
+                    <p>&emsp;&emsp;&emsp;&emsp;書名：<input class="inputt" name="bookName" id="bookName" type="text" ></p><p>&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;分類：<select class="inputt" id="class" name="class" maxlength="30" ><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
+                    <p>&emsp;&emsp;&emsp;&emsp;作者：<input class="inputt" name="author" id="author"type="text"></p><p>&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;數量：<input class="inputt" name="num" type='number' min='0' onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"></p>
+                    <p>&emsp;&emsp;&emsp;出版社：<input class="inputt" name="publisher"id="publisher" type="text"></p><p>&emsp;&emsp;出版日期：<input class="inputt" name="publish_year" id="publish_year" type="text" ></p>
+                    <p>&emsp;&emsp;&emsp;&emsp;簡介：<input class="inputt_double" name="describeBook" id="describeBook" type="text" ></p>
+                    <p>書籍圖片網址：<input class="inputt_double" name="img_url" id="img_url" type="text"></p>
+                    <p>&emsp;&emsp;書籍圖片：<input name="image" type="file" accept="image/png, image/jpeg,image/gif"></p>
+                    <p style="text-align:center;"><input type="submit" value="上架"/>&emsp;&emsp;&emsp;<input type="reset" value="清除"></p>
+                </form>
+            </div>
+            <div class="content content2" style="height:500px;">
+                <!--下架書籍 -->
+                <form action="delete.php" method="POST">
+                    <br>
+                    <p>&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input name="ISBN" class="inputt" id="takeoff_ISBN"type="text">&emsp;<button id='takeoff'type="button">館內搜尋</button>&emsp;<input type="reset" value="清除"></p>
+                    
+                
+                    <p>&emsp;&emsp;&emsp;&ensp;書名為:<div id="takeoff_name"></div>&emsp;</p>
+                    <p>&emsp;&emsp;&emsp;&ensp;作者為:<div id="takeoff_author"></div>&emsp;</p>
+                    <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="刪除">&emsp;&emsp;&emsp;</p>
+                </form>
+            </div>
+            <div class="content content3" style="height:500px;">
+                <form action="update.php" method="POST">
+                    <br>
+                    <p>&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input class="inputt" name="ISBN"id="update_ISBN" type="text">&emsp;<button type="button" id="update">館內搜尋</button></p>
+                    <p>&emsp;&emsp;&emsp;&emsp;書名：<input class="inputt" id="update_bookName" name="bookName" type="text" ></p><p>&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;分類：<select class="inputt" id="update_class" name="class" maxlength="30" style="border-color:#84C1FF;"><option id="update_總類" value="總類">總類</option><option id="update_哲學類" value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
+                    <p>&emsp;&emsp;&emsp;&emsp;作者：<input class="inputt" name="author"id="update_author" type="text" ></p><p>&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;數量：<input class="inputt" name="num"id="update_num" type='number' min='0' onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"></p>
+                    <p>&emsp;&emsp;&emsp;出版社：<input class="inputt" name="publisher"id="update_publisher" type="text" ></p><p>&emsp;&emsp;出版日期：<input class="inputt" name="publish_year"id="update_publish_year" type="text" ></p>
+                    <p>&emsp;&emsp;&emsp;&emsp;簡介：<input class="inputt_double" name="describeBook" id="update_describeBook"type="text" ></p>
+                    <p>書籍圖片網址：<input class="inputt_double" name="img_url" id="update_img_url" type="text"></p>
+                    <p>&emsp;&emsp;書籍圖片：<input name="image" type="file" accept="image/png, image/jpeg,image/gif"></p>
+                    
+                    <p style="text-align:center;"><input type="submit" value="送出修改">&emsp;<input type="submit" value="清除"></p>
+                </form>
+            </div>
+            <div class="content content4" style="height:500px;">
+                <form action="delete_lost_book.php" method="POST">
+                    <br>
+                    <p>&emsp;&emsp;&emsp;&emsp;書號：<input class="inputt" id="bookuniqueID" name="bookuniqueID" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;<input type="submit" value="刪除此書"></p>
+                </form>
+            </div>
         </div>
-        
-       
-    
-    <div class="tab-content-4">
-        <!-- updateBook -->
-        <form action="delete_lost_book.php" method="POST">
-            <br><br><br><br><br><br><br>
-            <p>&emsp;&emsp;&emsp;&emsp;&emsp;書號:&emsp;<input id="bookuniqueID" name="bookuniqueID" type="text" size="20" maxlength="30" style="border-color:#84C1FF;">&emsp;</p>
-            <br>
-            <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<input type="submit" value="刪除此書">&emsp;&emsp;&emsp;</p>
-        </form>
-        </div>
-    </div>
-       
     </div>
     <div class="container">
 
@@ -174,8 +205,13 @@
                         //console.log(document.getElementById("takeoff_bookNames").innerHTML);
                         
                         //document.getElementById("takeoff_bookNames").innerHTML = data.author;
-                        document.getElementById("takeoff_name").innerHTML = data.bookName;
-                        document.getElementById("takeoff_author").innerHTML=data.author;
+                        if(data.bookName!=""){
+                            document.getElementById("takeoff_name").innerHTML = "&emsp;&emsp;&emsp;&ensp;"+data.bookName;
+                        }
+                        if(data.author!=""){
+                            document.getElementById("takeoff_author").innerHTML="&emsp;&emsp;&emsp;&ensp;"+data.author;
+                        }
+                        
                         
                     },
                     error:function(e){
@@ -215,4 +251,5 @@
             })
         });
 </script>
+
 </HTML>
