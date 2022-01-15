@@ -61,7 +61,6 @@ if (mysqli_affected_rows($link)>0) {
     $new_id= mysqli_insert_id ($link);
     echo "書籍已經上傳成功";
     echo "<script>window.alert('書籍已經上傳成功');history.go(-1);</script>";
-    exit;
     }
     elseif(mysqli_affected_rows($link)==0) {
         echo "無資料新增";
