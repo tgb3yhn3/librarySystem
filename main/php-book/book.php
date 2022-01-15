@@ -7,6 +7,7 @@ require_once("../php-comment/comment.php");
 require_once("../php-favorite/isFavorite.php");
 require_once("../php-like/like_query.php");
 require_once("star_queryAPI.php");
+require_once("../php-like/isLike.php");
 $search=$_GET["search"];
 $book=get_search_book($search,2,1,$conn);
 $comment=get_comment($search,$conn);
@@ -23,6 +24,7 @@ if(isset($_SESSION['userID'])){
 else{
     $isFavorite=false;//訪客
 }
+
 // echo $book;
 ?>
 
@@ -126,6 +128,50 @@ else{
         max-height: 300px;
         overflow-y: auto;
     }
+
+    .bt-good{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #a5a5a5;
+        color: white;
+        font-size: 15px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 180px;/*按鈕寬*/
+        border-radius: 5px;/*圓角*/
+        background-image:url(good.png);
+    }
+    .bt-ungood{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #a5a5a5;
+        color: white;
+        font-size: 15px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 180px;/*按鈕寬*/
+        border-radius: 5px;/*圓角*/
+        background-image:url(nogood.png);
+    }
+    .bt-nogood{
+        background-repeat: no-repeat;
+        /* background-position: left; */
+        background-size: 20px;
+        background-position:9px 9px;
+        border: none;
+        background-color: #a5a5a5;
+        color: white;
+        font-size: 15px;
+        padding: 10px;/*按鈕內邊距離*/
+        width: 180px;/*按鈕寬*/
+        border-radius: 5px;/*圓角*/
+        /* //background-image:url(love.png); */
+        
+    }
     @import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
     .heart-btn{
     position: absolute;
@@ -162,7 +208,7 @@ else{
     font-family: 'Montserrat',sans-serif;
     }
     .numb:before{
-    content: '12';/*點讚數*/
+    content: <?php echo "'".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn)."';" ?>;/*點讚數*/
     font-size: 15px;
     margin-left: 7px;
     font-weight: 600;
@@ -170,7 +216,7 @@ else{
     font-family: sans-serif;
     }
     .numb.heart-active:before{
-    content: '13';/*點讚數*/
+    content: <?php echo "'".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn)."';" ?>;/*點讚數*/
     color: #000;
     }
     .text.heart-active{
@@ -241,7 +287,7 @@ else{
 			starRating.prototype.draw = function() {
 				var self = this;
 				var pointerStyle = ( self.canRate ? 'cursor:pointer' : '' );
-				var starImg = '<img class="star_img" src="staroutline.png" style="width:' + self.starWidth + 'px" />';
+				var starImg = '<img src="staroutline.png" style="width:' + self.starWidth + 'px" />';
 				var html = '<div style="width:' + self.containerWidth + 'px;height:' + self.starHeight + 'px;position:relative;' + pointerStyle + '">';
 
 				// create the progress bar that sits behinde the png star outlines
@@ -327,7 +373,7 @@ else{
     <!-- Teset -->
     <div class="container">
         <div class="row justify-content-center">
-            <div id="rwd_a"class="card col-8">
+            <div class="card col-8">
                 <div class="card-body">
                     <h3 class="card-title text-center"><?php echo $book[0]->bookName ?></h3>                
                 </div>
@@ -335,26 +381,27 @@ else{
         </div>
         <br>
         <div class="row justify-content-center">
-            <div class="card col-4 " id="rwd_b">
-                <img src="<?php echo $book[0]->img ?>" class="card-img" >
+            <div class="card col-4 " >
+                <img src="<?php echo $book[0]->img ?>" class="card-img">
                 <div class="card-body row justify-content-center w-auto" id="star_rating2">
                 </div>
                 <div class="card-body text-center ">
                     <form name="book" method="POST" >
-                        <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>">
-                        <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>">
-                        <input type="hidden" id="bt_sure" class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >
+                        <input type = "hidden" id = "userID" name="userID" value = "<?php if(isset($_SESSION['userID'])){echo $_SESSION['userID'];} ?>"><br>
+                        <input type = "hidden" id = "ISBN" name="ISBN" value = "<?php echo $book[0]->ISBN ?>"><br>
+                    <?php echo($book[0]->num==0&&isset($_SESSION['username']))?' <input type="button"  class ="btn bt_sure" value="預約租書" onClick="reserve_post()" >':''?>
                     </form>
                 </div>
                 <div class="card-body text-center">
                     <form action="../php-favorite/favoriteBook_API.php" method="POST">
                         <input type="hidden" name="ISBN"value="<?php echo $search;  ?>"/>
                         <input type="hidden" name="bookName"value="<?php echo $book[0]->bookName;  ?>"/>
-                        <input type ="hidden" id="bt_love" class="bt_love" value=""></input>
+                        <?php if(isset($_SESSION['username'])){
+                        echo '<input  type ="submit" class="bt_love" value=" '.($isFavorite?'移除':'加入').' 最愛"></input>';}?>
                     </form>  
                 </div>
             </div>
-            <div class="card col-4" id="rwd_c">
+            <div class="card col-4 ">
                 <div class="card-body scroll" >
                     <p>作者： <?php echo $book[0]->author ?>
                         <br> 
@@ -373,30 +420,39 @@ else{
         </div>
         <br>
         <div class="row justify-content-center">    
-            <div id="rwd_d"class="card col-8 comment_scroll">
+            <div class="card col-8 comment_scroll">
                     <div class="list-group list-group-flush">
                     <?php 
                         for($i=0;$i<count($comment);$i++){
                             echo'
                             <a class="list-group-item">
                                 <div class="d-flex w-100 align-items-center justify-content-between">
-                                <strong class="mb-1">'.$comment[$i]->username.'</strong>
-                                <small class="text-muted"></small>
-                                </div>
+                                <strong class="mb-1">'.$comment[$i]->username.'</strong>';
+                                if(isset($_SESSION['username'])){
+                                    if(strcmp($_SESSION['username'],$comment[$i]->username)){
+                                        $isLike = isLike($comment[$i]->username,$search,$comment[$i]->context,$_SESSION['userID'],$conn);
+                                        // echo isLike($comment[$i]->username,$search,$comment[$i]->context,$_SESSION['username'],$conn) ;
+                                        // echo "test";
+                                        echo '
+                                            <form action="../php-like/like_API.php" method="POST">
+                                                <input type="hidden" name="ISBN" value='.$search.'>
+                                                <input type="hidden" name="commentUsername" value='.$comment[$i]->username.'>
+                                                <input type="hidden" name="context" value='.$comment[$i]->context.'>
+                                                <input type="submit" class="'.($isLike?'bt-good':'bt-ungood').'" value='.getLike($comment[$i]->username,$search,$comment[$i]->context,$conn).'人喜歡這則留言>
+                                            </form>
+                                        ';
+                                    } 
+                                    else{
+                                        echo '<br><input type="submit" class="bt-nogood" value='.getLike($comment[$i]->username,$search,$comment[$i]->context,$conn).'人喜歡這則留言>';
+                                    }
+                                }else{
+                                    echo '<br><input type="submit" class="bt-nogood" value='.getLike($comment[$i]->username,$search,$comment[$i]->context,$conn).'人喜歡這則留言>';
+                                }
+
+                                echo'</div>
                                 <div class="col-10 mb-1 small">'.$comment[$i]->context;
-                            if(isset($_SESSION['username'])){
-                                if(strcmp($_SESSION['username'],$comment[$i]->username)){
-                                    echo '
-                                        <form action="../php-like/like_API.php" method="POST">
-                                            <input type="hidden" name="ISBN" value='.$search.'>
-                                            <input type="hidden" name="commentUsername" value='.$comment[$i]->username.'>
-                                            <input type="hidden" name="context" value='.$comment[$i]->context.'>
-                                            <input type="submit" value="喜歡評論">
-                                        </form>
-                                    ';
-                                } 
-                            }
-                            echo "score:".getLike($comment[$i]->username,$search,$comment[$i]->context,$conn);
+                            
+                            
                             echo '</div></a>'; 
                         }
                     ?>
@@ -415,43 +471,7 @@ else{
             </ul>
         </footer>
     </div>
-    <script>
-        <?php
-            if($book[0]->num==0&&isset($_SESSION['username'])){
-                echo'document.getElementById("bt_sure").setAttribute("type","button");';
-            }
-            if(isset($_SESSION['username'])){
-                echo'document.getElementById("bt_love").setAttribute("type","submit");';
-                if($isFavorite){
-                    echo'document.getElementById("bt_love").setAttribute("value","移除最愛");';
-                }
-                else{
-                    echo'document.getElementById("bt_love").setAttribute("value","加入最愛");';
-                }
-            }
-        ?>
-        rwd();
-        window.addEventListener('resize', rwd);
-        function rwd(){
-            if(document.documentElement.clientWidth<=576){
-                document.getElementById('rwd_a').setAttribute("class","card col-10");
-                document.getElementById('rwd_b').setAttribute("class","card col-10");
-                document.getElementById('rwd_c').setAttribute("class","card col-10");
-                document.getElementById('rwd_d').setAttribute("class","card col-10");
-                document.getElementById('bt_sure').setAttribute("style","width:"+document.documentElement.clientWidth/100*50+"px;");
-                document.getElementById('bt_love').setAttribute("style","width:"+document.documentElement.clientWidth/100*50+"px;");
-            }
-            else{
-                document.getElementById('rwd_a').setAttribute("class","card col-8");
-                document.getElementById('rwd_b').setAttribute("class","card col-4");
-                document.getElementById('rwd_c').setAttribute("class","card col-4");
-                document.getElementById('rwd_d').setAttribute("class","card col-8");
-                document.getElementById('bt_sure').removeAttribute("style");
-                document.getElementById('bt_love').removeAttribute("style");
-                
-            }
-        }
-	</script>
+    
 </body>
      
 </html>
