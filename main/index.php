@@ -228,7 +228,9 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     <script type="text/javascript">
         //將從資料庫抓到的資料輸出成新書推薦的項目
         var jsonUrl = "recommendNewBook.php";
+        console.log("YAA")
         $.getJSON(jsonUrl, function (data) {
+          console.log("YA")
             let recommendCount = 3;//首頁顯示3本推薦的新書
             while(recommendCount>0){
               $("#recommendNewBook"+recommendCount).attr("onclick","location.href='php-book/book.php?search="+data[recommendCount-1].ISBN+"'");
@@ -236,13 +238,22 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
               $("#recommendNewBook_author"+recommendCount).html("作者:"+data[recommendCount-1].author);
               $("#recommendNewBook_describeBook"+recommendCount).html("簡介:<br>"+data[recommendCount-1].describeBook);
               $imgurl = data[recommendCount-1].img_url;
-              if($imgurl == ""){
+              console.log("YA")
+               if($imgurl == ""&&data[recommendCount-1].imageType!=''){
+                 console.log(window.atob( data[recommendCount-1].bookImage ))
+                $imgurl="data:"+(data[recommendCount-1].imageType)+';base64,'+( data[recommendCount-1].bookImage )
+              }else if($imgurl == ""){
                 $imgurl = "recommendNewBook_no_Image.jfif";
               }
               $("#recommendNewBook_img"+recommendCount).attr("src",$imgurl);
               recommendCount-=1;
-            }           
-        });
+            }   
+        })
+    //     .done(function() { alert('getJSON request succeeded!'); })
+    // .fail(function(jqXHR, textStatus, errorThrown) { alert('getJSON request failed! ' + textStatus); 
+    
+//     })
+// .always(function() { alert('getJSON request ended!'); });;
 
         //將從資料庫抓到的資料輸出成首頁公告欄的項目
         jsonUrl = "php-announcement/announcement_view_API.php";

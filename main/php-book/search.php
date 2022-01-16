@@ -197,7 +197,7 @@
             if($datas[$i]["img_url"]!=""){
                 $img=$datas[$i]["img_url"];
             }else if($datas[$i]['bookImage']!=""){
-                $img="data:'.$datas[$i]['imageType'].';base64,'.base64_encode( $datas[$i]['bookImage'] ).'";
+                $img="data:".$datas[$i]['imageType'].';base64,'.base64_encode( $datas[$i]['bookImage'] );
             }else{
                 $img="https://png.pngtree.com/png-clipart/20210523/original/pngtree-coffee-and-book-in-line-art-png-image_6304989.jpg";
             }
