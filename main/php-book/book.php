@@ -9,6 +9,13 @@ require_once("../php-like/like_query.php");
 require_once("star_queryAPI.php");
 require_once("../php-like/isLike.php");
 $search=$_GET["search"];
+$sql="select ISBN from book
+      where ISBN = '$search'";
+$result = mysqli_query($conn,$sql);
+$rows = $result->num_rows;//抓取的結果中共有幾列資料
+if($rows == 0){
+    echo "<script>alert('此書不存在或已被下架!');history.back();</script>";
+}
 $book=get_search_book($search,2,1,$conn);
 $comment=get_comment($search,$conn);
 $star = get_star($search,$conn);
