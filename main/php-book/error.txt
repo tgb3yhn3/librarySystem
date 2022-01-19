@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "C:\xampp\htdocs\main\php-book\search.py", line 86, in <module>
-    book_json = {'book_name':book_name,'author':author,'company':company,'date':date,'img_url':img_url,'text':text}
-NameError: name 'company' is not defined

@@ -84,4 +84,5 @@ for($i=1;$i<=$num;$i++){
         
 
         // header('refresh:0;url=select.php',false);
+        header("refresh:0;url=bookchange.php",true);
 ?>
