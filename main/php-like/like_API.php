@@ -24,7 +24,7 @@ else{//使用者
         
     }
     else{//使用者將書籍從最愛移除
-        $sql="delete from good where userID='".$userID."' and username='".$commentUsername."' and ISBN='".$ISBN."'";
+        $sql="delete from good where userID='".$userID."' and username='".$commentUsername."' and context='".$context."' and ISBN='".$ISBN."'";
         mysqli_query($conn,$sql);
         mysqli_close($conn);//關閉資料庫連線
         echo "<script>alert('刪除喜歡成功!');history.go(-1);</script>";
