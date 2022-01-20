@@ -9,10 +9,10 @@ server with default setting (user 'root' with no password) */
 
 此文件用來定義資料庫相關資訊
 */
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '123456');
-define('DB_NAME', 'test');
+define('DB_SERVER', 'us-cdbr-east-05.cleardb.net');
+define('DB_USERNAME', 'b173ff6c6fd8c1');
+define('DB_PASSWORD', '6e46f35e');
+define('DB_NAME', 'heroku_5199541154d8577');
  
 /* Attempt to connect to MySQL database */
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
