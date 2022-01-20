@@ -91,7 +91,16 @@
             // echo $_SESSION["admin"];
             echo $_SESSION['username'].'&emsp;你好&emsp;';
             
-            echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+            echo '
+            <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="../php-member/logout.php" class="text-decoration-none"><button type="button" class="dropdown-item ">登出</button></a>
+                <a href="../php-member/change.php" class="text-decoration-none"><button type="button" class="dropdown-item ">修改密碼</button></a>
+            </div>
+          </div>
+          ';
           }else{
             echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
             <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
@@ -130,7 +139,7 @@
                 <input type="number"class="form-control" id="book_time'.$i.'" id="book_time'.$i.'" name="book_time" value="'.$datas[$i]["book_time"].'"onchange="change_color(this.id)"required>
                 </td>
                 <td>
-                <input type="number"class="form-control" id="book_fine'.$i.'" name="book_fine" value="'.$datas[$i]["book_fine"].'" onchange="change_color(this.id)" required>
+                <input type="float"class="form-control" id="book_fine'.$i.'" name="book_fine" value="'.$datas[$i]["book_fine"].'" onchange="change_color(this.id)" required>
                 </td>
                 <td>
                   <input type="text" class="form-control" type="text" placeholder="'.$datas[$i]["credit"].'"onchange="change_color(this.id)" readonly>

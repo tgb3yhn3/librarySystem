@@ -81,7 +81,16 @@
                 // echo $_SESSION["admin"];
                 echo $_SESSION['username'].'&emsp;你好&emsp;';
                 
-                echo '<a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+                echo '
+            <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="../php-member/logout.php" class="text-decoration-none"><button type="button" class="dropdown-item ">登出</button></a>
+                <a href="../php-member/change.php" class="text-decoration-none"><button type="button" class="dropdown-item ">修改密碼</button></a>
+            </div>
+          </div>
+          ';
             }else{
                 echo' <a href="../php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
                 <a href="../php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
@@ -102,6 +111,7 @@
                 <thead bgcolor='#84C1FF'>
                     <tr style='height:30px'>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>書名</font></th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>書籍ID</font></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>借閱日期</font></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>還書日期</font></th>
                         <th style='width:150px;border:1px black solid; text-align:center;'><font color='#000093'>書籍狀態</font></th>
@@ -113,9 +123,10 @@
     for($i=0;$i<$res_count;$i++){
                 echo "<tr style='height:30px'>
                         <th style='width:150px;border:1px black solid; text-align:center;'><a href='book.php?search=".$res_datas[$i]['ISBN']."'>".$res_datas[$i]['book_name']."</a></th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['book_unique_ID']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['start_rent_date']."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['return_date']."</th>
-                        <th style='width:150px;border:1px black solid; text-align:center;'> ".(($res_datas[$i]['book_status']=='已預約')?'<a target="" href="cancel_reserve_book.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'&userID='.$res_datas[$i]['userID'].'">已預約</a>':$res_datas[$i]['book_status'])."</th>
+                        <th style='width:150px;border:1px black solid; text-align:center;'> ".(($res_datas[$i]['book_status']=='已預約')?'<a target="" onClick="javascript: return confirm(\'確認取消預約?\');" href="cancel_reserve_book.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'&userID='.$res_datas[$i]['userID'].'">已預約</a>':$res_datas[$i]['book_status'])."</th>
                         <th style='width:150px;border:1px black solid; text-align:center;'>".(($res_datas[$i]['comment_status']=='未評論')?'<a target="" href="../php-comment/makecomment.php?book='.$res_datas[$i]['ISBN'].'&num='.$res_datas[$i]['numbering'].'">未評論</a>':$res_datas[$i]['comment_status'])."</th>
 
                         <th style='width:150px;border:1px black solid; text-align:center;'>".$res_datas[$i]['lasting_return_date']."</th>

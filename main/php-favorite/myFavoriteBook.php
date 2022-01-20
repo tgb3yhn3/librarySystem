@@ -28,8 +28,20 @@ session_start();
           <span class="fs-1">海大資工系圖書館系統<span class="fs-2">-我的最愛</span></span>
     
           <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2" disabled><?php echo $_SESSION['username']?></button>
-            <a href="../php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>
+         
+            <?php
+             echo $_SESSION['username'].'&emsp;你好&emsp;';
+            echo '
+            <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="../php-member/logout.php" class="text-decoration-none"><button type="button" class="dropdown-item ">登出</button></a>
+                <a href="../php-member/change.php" class="text-decoration-none"><button type="button" class="dropdown-item ">修改密碼</button></a>
+            </div>
+          </div>
+          ';
+            ?>
           </div>
         </header>
     </div>
@@ -69,10 +81,12 @@ session_start();
      /*將從資料庫抓到的資料輸出成html的table*/
      const jsonUrl = "viewFavoriteBook_API.php";
         var odd = 1;
+        var atLeastOne = 0;
         var color_controller;
         $.getJSON(jsonUrl, function (data) {
 
             for (let item in data) {
+                atLeastOne =1;
                 if(odd==1){
                     color_controller = "#FFF6D9";
                     console.log(odd);
@@ -86,7 +100,7 @@ session_start();
                     "<td style='border-right:2px white solid;'><a href='../php-book/book.php?search="+data[item].ISBN+"'>" + data[item].bookName + "</a></td>" +
                     
                     "<td style='border-right:2px white solid; text-align:center;'>" + data[item].ISBN + "<input type='hidden' name='ISBN' value="+data[item].ISBN+" form="+data[item].ISBN+">" + "</td>" +
-                    "<td style=' text-align:center;'>" + "<input type='submit' class='btn btn-outline-primary'  value='從最愛清單刪除' form="+data[item].ISBN+">" + "</td>" +
+                    "<td style=' text-align:center;'>" + "<input type='submit' class='btn btn-outline-primary' onClick=\"javascript: return confirm('確定要將該書從我的最愛移除嗎?');\" value='從最愛清單刪除' form="+data[item].ISBN+">" + "</td>" +
                     "</tr>";
                 $("#menu").append(content);
                 let content2 = "<form action='favoriteBook_API.php' method='post' id="+data[item].ISBN+"></form>"
@@ -98,7 +112,16 @@ session_start();
                     odd=1;
                 }
             }
+            if (atLeastOne == 0){
+            let content =
+                "<tr bgcolor=#FFF6D9>" +
+                "<td style='border-right:2px white solid; font-weight:bolder; text-align:center;' colspan=3>目前沒有任何書籍加入最愛</td>" +
+          
+                "</tr>";
+            $("#menu").append(content);
+        }
         });
+
 
 </script>
 </html>

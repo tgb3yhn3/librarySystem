@@ -5,6 +5,8 @@ $conn = require_once("config.php");
 
   $query  = "SELECT * FROM book  where ISBN<>'' ORDER BY create_time DESC LIMIT 3";
   $result = $conn->query($query);
+ 
+  // echo mysqli_errno($conn);
   if (!$result) die("Fatal Error");
 
   $rows = $result->num_rows;
@@ -15,6 +17,7 @@ $conn = require_once("config.php");
   {
     $result->data_seek($j);
     $row = $result->fetch_assoc();
+    $row['bookImage']=base64_encode($row['bookImage']);
     $row['describeBook'] = strip_tags($row['describeBook']);
     array_push($arr,$row);
   }
@@ -24,7 +27,7 @@ $conn = require_once("config.php");
 
   //convert to json
   echo json_encode($arr, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
-  
+  // print_r($arr);
   $result->close();
   $conn->close();
 ?>

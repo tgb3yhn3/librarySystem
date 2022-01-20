@@ -5,8 +5,9 @@ $username=$_POST['username'];
 $ISBN=$_POST['ISBN'];
 $context=$_POST['context'];
 $num=$_POST['num'];
-$sql="INSERT INTO comment (username,ISBN, context)
-VALUES('".$username."','".$ISBN."','".$context."')";
+$good = substr($_POST['good'], 0, -1);
+$sql="INSERT INTO comment (username,ISBN, context,good)
+VALUES('".$username."','".$ISBN."','".$context."','".$good."')";
 
 if(mysqli_query($conn, $sql)){
 echo "回應成功<br>";

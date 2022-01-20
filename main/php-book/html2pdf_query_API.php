@@ -1,7 +1,7 @@
 <?php // query_API.php
     
     function BorrowReturnBook_query_API($uniqueID,$conn){
-        $SQL = "SELECT * FROM user_book_history WHERE book_unique_ID = '".$uniqueID."'";
+        $SQL = "SELECT * FROM user_book_history WHERE book_unique_ID = '".$uniqueID."' ORDER BY numbering DESC";
         $result1 = mysqli_query($conn,$SQL);
         $datas=array();
         //  echo "in";

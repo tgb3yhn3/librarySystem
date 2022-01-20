@@ -10,8 +10,8 @@
     $userID = $_SESSION["userID"];//哪位使用者按下加入最愛
     /*從資料庫抓取資料*/
     $sql="select bookName,ISBN 
-        FROM user_favorite_book_data
-        where userID=$userID";
+          FROM user_favorite_book_data
+          where userID=$userID and ISBN in(select ISBN from book)";
     mysqli_query($conn,$sql);
     $result = mysqli_query($conn,$sql);//抓取的結果
     if (!$result) die("Fatal Error");//若抓取的結果不存在，終止程式並回報錯誤

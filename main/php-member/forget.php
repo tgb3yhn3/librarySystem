@@ -1,7 +1,7 @@
 <?php
 //POST 後端 用來寄出驗證信
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $conn=require_once "config.php";
+        $conn=require_once "../config.php";
         require_once "sentForgetEmail.php";
         $userID=$_POST["userID"];
         $sql="SELECT * FROM users WHERE userID='".$userID."'";

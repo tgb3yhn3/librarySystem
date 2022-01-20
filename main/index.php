@@ -59,7 +59,16 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
             // echo $_SESSION["admin"];
             echo $_SESSION['username'].'&emsp;你好&emsp;';
             
-            echo '<a href="php-member/logout.php"><button type="button" class="btn btn-primary">登出</button></a>';
+            echo '
+            <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="php-member/logout.php" class="text-decoration-none"><button type="button" class="dropdown-item ">登出</button></a>
+                <a href="php-member/change.php" class="text-decoration-none"><button type="button" class="dropdown-item ">修改密碼</button></a>
+            </div>
+          </div>
+          ';
           }else{
             echo' <a href="php-member/login-2.htm"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
             <a href="php-member/signup-2.htm"><button type="button" class="btn btn-primary">Sign-up</button></a>
@@ -75,9 +84,14 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
               <input name="search"class="form-control me-2" type="search" placeholder="請輸入書籍名稱" aria-label="書籍搜尋" required>
             </div>
             <div class="col-1">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </div>
+              <button class="btn btn-outline-success" type="submit">🔍</button>
            </form>
+           </div>
+           <div class="col-1">
+             <form action="php-book/advancedSearch.php" method="POST">
+              <button class="btn btn-outline-danger" type="submit">進階搜尋</button>
+              </form>
+           </div>
         </div>
     </div>
     <br>
@@ -90,7 +104,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3 style="display:inline;">系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.php">更多</a></div>
+            <div><h3 style="display:inline;">📢系統公告&emsp;</h3><a href="php-announcement/announcement_visitor_user.php">更多</a></div>
             <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -106,7 +120,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     </div>
     <div class="container">
         <div  class="w-75 p-3 offset-2">
-            <div><h3>新書推薦</h3></div>
+            <div><h3>👍新書推薦</h3></div>
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -154,25 +168,31 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     
     <div class="container">
         <div class="w-75 p-3 offset-2">
-            <div><h3>熱門排行</h3></div>
+            <div><h3>🔥熱門排行</h3></div>
         <div class="row">
             <div class="col">
               <div class="card h-100">
-                <img src="mostview.png" class="card-img-top" >
+                <img src="mostview2.png" class="card-img-top">
                 <div class="card-body">
                   <h4 class="card-title">借閱</h4>
                   <p class="card-text">依照最多人借閱書籍排行</p>
-                  <button type="button" class="btn btn-outline-primary me-2">前往</button>
+                  <form method="get" action="php-book/search_php.php">
+                      <input type="hidden"  name="leaderboardAccordingTo" value="borrow" />
+                      <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
+                  </form>
                 </div>
               </div>
             </div>
             <div class="col">
               <div class="card h-100">
-                <img src="mostfavorite.png" class="card-img-top" >
+                <img src="mostfavorite2.png" class="card-img-top" >
                 <div class="card-body">
                   <h4 class="card-title">評價</h4>
                   <p class="card-text">依照最高評價書籍排行</p>
-                  <button type="button" class="btn btn-outline-primary me-2">前往</button>
+                  <form method="get" action="php-book/search_php.php">
+                      <input type="hidden"  name="leaderboardAccordingTo" value="star" />
+                      <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
+                  </form>
                 </div>
               </div>
             </div>
@@ -182,7 +202,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
                 <div class="card-body">
                   <h4 class="card-title">討論度</h4>
                   <p class="card-text">依照討論度排行</p>
-                  <form method="get" action="php-book/hotLeaderboard.php">
+                  <form method="get" action="php-book/search_php.php">
                       <input type="hidden"  name="leaderboardAccordingTo" value="discussion" />
                       <input class="btn btn-outline-primary me-2" type="submit" value="前往" />
                   </form>
@@ -208,7 +228,9 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
     <script type="text/javascript">
         //將從資料庫抓到的資料輸出成新書推薦的項目
         var jsonUrl = "recommendNewBook.php";
+        console.log("YAA")
         $.getJSON(jsonUrl, function (data) {
+          console.log("YA")
             let recommendCount = 3;//首頁顯示3本推薦的新書
             while(recommendCount>0){
               $("#recommendNewBook"+recommendCount).attr("onclick","location.href='php-book/book.php?search="+data[recommendCount-1].ISBN+"'");
@@ -216,13 +238,22 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
               $("#recommendNewBook_author"+recommendCount).html("作者:"+data[recommendCount-1].author);
               $("#recommendNewBook_describeBook"+recommendCount).html("簡介:<br>"+data[recommendCount-1].describeBook);
               $imgurl = data[recommendCount-1].img_url;
-              if($imgurl == ""){
+              console.log("YA")
+               if($imgurl == ""&&data[recommendCount-1].imageType!=''){
+                 console.log(window.atob( data[recommendCount-1].bookImage ))
+                $imgurl="data:"+(data[recommendCount-1].imageType)+';base64,'+( data[recommendCount-1].bookImage )
+              }else if($imgurl == ""){
                 $imgurl = "recommendNewBook_no_Image.jfif";
               }
               $("#recommendNewBook_img"+recommendCount).attr("src",$imgurl);
               recommendCount-=1;
-            }           
-        });
+            }   
+        })
+    //     .done(function() { alert('getJSON request succeeded!'); })
+    // .fail(function(jqXHR, textStatus, errorThrown) { alert('getJSON request failed! ' + textStatus); 
+    
+//     })
+// .always(function() { alert('getJSON request ended!'); });;
 
         //將從資料庫抓到的資料輸出成首頁公告欄的項目
         jsonUrl = "php-announcement/announcement_view_API.php";

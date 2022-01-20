@@ -1,10 +1,10 @@
 <?php
-    function adjust_credit($userID,$number,$conn){
-        require_once("algorithim.php");
-        $get_user_credit =  "SELECT * FROM user_condition WHERE userID = $userID";
-        $result = mysqli_query($conn,$get_user_credit);
-        if ($result) {
-            // mysqli_num_rows方法可以回傳我們結果總共有幾筆資料
+    function getLike($username,$ISBN,$context,$link){
+        $sql="select * from good where context='".$context."' and ISBN='".$ISBN."' and username='".$username."';";
+        $datas=array();
+        $like=0;
+        $result=mysqli_query($link,$sql);
+        if($result){
             if (mysqli_num_rows($result)>0) {
                 // 取得大於0代表有資料
                 // while迴圈會根據資料數量，決定跑的次數
@@ -12,12 +12,12 @@
                 while ($row = mysqli_fetch_assoc($result)) {
                     // 每跑一次迴圈就抓一筆值，最後放進data陣列中
                     $datas[] = $row;
+                    $like += 1;
                 }
             }
             // 釋放資料庫查到的記憶體
             mysqli_free_result($result);
         }
-        algorithim($datas,$number,$conn);
+        return $like;
     }
-    
 ?>

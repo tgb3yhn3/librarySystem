@@ -27,10 +27,12 @@
         </script>
     </head>
 
-    <body onload="main()">
-      <div id="view">
-        <p>還書憑據</p>
-        <br>
+    <body onload="main()" >
+      <div id="view" >
+      <div style="border-width:3px;border-style:dashed;border-color:#FFAC55;padding:5px;">
+      <div style="border-width:3px;border-style:dashed;border-color:#FFAC55;padding:5px;">
+      <div style="border-width:3px;border-style:dashed;border-color:#FFAC55;padding:5px;">
+        <h2>-----------------------------------------還書憑據----------------------------------------</h2>
         <h>名字 : <?php echo $userName[0]['username']?></h>
         <br>
         <h>學號 : <?php echo $datas[0]['userID']?></h>
@@ -39,7 +41,10 @@
         <br>
         <h>借書日期:<?php echo $datas[0]['start_rent_date']?></h>
         <br>
-        <h>還書日期:<?php echo date("Y-m-d H:i:s");?></h>
+        <h>還書日期:<?php echo $datas[0]['lasting_return_date']?></h>
+      </div>
+      </div>
+      </div>
       </div>
       <br>
       <button id="export-pdf">Export PDF</button>

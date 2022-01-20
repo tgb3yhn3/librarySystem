@@ -81,6 +81,9 @@ if(!isset($_POST['ISBN'])){
     // $bookUniqueID=$ISBN.'_0';
     if($oldnum>$num)
     {
+        if($num==0)
+        echo"<script>alert('不得調整數量為零')</script>";
+        else{
         if(check_still_have_borrow($ISBN,$conn))
         alertMsg("尚有外借中，不允許調低數量");
         else{
@@ -89,29 +92,31 @@ if(!isset($_POST['ISBN'])){
             
             
         
-            for($i=$oldnum-1;$i>=$num;$i--){
+            for($i=$oldnum;$i>$num;$i--){
                 $stmt =$conn->prepare("delete from book where bookUniqueID='".$ISBN."_".$i."'");
                 
                 $stmt->execute();
             }
             alertMsg("調整成功");
+            echo"<hr>原數量:".$oldnum."<br>調整後數量:".$num;
         }
+    }
     }else if($oldnum<$num){
         $stmt->execute();
         $stmt = $conn->prepare("INSERT INTO `book`(`bookName`, `author`, `ISBN`, `describeBook`, `bookImage`, `imageType`, `bookUniqueID`, `class`, `publish_year`, `num`, `status`, `publisher`, `img_url`) VALUES 
                                           ('','','','','','',?,'','','','','','')");
          $stmt->bind_param("s",$bookUniqueID);
-        for($i=$oldnum-1;$i<$num;$i++){
+        for($i=$oldnum-1;$i<=$num;$i++){
             $bookUniqueID=$ISBN.'_'.$i;
             $stmt->execute();
-            echo"新增";
         }
         alertMsg("調整成功");
+        echo"<hr>原數量:".$oldnum."<br>調整後數量:".$num;
     }else{
         echo("<br>無調整數量");
     }
     // $stmt->bind_param();
     
 }
-
+header("refresh:0;url=bookchange.php",true);
 ?>
