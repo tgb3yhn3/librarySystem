@@ -89,7 +89,8 @@ if(!isset($_POST['ISBN'])){
         else{
 
             $stmt->execute();
-            
+            echo"test";
+            echo  mysqli_error($conn);
             
         
             for($i=$oldnum;$i>$num;$i--){
@@ -113,10 +114,11 @@ if(!isset($_POST['ISBN'])){
         alertMsg("調整成功");
         echo"<hr>原數量:".$oldnum."<br>調整後數量:".$num;
     }else{
+        $stmt->execute();
         echo("<br>無調整數量");
     }
     // $stmt->bind_param();
     
 }
-header("refresh:0;url=bookchange.php",true);
+// header("refresh:0;url=bookchange.php",true);
 ?>
