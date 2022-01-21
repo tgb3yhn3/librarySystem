@@ -60,7 +60,7 @@ if(!isset($_POST['ISBN'])){
         if(!empty($result)){
             $oldnum=$datas[0]["num"];
         }  
-        mysqli_query($conn,'SET NAMES uff8');
+        // mysqli_query($conn,'SET NAMES uff8');
         echo "正確連接資料庫";
     }
     else {
