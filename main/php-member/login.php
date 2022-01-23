@@ -39,26 +39,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION["admin"]=($_SESSION["status"]==2);
             
             
-            header("refresh=0;url=../index.php",false);//登陸完成跳轉回首頁
+            echo "<script>alert('".'登入成功'."');window.location.replace('../index.php');</script>";
         }else{
             
             function_alert("您的帳號已被列為黑名單 ，故無法使用 原因  ".$isblackList);
-            header("refresh:0;url=login-2.htm",false);
+            echo "<script>window.location.replace('login-2.html');</script>";
         }
         
     }
     else if($row['status']==0&&$row['password']==$password){
         //帳號密碼都對但是還沒註冊=> stastus=0
         function_alert("您的帳號尚未通過信箱驗證 ，故無法使用");
-        header("refresh:0;url='login-2.htm'",false);
+        echo "<script>window.location.replace('login-2.html');</script>";
         
     }else{//打錯密碼
         function_alert("帳號或密碼錯誤"); 
-        header("refresh:0;url='login-2.htm'",false);
+        echo "<script>window.location.replace('login-2.html');</script>";
      }
 }else{
     function_alert("請聯絡管理員，wrong request method");
-    header("refresh:0;url='login-2.htm'",false);   
+    echo "<script>window.location.replace('login-2.html');</script>";
 }
 
     // Close connection
@@ -70,6 +70,6 @@ function function_alert($message) {
     echo "<script>alert('$message')</script>"; 
     return false;
 } 
-header("refresh:0;url=../index.php",false);
+echo "<script>window.location.replace('login-2.html');</script>";
 ?>
 <a href="index.php">若無跳轉請按此</a>
