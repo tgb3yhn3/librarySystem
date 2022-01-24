@@ -96,6 +96,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             width: 80%;
            
     }
+    }
     </style>
 </HEAD>
 <BODY>
