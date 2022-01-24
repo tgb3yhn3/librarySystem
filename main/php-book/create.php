@@ -4,7 +4,7 @@ $host = 'us-cdbr-east-05.cleardb.net';
 		$dbuser ='b173ff6c6fd8c1';
 		$dbpassword = '6e46f35e';
 		$dbname = 'heroku_5199541154d8577';
-$link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
+$link = require_once('../config.php');
 
 $bookName=$_POST["bookName"];
 $author=$_POST["author"];
