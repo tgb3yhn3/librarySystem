@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\xampp\htdocs\main\php-book\search.py", line 9, in <module>
+    params = sys.argv[1]
+IndexError: list index out of range
