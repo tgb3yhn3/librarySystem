@@ -221,7 +221,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
                     url: "search_ISBN.php",
                     data : {ISBN : $('#ISBN').val()},
                     success:function(data){
-                        
+                        console.log(data)
                         var data = JSON.parse(data);
                         document.getElementById("bookName").value = data.book_name;
                         document.getElementById("author").value = data.author;
