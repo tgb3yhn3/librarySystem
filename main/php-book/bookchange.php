@@ -144,8 +144,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             <!-- 上架書籍-->
             <div class="content content1" style="height:500px;" >
                 <form action="create.php" method="post" enctype="multipart/form-data">
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input  class="inputt" name="ISBN" id="ISBN"type="text"></p>
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;<button  type="button" id="crawl">自動爬取書籍資料</button></p>
+                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input  class="inputt" name="ISBN" id="ISBN"type="text">&emsp;<button  type="button" id="crawl">自動爬取書籍資料</button></p>
                     <p class="rwd_word">&emsp;&emsp;&emsp;&emsp;書名：<input class="inputt" name="bookName" id="bookName" type="text" ></p>
                     <p class="rwd_word">&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;分類：<select class="inputt" id="class" name="class" maxlength="30" ><option value="總類">總類</option><option value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
                     <p class="rwd_word">&emsp;&emsp;&emsp;&emsp;作者：<input class="inputt" name="author" id="author"type="text"></p>
@@ -161,8 +160,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             <div class="content content2" style="height:500px;">
                 <!--下架書籍 -->
                 <form action="delete.php" method="POST">
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input name="ISBN" class="inputt" id="takeoff_ISBN"type="text"></p>
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;<button id='takeoff'type="button">館內搜尋</button>&emsp;<input type="reset" value="清除"></p>
+                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input name="ISBN" class="inputt" id="takeoff_ISBN"type="text">&emsp;<button id='takeoff'type="button">館內搜尋</button>&emsp;<input type="reset" value="清除"></p>
                     
                 
                     <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;書名為:<div id="takeoff_name"></div>&emsp;</p>
@@ -172,8 +170,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             </div>
             <div class="content content3" style="height:500px;">
                 <form action="update.php" method="POST">
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input class="inputt" name="ISBN"id="update_ISBN" type="text"></p>
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;<button type="button" id="update">館內搜尋</button></p>
+                    <p class="rwd_word">&emsp;&emsp;&emsp;&ensp;&thinsp;ISBN：<input class="inputt" name="ISBN"id="update_ISBN" type="text">&emsp;<button type="button" id="update">館內搜尋</button></p>
                     <p class="rwd_word">&emsp;&emsp;&emsp;&emsp;書名：<input class="inputt" id="update_bookName" name="bookName" type="text" ></p>
                     <p class="rwd_word">&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;分類：<select class="inputt" id="update_class" name="class" maxlength="30" style="border-color:#84C1FF;"><option id="update_總類" value="總類">總類</option><option id="update_哲學類" value="哲學類">哲學類</option><option value="宗教類">宗教類</option><option value="自然科學類">自然科學類</option><option value="應用科學類">應用科學類</option><option value="社會科學類">社會科學類</option><option value="中國史地類">中國史地類</option><option value="外國史地類">外國史地類</option><option value="語文類">語文類</option><option value="美術類">美術類</option></select></p>
                     <p class="rwd_word">&emsp;&emsp;&emsp;&emsp;作者：<input class="inputt" name="author"id="update_author" type="text" ></p>
@@ -189,8 +186,7 @@ if(!isset($_SESSION["admin"]) || $_SESSION["admin"]!=true){
             </div>
             <div class="content content4" style="height:500px;">
                 <form action="delete_lost_book.php" method="POST">
-                    <p class="rwd_word">&emsp;&emsp;&emsp;&emsp;書號：<input class="inputt" id="bookuniqueID" name="bookuniqueID" type="text"></p>
-                    <p class="rwd_word center"><input type="submit" value="刪除此書"></p>
+                    <p class="rwd_word">&emsp;&emsp;&emsp;&emsp;書號：<input class="inputt" id="bookuniqueID" name="bookuniqueID" type="text">&emsp;<input type="submit" value="刪除此書"></p>
                 </form>
             </div>
         </div>
