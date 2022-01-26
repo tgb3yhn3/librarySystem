@@ -2,10 +2,10 @@
 require_once("checkAPI.php");
 //POST 後端 用來刪除書籍
 $del=$_POST['ISBN'];
-$host = 'localhost';
-$dbuser ='root';
-$dbpassword = '123456';
-$dbname = 'test';
+$host = 'us-cdbr-east-05.cleardb.net';
+		$dbuser ='b173ff6c6fd8c1';
+		$dbpassword = '6e46f35e';
+		$dbname = 'heroku_5199541154d8577';
 $sql="delete  from `book` where bookUniqueID like '$del%'";
 $link = mysqli_connect($host,$dbuser,$dbpassword,$dbname);
 if(check_still_have_borrow($del,$link)){

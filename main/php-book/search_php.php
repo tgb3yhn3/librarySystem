@@ -254,21 +254,10 @@ mysqli_close($conn);
               </div>
               <div class="col-md-3 ">
                 <div class="d-grid gap-5">
-                '.(isset($_SESSION['admin'])&&$_SESSION['admin']==true?'<button  class="btn btn-danger " id="delete_'.$book[$i]->ISBN.'">刪除此書</button>
+                
                 <script>
-          $("#delete_'.$book[$i]->ISBN.'").click(function(){
-                $.ajax({
-                    type: "POST",
-                    url: "delete.php",
-                    data : {delete : "'.$book[$i]->ISBN.'"},
-                    success:function(data){
-                        alert("刪除成功")
-                        location.reload();
-                    }
-                })
-            })
-        ;
-</script>':'').'<form name="book" method="POST" action="reserve_book.php">
+          
+</script>'.'<form name="book" method="POST" action="reserve_book.php">
                   <br>
                  '.($book[$i]->num==0&&isset($_SESSION["userID"])?'<button type="submit" id = "reservation_btn" class="btn btn-primary mr-1" >預約租書</button>':'').' 
                  

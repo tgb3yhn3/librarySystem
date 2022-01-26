@@ -1,10 +1,12 @@
 <?php
     if(isset($_GET['num'])){
+        
         require_once('bookAPI.php');
-        define('DB_SERVER', 'localhost');
-        define('DB_USERNAME', 'root');
-        define('DB_PASSWORD', '123456');
-        define('DB_NAME', 'test');
+        
+        define('DB_SERVER', 'us-cdbr-east-05.cleardb.net');
+define('DB_USERNAME', 'b173ff6c6fd8c1');
+define('DB_PASSWORD', '6e46f35e');
+define('DB_NAME', 'heroku_5199541154d8577');
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         mysqli_query($link, 'SET NAMES utf8');
         $get_this_line_up =  "SELECT * FROM line_up WHERE userID = '".$_GET['userID']."' AND ISBN = '".$_GET['book']."'" ;

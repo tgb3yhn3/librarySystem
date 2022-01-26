@@ -11,36 +11,26 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     //檢查帳號是否重複
     $check="SELECT * FROM users WHERE userID='".$userID."'";
     if(mysqli_num_rows(mysqli_query($conn,$check))==0){
-        $sql="INSERT INTO users (username,userID,email, password,token,status)
+        if(sentRegMail($email,$token)){
+            $sql="INSERT INTO users (username,userID,email, password,token,status)
             VALUES('".$username."','".$userID."','".$email."','".$password."','".$token."',0)";
-       
-        
-        if(mysqli_query($conn, $sql)){
-            if(sentRegMail($email,$token)){
-                require_once '../php-condiction/create_condition.php';
-                create_condition($conn,$userID);
-                echo "註冊成功!<br>";
-                
-                echo"沒收到驗證信請檢查垃圾郵件<br>";
-                echo "<br>3秒後將自動跳轉回首頁<br>";
-                echo "<a href='../index.php'>未成功跳轉頁面請點擊此</a>";
-                
-                header("refresh:3;url=../index.php",true);
+            if(mysqli_query($conn, $sql)){
             }else{
-                $sql='delete from users where userID="'.$userID.'"';
-                mysqli_query($conn, $sql);
-                echo"郵件寄送失敗，請重試或請聯繫系統管理員";
+                echo "Error creating table: " . mysqli_error($conn);
             }
+            require_once '../php-condiction/create_condition.php';
+            create_condition($conn,$userID);
+            echo "註冊成功!<br>";
             
+            echo"沒收到驗證信請檢查垃圾郵件<br>";
+            echo "<br>3秒後將自動跳轉回首頁<br>";
+            echo "<a href='../index.php'>未成功跳轉頁面請點擊此</a>";
             
-            
-            //echo "<a href='index.php'>未成功跳轉頁面請點擊此</a>";
-            
-  
-            // header("refresh:3;url=index.php");
-            // exit;
+            header("refresh:3;url=../index.php",true);
         }else{
-            echo "Error creating table: " . mysqli_error($conn);
+            $sql='delete from users where userID="'.$userID.'"';
+            mysqli_query($conn, $sql);
+            echo"郵件寄送失敗，請重試或請聯繫系統管理員";
         }
     }
     else{
